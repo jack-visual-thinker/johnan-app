@@ -1,108 +1,104 @@
 :root {
-  --color-primary: #E76F51;
-  --color-primary-light: #F4A261;
-  --color-secondary: #2A9D8F;
-  --color-secondary-dark: #264653;
+  /* Brand Colors extracted from reference */
   --color-bg: #FFFDF7;
+  --color-text: #333333;
+  --color-text-sub: #666666;
+  
+  --color-primary: #F0A500;  /* Gold/Yellow for main actions */
+  --color-primary-light: #F4D35E;
+  
+  --color-accent-orange: #F39C12; /* Start Button Gradient Start */
+  --color-accent-yellow: #F1C40F; /* Start Button Gradient End */
+  
+  --color-blue: #2980B9; /* Link/Highlight color */
+  
   --color-card-bg: #FFFFFF;
-  --color-text: #2D3436;
-  --color-text-light: #636E72;
-  --color-accent: #E9C46A;
   
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-  
+  --color-legend-card-border: #F0A500;
+  --color-legend-bg: #FFFBE6;
+
+  /* Spacing & Radius */
   --radius-md: 12px;
   --radius-lg: 20px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
-
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color: var(--color-text);
-  background-color: var(--color-bg);
   
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  line-height: 1.6;
+  color: var(--color-text);
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  justify-content: center;
   min-height: 100vh;
-  width: 100%;
+  background-color: var(--color-bg);
 }
 
 #root {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: 800px; /* Wider for the 2-col result view */
+  padding: 2rem 1rem;
+  box-sizing: border-box;
 }
 
-/* Utilities */
-.btn {
-  border-radius: var(--radius-full);
-  border: 1px solid transparent;
-  padding: 0.8em 1.6em;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  background-color: var(--color-primary);
-  color: white;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-.btn:hover {
-  background-color: var(--color-primary-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.btn:active {
-  transform: translateY(0);
-}
-
+/* Common Utilities */
 .card {
   background: var(--color-card-bg);
   padding: 2rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: 2.2em;
-  line-height: 1.1;
-  color: var(--color-secondary-dark);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: #EEE;
-  border-radius: var(--radius-full);
-  overflow: hidden;
+  box-shadow: var(--shadow-sm);
   margin-bottom: 2rem;
 }
 
-.progress-fill {
-  height: 100%;
-  background: var(--color-secondary);
-  transition: width 0.3s ease-out;
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-orange));
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 0 #D35400; /* 3D effect border */
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #D35400;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.btn-outline {
+  background: white;
+  color: var(--color-text-sub);
+  border: 2px solid #E0E0E0;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+h1, h2, h3 {
+  margin: 0;
 }
