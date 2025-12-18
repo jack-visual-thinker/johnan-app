@@ -50,7 +50,7 @@ function App() {
       {currentPage === 'encyclopedia' && <EncyclopediaView />}
       {currentPage === 'faq' && <FAQView />}
       {currentPage === 'quiz' && <QuizView onFinish={handleQuizFinish} />}
-      {currentPage === 'result' && <ResultView answers={answers} onRetry={handleRetry} />}
+      {currentPage === 'result' && <ResultView answers={answers} onRetry={handleRetry} userData={userData} />}
       
       <footer style={{ marginTop: '2rem', fontSize: '0.8rem', color: '#AAA', textAlign: 'center', paddingBottom: '2rem' }}>
         &copy; じょうずかん

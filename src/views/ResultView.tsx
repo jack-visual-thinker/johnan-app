@@ -9,6 +9,7 @@ import { LoadingView } from './LoadingView';
 type Props = {
   answers: Record<number, number>;
   onRetry: () => void;
+  userData: { name: string; email: string } | null;
 };
 
 const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
@@ -67,8 +68,10 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
   );
 };
 
-export const ResultView: React.FC<Props> = ({ answers, onRetry }) => {
+export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   const [loading, setLoading] = useState(true);
+  // userData will be used in Phase 2 for email functionality
+  console.log("User data:", userData);
 
   const { animal, scores, comment } = useMemo(() => {
     const s = calculateScores(answers);
