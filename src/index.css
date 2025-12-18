@@ -37,7 +37,11 @@ body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background-color: var(--color-bg);
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #root {
@@ -101,4 +105,15 @@ body {
 
 h1, h2, h3 {
   margin: 0;
+}
+
+/* Header spacing */
+.app-container {
+  padding-top: 100px;
+}
+
+/* Input styles */
+input:focus {
+  outline: none;
+  border-color: var(--color-primary) !important;
 }
