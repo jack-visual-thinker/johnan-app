@@ -17,7 +17,7 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
   const numPoints = keys.length;
   const radius = 80; // Smaller radius to fit design
   const center = 100;
-  
+
   const getPoint = (index: number, value: number) => {
     const angle = (Math.PI * 2 * index) / numPoints - Math.PI / 2;
     const r = (value / 10) * radius;
@@ -35,33 +35,33 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
         {/* Background Grid */}
         <polygon points={bgPoints} fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="1" />
         {[7, 4].map(scale => (
-           <polygon 
-             key={scale}
-             points={keys.map((_, i) => getPoint(i, scale)).map(p => p.join(',')).join(' ')} 
-             fill="none" 
-             stroke="#F3F4F6" 
-             strokeWidth="1" 
-           />
+          <polygon
+            key={scale}
+            points={keys.map((_, i) => getPoint(i, scale)).map(p => p.join(',')).join(' ')}
+            fill="none"
+            stroke="#F3F4F6"
+            strokeWidth="1"
+          />
         ))}
         {/* Data */}
         <polygon points={points} fill="rgba(240, 165, 0, 0.4)" stroke="var(--color-primary)" strokeWidth="2" />
-        
+
         {/* Labels */}
         {keys.map((key, i) => {
-           const [x, y] = getPoint(i, 13);
-           return (
-             <text 
-               key={key} 
-               x={x} 
-               y={y} 
-               fontSize="9" 
-               textAnchor="middle" 
-               dominantBaseline="middle"
-               fill="#6B7280"
-             >
-               {PARAM_LABELS[key]}
-             </text>
-           );
+          const [x, y] = getPoint(i, 13);
+          return (
+            <text
+              key={key}
+              x={x}
+              y={y}
+              fontSize="9"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="#6B7280"
+            >
+              {PARAM_LABELS[key]}
+            </text>
+          );
         })}
       </svg>
     </div>
@@ -100,21 +100,21 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="result-view"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <div style={{ 
-          display: 'inline-flex', 
-          alignItems: 'center', 
-          gap: '0.5rem', 
-          background: 'white', 
-          padding: '0.5rem 1rem', 
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          background: 'white',
+          padding: '0.5rem 1rem',
           borderRadius: '99px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.05)' 
+          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
         }}>
           <BookOpen size={16} color="var(--color-primary)" />
           <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>じょうずかん</span>
@@ -123,19 +123,19 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       </div>
 
       {/* Main Result Card (Orange) */}
-      <div className="card" style={{ 
-        background: 'linear-gradient(135deg, #F4A261, #E76F51)', 
+      <div className="card" style={{
+        background: 'linear-gradient(135deg, #F4A261, #E76F51)',
         color: 'white',
         textAlign: 'center',
         padding: '3rem 2rem',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.3)', 
+        <div style={{
+          background: 'rgba(255,255,255,0.3)',
           backdropFilter: 'blur(4px)',
-          padding: '0.5rem 1.5rem', 
-          borderRadius: '99px', 
+          padding: '0.5rem 1.5rem',
+          borderRadius: '99px',
           display: 'inline-block',
           marginBottom: '2rem',
           fontSize: '0.9rem'
@@ -145,29 +145,29 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
 
         <div style={{ marginBottom: '1rem' }}>
           {/* Placeholder for Animal Image if exists, else Emoji */}
-          <div style={{ 
-            fontSize: '6rem', 
-            background: 'white', 
-            width: '120px', 
-            height: '120px', 
-            borderRadius: '50%', 
-            display: 'flex', 
-            alignItems: 'center', 
+          <div style={{
+            fontSize: '6rem',
+            background: 'white',
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto',
             boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
           }}>
-             <img 
-               src={`/images/${animal.id}.png`} 
-               onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerText = '🦁'; }}
-               alt={animal.name}
-               style={{ width: '80%', height: 'auto' }}
-             />
+            <img
+              src={`/images/${animal.id}.png`}
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerText = '🦁'; }}
+              alt={animal.name}
+              style={{ width: '170%', height: '170%', objectFit: 'contain' }}
+            />
           </div>
         </div>
 
         <h1 style={{ fontSize: '1.8rem', fontWeight: 'bold', lineHeight: 1.4, margin: '1rem 0', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          「{animal.catchphrase.split('」')[0].replace('「', '')}」<br/>
+          「{animal.catchphrase.split('」')[0].replace('「', '')}」<br />
           {animal.catchphrase.split('」')[1]}
         </h1>
 
@@ -205,18 +205,18 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         </h3>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           {topStrengths.map((str, i) => (
-             <span key={str} style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
-               <span style={{ color: '#F59E0B', marginRight: '4px' }}>#{i+1}</span> {str}
-             </span>
+            <span key={str} style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <span style={{ color: '#F59E0B', marginRight: '4px' }}>#{i + 1}</span> {str}
+            </span>
           ))}
         </div>
       </div>
 
       {/* Legend Story Card */}
-      <div className="card" style={{ 
-        border: '3px solid var(--color-legend-card-border)', 
+      <div className="card" style={{
+        border: '3px solid var(--color-legend-card-border)',
         background: 'var(--color-legend-bg)',
-        padding: '0' 
+        padding: '0'
       }}>
         <div style={{ padding: '1.5rem', borderBottom: '1px solid #FDE68A' }}>
           <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#B45309', textTransform: 'uppercase' }}>JOHNAN LEGEND STORY</div>
@@ -224,38 +224,38 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         </div>
 
         <div style={{ padding: '2rem' }}>
-           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-             <div style={{ 
-               background: '#F3F4F6', 
-               padding: '2rem', 
-               borderRadius: '12px', 
-               textAlign: 'center',
-               display: 'flex',
-               flexDirection: 'column',
-               justifyContent: 'center',
-               minWidth: '200px'
-             }}>
-               <div style={{ fontSize: '0.8rem', color: '#6B7280', letterSpacing: '1px' }}>NAME</div>
-               <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{animal.legendName}</div>
-               <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#6B7280', background: '#E5E7EB', padding: '2px 8px', borderRadius: '4px', display: 'inline-block', margin: '0.5rem auto 0 auto' }}>
-                 {animal.legendRole}
-               </div>
-             </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div style={{
+              background: '#F3F4F6',
+              padding: '2rem',
+              borderRadius: '12px',
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              minWidth: '200px'
+            }}>
+              <div style={{ fontSize: '0.8rem', color: '#6B7280', letterSpacing: '1px' }}>NAME</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{animal.legendName}</div>
+              <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#6B7280', background: '#E5E7EB', padding: '2px 8px', borderRadius: '4px', display: 'inline-block', margin: '0.5rem auto 0 auto' }}>
+                {animal.legendRole}
+              </div>
+            </div>
 
-             <div style={{ textAlign: 'left', flex: 1 }}>
-               {episodes.map((ep, i) => (
-                 <div key={i} style={{ marginBottom: '1.5rem' }}>
-                   <div style={{ fontWeight: 'bold', color: '#D97706', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                     <span style={{ width: '8px', height: '8px', background: '#D97706', borderRadius: '50%' }}></span>
-                     {ep.title.replace(/[【】]/g, '')}
-                   </div>
-                   <p style={{ margin: 0, fontSize: '0.95rem', color: '#374151', lineHeight: 1.8 }}>
-                     {ep.content}
-                   </p>
-                 </div>
-               ))}
-             </div>
-           </div>
+            <div style={{ textAlign: 'left', flex: 1 }}>
+              {episodes.map((ep, i) => (
+                <div key={i} style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ fontWeight: 'bold', color: '#D97706', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ width: '8px', height: '8px', background: '#D97706', borderRadius: '50%' }}></span>
+                    {ep.title.replace(/[【】]/g, '')}
+                  </div>
+                  <p style={{ margin: 0, fontSize: '0.95rem', color: '#374151', lineHeight: 1.8 }}>
+                    {ep.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Connection Box */}
@@ -264,20 +264,20 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             <Sparkles size={16} /> キミとのつながり
           </h4>
           <p style={{ fontSize: '0.9rem', color: '#4B5563', margin: 0 }}>
-             {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。
-             あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}さんの生きた証と重なるじゃろう！
+            {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。
+            あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}さんの生きた証と重なるじゃろう！
           </p>
         </div>
       </div>
 
       {/* Footer Actions */}
       <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', paddingBottom: '3rem' }}>
-         <button className="btn-outline" onClick={onRetry} style={{ padding: '0.8rem 1.5rem' }}>
-           <RefreshCw size={18} /> 最初からやる
-         </button>
-         <button className="btn-primary" style={{ fontSize: '1rem', padding: '0.8rem 2rem' }}>
-           <Share2 size={18} /> みんなに教える
-         </button>
+        <button className="btn-outline" onClick={onRetry} style={{ padding: '0.8rem 1.5rem' }}>
+          <RefreshCw size={18} /> 最初からやる
+        </button>
+        <button className="btn-primary" style={{ fontSize: '1rem', padding: '0.8rem 2rem' }}>
+          <Share2 size={18} /> みんなに教える
+        </button>
       </div>
 
       <footer style={{ marginTop: '2rem', textAlign: 'center', color: '#AAA', fontSize: '0.8rem' }}>

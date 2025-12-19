@@ -1,12 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const animals = [
-  { id: 'snake', name: 'ヘビ', image: '/images/snake.png', description: '慎重で観察力に優れたタイプ' },
-  { id: 'sheep', name: 'ヒツジ', image: '/images/sheep.png', description: '協調性があり、優しいタイプ' },
-  { id: 'pigeon', name: 'ハト', image: '/images/pigeon.png', description: '平和を愛し、穏やかなタイプ' },
-  { id: 'lion', name: 'ライオン', image: '/images/lion.png', description: 'リーダーシップがあり、勇敢なタイプ' },
-];
+import { ANIMAL_TYPES } from '../data/types';
 
 export const EncyclopediaView: React.FC = () => {
   return (
@@ -16,17 +10,17 @@ export const EncyclopediaView: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 style={{ 
-          fontSize: '2rem', 
-          fontWeight: '900', 
-          color: 'var(--color-text)', 
+        <h1 style={{
+          fontSize: '2rem',
+          fontWeight: '900',
+          color: 'var(--color-text)',
           marginBottom: '1rem',
           textAlign: 'center'
         }}>
           愉快な仲間たちの動物集
         </h1>
 
-        <p style={{ 
+        <p style={{
           textAlign: 'center',
           color: 'var(--color-text-sub)',
           marginBottom: '3rem',
@@ -35,12 +29,13 @@ export const EncyclopediaView: React.FC = () => {
           診断結果として登場する動物たちを紹介します
         </p>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-          gap: '2rem'
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: '2rem',
+          padding: '0 1rem'
         }}>
-          {animals.map((animal, index) => (
+          {ANIMAL_TYPES.map((animal, index) => (
             <motion.div
               key={animal.id}
               className="card"
@@ -61,29 +56,39 @@ export const EncyclopediaView: React.FC = () => {
                 margin: '0 auto 1rem auto',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                background: '#F9F9F9'
+                background: '#F9F9F9',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.05)'
               }}>
-                <img 
-                  src={animal.image} 
+                <img
+                  src={`/images/${animal.id}.png`}
                   alt={animal.name}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerText = '🦁'; // Emoji fallback
+                    e.currentTarget.parentElement!.style.fontSize = '4rem';
+                  }}
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
+                    width: '170%',
+                    height: '170%',
+                    objectFit: 'contain',
                   }}
                 />
               </div>
-              <h3 style={{ 
+              <h3 style={{
                 fontSize: '1.3rem',
                 color: 'var(--color-text)',
                 marginBottom: '0.5rem'
               }}>
                 {animal.name}
               </h3>
-              <p style={{ 
+              <p style={{
                 fontSize: '0.9rem',
                 color: 'var(--color-text-sub)',
-                lineHeight: 1.6
+                lineHeight: 1.6,
+                minHeight: '4.8em' // Align height for descriptions
               }}>
                 {animal.description}
               </p>
@@ -91,20 +96,20 @@ export const EncyclopediaView: React.FC = () => {
           ))}
         </div>
 
-        <div style={{ 
-          textAlign: 'center', 
+        <div style={{
+          textAlign: 'center',
           marginTop: '3rem',
           padding: '1.5rem',
           background: 'var(--color-legend-bg)',
           borderRadius: 'var(--radius-md)'
         }}>
-          <p style={{ 
+          <p style={{
             fontSize: '0.95rem',
             color: 'var(--color-text-sub)',
             lineHeight: 1.8
           }}>
-            ※ 他にも様々な動物タイプがあります。<br />
-            診断を受けて、あなたの動物を見つけてください！
+            すべての動物たちに、それぞれの個性と魅力があります。<br />
+            あなたの周りの人はどのタイプかな？
           </p>
         </div>
       </motion.div>

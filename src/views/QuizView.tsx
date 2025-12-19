@@ -7,11 +7,11 @@ type Props = {
 };
 
 const OPTIONS = [
-  { label: 'はい！', value: 5 },
-  { label: 'たぶん そう', value: 4 },
-  { label: 'どっちでもない', value: 3 },
-  { label: 'たぶん ちがう', value: 2 },
-  { label: 'いいえ！', value: 1 },
+  { value: 5, size: 60, color: '#2ECC71', borderColor: '#2ECC71' }, // Big Green
+  { value: 4, size: 45, color: 'transparent', borderColor: '#2ECC71' }, // Medium Green (Outline)
+  { value: 3, size: 40, color: 'transparent', borderColor: '#BDC3C7' }, // Small Gray
+  { value: 2, size: 45, color: 'transparent', borderColor: '#9B59B6' }, // Medium Purple (Outline)
+  { value: 1, size: 60, color: '#8E44AD', borderColor: '#8E44AD' }, // Big Purple
 ];
 
 export const QuizView: React.FC<Props> = ({ onFinish }) => {
@@ -54,21 +54,49 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
             {QUESTIONS[currentIndex].text}
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-            {OPTIONS.map((option) => (
-              <button
-                key={option.label}
-                className="btn"
-                style={{ 
-                  backgroundColor: 'var(--color-bg)', 
-                  color: 'var(--color-text)', 
-                  border: '2px solid var(--color-primary)',
-                }}
-                onClick={() => handleAnswer(option.value)}
-              >
-                {option.label}
-              </button>
-            ))}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '1rem 0'
+          }}>
+            <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>そう思う</span>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              {OPTIONS.map((option) => (
+                <motion.button
+                  key={option.value}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => handleAnswer(option.value)}
+                  style={{
+                    width: option.size,
+                    height: option.size,
+                    borderRadius: '50%',
+                    border: `3px solid ${option.borderColor}`,
+                    backgroundColor: option.color === 'transparent' ? 'transparent' : option.color,
+                    cursor: 'pointer',
+                    padding: 0,
+                    outline: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  aria-label={`Option ${option.value}`}
+                >
+                  {/* Inner circle for outlined buttons to make them easier to see being "filled" if needed, 
+                      but user asked for outline/circle style. 
+                      Let's stick to simple circles or filled circles.
+                      Ref image 4 shows: Green Outline (Big), Green Outline (Med), Gray Outline (Small), Purple Outline (Med), Purple Outline (Big).
+                      Wait, Ref 4 shows OUTLINES.
+                      Let's adjustment colors in the OPTIONS constant above to match 'Outline' style.
+                  */}
+
+                </motion.button>
+              ))}
+            </div>
+
+            <span style={{ color: '#8E44AD', fontWeight: 'bold' }}>そう思わない</span>
           </div>
         </motion.div>
       </AnimatePresence>

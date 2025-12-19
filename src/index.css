@@ -1,20 +1,35 @@
 :root {
   /* Brand Colors extracted from reference */
-  --color-bg: #FFFDF7;
-  --color-text: #333333;
-  --color-text-sub: #666666;
-  
-  --color-primary: #F0A500;  /* Gold/Yellow for main actions */
-  --color-primary-light: #F4D35E;
-  
-  --color-accent-orange: #F39C12; /* Start Button Gradient Start */
-  --color-accent-yellow: #F1C40F; /* Start Button Gradient End */
-  
-  --color-blue: #2980B9; /* Link/Highlight color */
-  
+  /* New Theme Colors (Cute/Organic) */
+  --color-bg: #EAE3CC;
+  /* Light Beige background */
+  --color-card-brown: #967D5F;
+  /* Brown Card */
+  --color-btn-yellow: #F4C430;
+  /* Mustard Yellow */
+  --color-text-white: #FFFFFF;
+  /* White Text */
+
+  --color-text: #5D4037;
+  /* Dark Brown for main text */
+  --color-text-sub: #8D7456;
+  /* Lighter Brown for sub text */
+
+  --color-primary: #F4C430;
+  /* Mapped to Yellow */
+  --color-primary-light: #F7DC6F;
+
+  --color-accent-orange: #ECF0F1;
+  /* Unused in new theme, kept for safety */
+  --color-accent-yellow: #F4C430;
+
+  --color-blue: #2980B9;
+  /* Link/Highlight color */
+
   --color-card-bg: #FFFFFF;
-  
-  --color-legend-card-border: #F0A500;
+  /* Default card bg */
+
+  --color-legend-card-border: #967D5F;
   --color-legend-bg: #FFFBE6;
 
   /* Spacing & Radius */
@@ -22,12 +37,12 @@
   --radius-lg: 20px;
   --radius-xl: 32px;
   --radius-full: 9999px;
-  
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
 
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Quicksand", "Arial Rounded MT Bold", sans-serif;
   line-height: 1.6;
   color: var(--color-text);
 }
@@ -37,16 +52,19 @@ body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  background-color: var(--color-bg);
   background-image: url('/background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+
 }
 
 #root {
   width: 100%;
-  max-width: 800px; /* Wider for the 2-col result view */
+  max-width: 800px;
+  /* Wider for the 2-col result view */
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
@@ -68,7 +86,8 @@ body {
   font-size: 1.25rem;
   font-weight: bold;
   border-radius: var(--radius-full);
-  box-shadow: 0 4px 0 #D35400; /* 3D effect border */
+  box-shadow: 0 4px 0 #D35400;
+  /* 3D effect border */
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s;
   display: inline-flex;
@@ -103,7 +122,9 @@ body {
   color: var(--color-primary);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
 }
 

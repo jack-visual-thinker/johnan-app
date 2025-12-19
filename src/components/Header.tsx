@@ -24,13 +24,17 @@ export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
 
   return (
     <>
-      <header className="app-header">
+      <header className={`app-header ${['start', 'result'].includes(currentPage) ? 'start-mode' : ''}`}>
         <div className="logo-container" onClick={() => onNavigate('start')}>
-          <img src="/logo-jouzukan.jpg" alt="じょうずかん" className="logo" />
+          {['start', 'result'].includes(currentPage) ? (
+            <img src="/logo-jouzukan-header.jpg" alt="じょうずかん" className="logo" />
+          ) : (
+            <img src="/logo-jouzukan.jpg" alt="じょうずかん" className="logo" />
+          )}
         </div>
-        
-        <button 
-          className="menu-button" 
+
+        <button
+          className="menu-button"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="メニュー"
         >

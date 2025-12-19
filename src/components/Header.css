@@ -94,13 +94,59 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Start Mode (Custom Design) */
+.start-mode.app-header {
+  background-color: var(--color-card-brown);
+  /* "This brown" from request */
+  backdrop-filter: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.start-mode .logo-text {
+  /* No longer used if replacing with image, but keeping for safety or fallback */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-btn-yellow);
+  font-family: var(--font-handwritten);
+}
+
+/* Adjust logo container in start mode to handle the new image nicely */
+.start-mode .logo-container .logo {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  /* If the image has a brown background, we might not need borderRadius, but it looks cleaner */
+}
+
+.start-mode .menu-button {
+  background-color: var(--color-btn-yellow);
+  border: none;
+  border-radius: 8px;
+  color: #5D4037;
+  /* Dark brown icon */
+}
+
+.start-mode .menu-button:hover {
+  opacity: 0.9;
 }
 
 /* Add spacing for fixed header */
