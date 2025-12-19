@@ -24,13 +24,9 @@ export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
 
   return (
     <>
-      <header className={`app-header ${['start', 'result'].includes(currentPage) ? 'start-mode' : ''}`}>
+      <header className="app-header start-mode">
         <div className="logo-container" onClick={() => onNavigate('start')}>
-          {['start', 'result'].includes(currentPage) ? (
-            <img src="/logo-jouzukan-header.jpg" alt="じょうずかん" className="logo" />
-          ) : (
-            <img src="/logo-jouzukan.jpg" alt="じょうずかん" className="logo" />
-          )}
+          <img src="/logo-jouzukan-header.jpg" alt="じょうずかん" className="logo" />
         </div>
 
         <button
