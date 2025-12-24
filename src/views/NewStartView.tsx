@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, User } from 'lucide-react';
+import startBtnImg from '../assets/start_btn.png';
+import headerTitleImg from '../assets/header_title.png';
+import { FloatingIcons } from '../components/FloatingIcons';
 
 type Props = {
   onStart: (userData: { name: string; email: string }) => void;
@@ -39,8 +42,9 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
   };
 
   return (
-    <div className="start-view" style={{ textAlign: 'center', paddingBottom: '4rem' }}>
-      <motion.div
+    <div className="start-view" style={{ textAlign: 'center', paddingBottom: '4rem', position: 'relative', overflow: 'hidden' }}>
+      <FloatingIcons />
+      <motion.div style={{ position: 'relative', zIndex: 1 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -48,20 +52,43 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
 
 
         {/* Title */}
-        <h1 style={{
-          fontSize: '2rem',
-          fontWeight: '900',
-          color: 'var(--color-text)',
-          marginBottom: '1rem',
-          lineHeight: 1.3,
-          fontFamily: 'var(--font-handwritten)',
-          transform: 'rotate(-2deg)'
-        }}>
-          あなたは <br />
-          <span style={{ color: 'var(--color-btn-yellow)', fontSize: '2.5rem' }}>どのレジェンド</span>タイプ？
-        </h1>
+        <div style={{ marginBottom: '0.5rem' }}>
+          <img 
+            src={headerTitleImg} 
+            alt="あなたはどのレジェンドタイプ？" 
+            style={{ 
+              maxWidth: '90%', 
+              width: '600px', 
+              display: 'block', 
+              margin: '0 auto',
+              transform: 'rotate(-2deg)'
+            }} 
+          />
+        </div>
 
-        <div style={{ width: '80%', height: '2px', background: 'rgba(0,0,0,0.1)', margin: '0 auto 2rem auto', borderRadius: '2px' }}></div>
+        
+        {/* Introduction Text Box */}
+        <div style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          maxWidth: '500px',
+          margin: '0 auto 2rem auto',
+          textAlign: 'left',
+          color: 'var(--color-text)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+          fontFamily: 'var(--font-body)',
+          lineHeight: '1.8'
+        }}>
+          <p style={{ marginBottom: '1rem', fontWeight: 'bold' }}>
+            JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
+          </p>
+          <p>
+            あなたの性格は、歴史上の誰に似ているかな？<br/>
+            質問に答えて、あなたの中に眠るレジェンドの魂を見つけよう！
+          </p>
+        </div>
+
 
 
         <form onSubmit={handleSubmit}>
@@ -177,22 +204,16 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
 
           </div>
 
-          {/* Start Button */}
+                    {/* Start Button */}
           <button type="submit" className="" style={{
-            background: 'var(--color-btn-yellow)',
-            color: 'var(--color-bg)',
+            background: 'transparent',
             border: 'none',
-            padding: '1rem 4rem',
-            fontSize: '1.5rem',
-            fontWeight: '900',
-            borderRadius: '2px 8px 3px 12px',
-            boxShadow: '2px 4px 0 rgba(0,0,0,0.1)',
+            padding: 0,
             cursor: 'pointer',
-            fontFamily: 'var(--font-handwritten)',
-            transform: 'rotate(-1deg)',
-            marginBottom: '2rem'
+            marginBottom: '2rem',
+            display: 'inline-block'
           }}>
-            診断スタート！
+             <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '300px', display: 'block' }} />
           </button>
         </form>
 

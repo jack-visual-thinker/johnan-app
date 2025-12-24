@@ -3,7 +3,7 @@
   /* New Theme Colors (Cute/Organic) */
   --color-bg: #EAE3CC;
   /* Light Beige background */
-  --color-card-brown: #967D5F;
+  --color-card-brown: #9A8153;
   /* Brown Card */
   --color-btn-yellow: #F4C430;
   /* Mustard Yellow */
@@ -29,7 +29,7 @@
   --color-card-bg: #FFFFFF;
   /* Default card bg */
 
-  --color-legend-card-border: #967D5F;
+  --color-legend-card-border: #9A8153;
   --color-legend-bg: #FFFBE6;
 
   /* Spacing & Radius */
@@ -54,7 +54,7 @@ body {
   min-height: 100vh;
   background-color: var(--color-bg);
   background-image: url('/background.png');
-  background-size: cover;
+  background-size: cover; background-repeat: no-repeat;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -65,7 +65,7 @@ body {
   width: 100%;
   max-width: 800px;
   /* Wider for the 2-col result view */
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   box-sizing: border-box;
 }
 
