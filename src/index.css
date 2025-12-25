@@ -142,7 +142,7 @@ input:focus {
 
 @media (max-width: 768px) {
   body {
-    background-image: url('/background_mobile2.png');
+    background-image: url('/background_mobile3.png');
     background-size: cover;
     /* Ensure mobile bg covers too */
   }
