@@ -16,11 +16,11 @@ export type ParameterKey =
   | 'Innovation';
 
 export const QUESTIONS: Question[] = [
-  { id: 1, text: '自分の意見と対立する話を聞いたとき、すぐに反論するのではなく「なぜそう思うのか」を深く理解しようとする。', image: '/images/Q2Image.png', parameterKey: 'Respect' },
+  { id: 1, text: '自分の意見と対立する話を聞いたとき、すぐに反論するのではなく「なぜそう思うのか」を深く理解しようとする。', image: '/images/Q1Image.png', parameterKey: 'Respect' },
   { id: 2, text: 'チーム全体がうまくいくなら、自分の手柄にならなくても喜んで裏方に回ることができる。', image: '/images/Q2Image.png', parameterKey: 'Respect' },
-  { id: 3, text: '忙しいときでも、周りの人が困っている様子なら、手を止めて声をかけたり手伝ったりする。', image: '/images/Q2Image.png', parameterKey: 'Warmth' },
-  { id: 4, text: '一人で黙々と作業するよりも、みんなでわいわい議論しながら作り上げるプロセスが好きだ。', image: '/images/Q2Image.png', parameterKey: 'Warmth' },
-  { id: 5, text: '一度「やる」と決めたことは、どんなに状況が悪化しても、意地でも最後までやり遂げる。', image: '/images/Q2Image.png', parameterKey: 'Responsibility' },
+  { id: 3, text: '忙しいときでも、周りの人が困っている様子なら、手を止めて声をかけたり手伝ったりする。', image: '/images/Q3Image.png', parameterKey: 'Warmth' },
+  { id: 4, text: '一人で黙々と作業するよりも、みんなでわいわい議論しながら作り上げるプロセスが好きだ。', image: '/images/Q4Image.png', parameterKey: 'Warmth' },
+  { id: 5, text: '一度「やる」と決めたことは、どんなに状況が悪化しても、意地でも最後までやり遂げる。', image: '/images/Q5Image.png', parameterKey: 'Responsibility' },
   { id: 6, text: '困難なトラブルが起きたとき、「困った」と落ち込むより、「腕の見せ所だ」と逆に燃えてくる。', image: '/images/Q2Image.png', parameterKey: 'Responsibility' },
   { id: 7, text: 'もし会社やチームが間違ったことをしようとしたら、空気を読まずに「それは違う」と言う覚悟がある。', image: '/images/Q2Image.png', parameterKey: 'UniversalTruth' },
   { id: 8, text: 'ルールや利益も大事だが、それ以上に「人としての自由」や「愛」が守られているかを重視する。', image: '/images/Q2Image.png', parameterKey: 'UniversalTruth' },
