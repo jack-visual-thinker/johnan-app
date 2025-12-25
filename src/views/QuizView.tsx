@@ -68,7 +68,7 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
 
           {/* Part 2: Question Text (Middle) */}
           <h2 style={{
-            fontSize: '1.2rem',
+            fontSize: '12px',
             margin: '0 0 2rem 0',
             lineHeight: 1.6,
             textAlign: 'center' // Ensure centered text
