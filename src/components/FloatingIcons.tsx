@@ -49,6 +49,36 @@ const mobileIcons: IconConfig[] = [
   { layer: 'background', top: '15%', right: '50%', scale: 0.5, zIndex: -5, opacity: 0.6, blur: '2px' },
   { layer: 'background', top: '50%', left: '15%', scale: 0.4, zIndex: -5, opacity: 0.5, blur: '2px' },
   { layer: 'background', top: '65%', right: '10%', scale: 0.5, zIndex: -5, opacity: 0.6, blur: '1px' },
+  // ... Previous Mobile Icons ...
+
+  // -- EXTRA DENSITY BATCH 1 (Mobile) --
+  { layer: 'midground', top: '15%', right: '40%', scale: 0.9, zIndex: 0 },
+  { layer: 'midground', top: '35%', left: '30%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '65%', right: '35%', scale: 0.8, zIndex: 0 },
+  { layer: 'midground', top: '75%', left: '40%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '90%', right: '25%', scale: 0.9, zIndex: 0 },
+  { layer: 'background', top: '8%', left: '10%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '1px' },
+  { layer: 'background', top: '25%', right: '5%', scale: 0.4, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '48%', left: '15%', scale: 0.6, zIndex: -5, opacity: 0.5, blur: '1px' },
+  { layer: 'background', top: '82%', right: '10%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '55%', left: '45%', scale: 0.4, zIndex: -5, opacity: 0.6, blur: '2px' },
+
+  // -- EXTRA DENSITY BATCH 2 (Mobile) --
+  { layer: 'midground', top: '10%', right: '25%', scale: 0.8, zIndex: 0 },
+  { layer: 'midground', top: '30%', left: '50%', scale: 0.9, zIndex: 0 },
+  { layer: 'midground', top: '52%', right: '45%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '72%', left: '10%', scale: 0.8, zIndex: 0 },
+  { layer: 'midground', top: '88%', right: '5%', scale: 0.9, zIndex: 0 },
+  { layer: 'background', top: '15%', left: '55%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '38%', right: '50%', scale: 0.4, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '62%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '78%', right: '45%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '95%', left: '35%', scale: 0.4, zIndex: -5, opacity: 0.6, blur: '3px' },
+  { layer: 'background', top: '3%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '20%', left: '20%', scale: 0.4, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '45%', right: '20%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '70%', left: '35%', scale: 0.5, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '98%', right: '15%', scale: 0.4, zIndex: -5, opacity: 0.5, blur: '2px' },
 ];
 
 // Desktop Configuration - Doubled Density & Life
@@ -75,7 +105,7 @@ const desktopIcons: IconConfig[] = [
   { layer: 'midground', top: '50%', right: '10%', scale: 1.5, zIndex: 0 },
   { layer: 'midground', top: '30%', left: '50%', scale: 1.1, zIndex: 0 },
 
-  // Background (Many small ones for vastness)
+  // ... Background (Many small ones for vastness) ...
   { layer: 'background', top: '10%', left: '35%', scale: 0.7, zIndex: -5, opacity: 0.6, blur: '2px' },
   { layer: 'background', top: '18%', right: '40%', scale: 0.6, zIndex: -5, opacity: 0.7, blur: '2px' },
   { layer: 'background', top: '28%', left: '30%', scale: 0.8, zIndex: -5, opacity: 0.5, blur: '1px' },
@@ -90,6 +120,40 @@ const desktopIcons: IconConfig[] = [
   { layer: 'background', top: '65%', right: '8%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
   { layer: 'background', top: '12%', right: '15%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
   { layer: 'background', top: '42%', left: '8%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
+
+  // -- EXTRA DENSITY BATCH 1 (Desktop) --
+  { layer: 'midground', top: '12%', right: '35%', scale: 1.2, zIndex: 0 },
+  { layer: 'midground', top: '28%', left: '35%', scale: 1.3, zIndex: 0 },
+  { layer: 'midground', top: '48%', right: '40%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '62%', left: '35%', scale: 1.4, zIndex: 0 },
+  { layer: 'midground', top: '82%', right: '30%', scale: 1.2, zIndex: 0 },
+  { layer: 'background', top: '5%', left: '15%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '25%', right: '15%', scale: 0.7, zIndex: -5, opacity: 0.5, blur: '1px' },
+  { layer: 'background', top: '45%', left: '12%', scale: 0.5, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '65%', right: '12%', scale: 0.6, zIndex: -5, opacity: 0.5, blur: '1px' },
+  { layer: 'background', top: '85%', left: '18%', scale: 0.7, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '15%', right: '20%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
+  { layer: 'background', top: '35%', left: '22%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '55%', right: '18%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '75%', left: '8%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '95%', right: '25%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
+
+  // -- EXTRA DENSITY BATCH 2 (Desktop) --
+  { layer: 'midground', top: '18%', right: '45%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '38%', left: '40%', scale: 1.3, zIndex: 0 },
+  { layer: 'midground', top: '58%', right: '50%', scale: 1.2, zIndex: 0 },
+  { layer: 'midground', top: '78%', left: '45%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '92%', right: '45%', scale: 1.3, zIndex: 0 },
+  { layer: 'background', top: '8%', left: '48%', scale: 0.6, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '22%', right: '52%', scale: 0.5, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '42%', left: '52%', scale: 0.7, zIndex: -5, opacity: 0.5, blur: '2px' },
+  { layer: 'background', top: '68%', right: '53%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '1px' },
+  { layer: 'background', top: '88%', left: '42%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
+  { layer: 'background', top: '3%', right: '8%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '28%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '1px' },
+  { layer: 'background', top: '52%', right: '5%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
+  { layer: 'background', top: '72%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.5, blur: '3px' },
+  { layer: 'background', top: '98%', right: '35%', scale: 0.6, zIndex: -5, opacity: 0.6, blur: '2px' },
 ];
 
 export const FloatingIcons: React.FC = () => {

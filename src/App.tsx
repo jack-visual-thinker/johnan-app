@@ -53,7 +53,7 @@ function App() {
       {currentPage === 'result' && <ResultView answers={answers} onRetry={handleRetry} userData={userData} />}
 
       <footer style={{ marginTop: '2rem', fontSize: '0.8rem', color: '#AAA', textAlign: 'center', paddingBottom: '2rem' }}>
-        &copy; じょうずかん
+        &copy; JOJOEN 飼育委員会
       </footer>
     </div>
   );

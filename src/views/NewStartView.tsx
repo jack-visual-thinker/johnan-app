@@ -218,9 +218,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           </button>
         </form>
 
-        <p style={{ fontSize: '0.9rem', color: '#999', marginTop: '1.5rem' }}>
-          (全部で18問 / 3分くらいでおわるよ)
-        </p>
+
       </motion.div>
     </div >
   );
