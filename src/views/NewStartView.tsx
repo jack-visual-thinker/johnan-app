@@ -235,7 +235,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            marginTop: '-20px', // Adjusted 10px down per user request (-30 -> -20)
+            marginTop: '-10px', // Adjusted another 10px down per user request (-20 -> -10)
             display: 'inline-block',
             position: 'relative',
             zIndex: 2
