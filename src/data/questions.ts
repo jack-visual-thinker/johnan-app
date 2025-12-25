@@ -30,8 +30,8 @@ export const QUESTIONS: Question[] = [
   { id: 12, text: '私利私欲のためではなく、「誰かのため」「社会のため」という大義名分があるとき、一番力が出る。', image: '/images/Q12Image.png', parameterKey: 'Mission' },
   { id: 13, text: '今の仕事や役割を与えられていることに対して、不満よりも「ありがたい」という気持ちが先に立つ。', image: '/images/Q13Image.png', parameterKey: 'HeavenlyWork' },
   { id: 14, text: '商品やサービスを作るとき、「売れるか」と同じくらい「それが世の中を良くするか」を大切にしたい。', image: '/images/Q14Image.png', parameterKey: 'HeavenlyWork' },
-  { id: 15, text: '机の上やデータの整理整頓がされていないと、どうしても気になって仕事に集中できない。', image: '/images/Q2Image.png', parameterKey: 'Thoroughness' },
-  { id: 16, text: 'なんとなく上手くいった時よりも、失敗してもその原因を完全に突き止めた時の方がスッキリする。', image: '/images/Q2Image.png', parameterKey: 'Thoroughness' },
-  { id: 17, text: '「いつも通りのやり方」を繰り返すのは退屈で、常に「もっと面白い方法はないか」と工夫したくなる。', image: '/images/Q2Image.png', parameterKey: 'Innovation' },
-  { id: 18, text: '前例のない新しいプロジェクトへの参加を求められたら、不安よりもワクワクする好奇心が勝つ。', image: '/images/Q2Image.png', parameterKey: 'Innovation' },
+  { id: 15, text: '机の上やデータの整理整頓がされていないと、どうしても気になって仕事に集中できない。', image: '/images/Q15Image.png', parameterKey: 'Thoroughness' },
+  { id: 16, text: 'なんとなく上手くいった時よりも、失敗してもその原因を完全に突き止めた時の方がスッキリする。', image: '/images/Q16Image.png', parameterKey: 'Thoroughness' },
+  { id: 17, text: '「いつも通りのやり方」を繰り返すのは退屈で、常に「もっと面白い方法はないか」と工夫したくなる。', image: '/images/Q17Image.png', parameterKey: 'Innovation' },
+  { id: 18, text: '他の人が「ありえない」と笑うような突飛なアイデアこそ、実現する価値があると思う。', image: '/images/Q18Image.png', parameterKey: 'Innovation' },
 ];
