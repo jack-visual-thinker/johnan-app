@@ -72,16 +72,17 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
         <div style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
-          padding: '1.5rem',
+          padding: '2rem', // Increased padding for better balance
           maxWidth: '500px',
-          margin: '0 auto 1rem auto',
+          margin: '0 auto 1.5rem auto', // Increased margin
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
           fontFamily: 'var(--font-body)',
-          lineHeight: '1.8'
+          lineHeight: '2.0', // Increased line height for 14px readability
+          fontSize: '14px' // User requested 14px
         }}>
-          <p style={{ marginBottom: '1rem', fontWeight: 'bold' }}>
+          <p style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
           </p>
           <p>
@@ -97,32 +98,35 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             textAlign: 'left',
             maxWidth: '400px',
             margin: '0 auto 1rem auto',
-            padding: '2rem 2rem',
+            padding: '2.5rem 2rem', // Increased vertical padding
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
             borderRadius: '24px'
           }}>
             <h2 style={{
-              fontSize: '1.4rem',
-              marginBottom: '2rem',
+              fontSize: '14px', // User requested 14px
+              marginBottom: '2.5rem', // Increased spacing
               color: 'var(--color-text-white)',
               textAlign: 'center',
-              fontFamily: 'var(--font-handwritten)'
+              fontFamily: 'var(--font-handwritten)',
+              fontWeight: 'bold',
+              letterSpacing: '0.05em' // Added spacing for elegance
             }}>
               診断をはじめる前に
             </h2>
 
             {/* Name Input */}
-            <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
               <label htmlFor="name" style={{
                 display: 'block',
-                marginBottom: '0.5rem',
+                marginBottom: '0.8rem',
                 fontWeight: 'bold',
-                fontSize: '1rem',
-                fontFamily: 'var(--font-handwritten)'
+                fontSize: '14px', // User requested 14px
+                fontFamily: 'var(--font-handwritten)',
+                opacity: 0.9
               }}>
-                <User size={20} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+                <User size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
                 おなまえ
               </label>
               <input
@@ -137,36 +141,43 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 style={{
                   width: '100%',
                   padding: '0.8rem 1rem',
-                  fontSize: '1.1rem',
+                  fontSize: '16px', // Keep input text readable (prevent zoom on mobile)
                   color: 'white',
                   background: 'transparent',
-                  border: errors.name ? '3px solid #ff6b6b' : '3px solid white',
-                  borderRadius: '16px',
+                  border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)', // Thinner border for elegance
+                  borderRadius: '12px',
                   outline: 'none',
                   transition: 'all 0.2s',
                   boxSizing: 'border-box',
                   fontFamily: 'var(--font-handwritten)'
                 }}
-                onFocus={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
-                onBlur={(e) => e.target.style.background = 'transparent'}
+                onFocus={(e) => {
+                  e.target.style.background = 'rgba(255,255,255,0.1)';
+                  e.target.style.borderColor = 'white';
+                }}
+                onBlur={(e) => {
+                  e.target.style.background = 'transparent';
+                  if (!errors.name) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+                }}
               />
               {errors.name && (
-                <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
+                <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
                   {errors.name}
                 </p>
               )}
             </div>
 
             {/* Email Input */}
-            <div style={{ marginBottom: '1rem' }}>
+            <div style={{ marginBottom: '1.5rem' }}>
               <label htmlFor="email" style={{
                 display: 'block',
-                marginBottom: '0.5rem',
+                marginBottom: '0.8rem',
                 fontWeight: 'bold',
-                fontSize: '1rem',
-                fontFamily: 'var(--font-handwritten)'
+                fontSize: '14px', // User requested 14px
+                fontFamily: 'var(--font-handwritten)',
+                opacity: 0.9
               }}>
-                <Mail size={20} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+                <Mail size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
                 メールアドレス
               </label>
               <input
@@ -181,27 +192,33 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 style={{
                   width: '100%',
                   padding: '0.8rem 1rem',
-                  fontSize: '1.1rem',
+                  fontSize: '16px', // Keep input text readable
                   color: 'white',
                   background: 'transparent',
-                  border: errors.email ? '3px solid #ff6b6b' : '3px solid white',
-                  borderRadius: '16px',
+                  border: errors.email ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
+                  borderRadius: '12px',
                   outline: 'none',
                   transition: 'all 0.2s',
                   boxSizing: 'border-box',
                   fontFamily: 'var(--font-handwritten)'
                 }}
-                onFocus={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
-                onBlur={(e) => e.target.style.background = 'transparent'}
+                onFocus={(e) => {
+                  e.target.style.background = 'rgba(255,255,255,0.1)';
+                  e.target.style.borderColor = 'white';
+                }}
+                onBlur={(e) => {
+                  e.target.style.background = 'transparent';
+                  if (!errors.email) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+                }}
               />
               {errors.email && (
-                <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
+                <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
                   {errors.email}
                 </p>
               )}
             </div>
 
-            <div style={{ width: '80%', height: '2px', background: 'rgba(255,255,255,0.3)', margin: '2rem auto 0 auto', borderRadius: '2px' }}></div>
+            <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.2)', margin: '2.5rem auto 0 auto' }}></div>
 
           </div>
 
