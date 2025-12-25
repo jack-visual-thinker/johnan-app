@@ -74,13 +74,15 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           borderRadius: '16px',
           padding: '1.2rem', // Reduced padding
           maxWidth: '500px',
-          margin: '0 auto 1rem auto', // Reduced margin
+          margin: '-20px auto -20px auto', // User requested -20px top/bottom
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
           fontFamily: 'var(--font-body)',
           lineHeight: '1.8', // Slightly reduced line height
-          fontSize: '14px'
+          fontSize: '14px',
+          zIndex: 2, // Ensure it sits correctly if overlapping
+          position: 'relative'
         }}>
           <p style={{ marginBottom: '0.8rem', fontWeight: 'bold' }}>
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
@@ -97,12 +99,14 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           <div className="card" style={{
             textAlign: 'left',
             maxWidth: '400px',
-            margin: '0 auto 0.5rem auto', // Reduced margin
+            margin: '-50px auto -50px auto', // User requested -50px top/bottom
             padding: '1.5rem', // Reduced padding
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
-            borderRadius: '24px'
+            borderRadius: '24px',
+            position: 'relative',
+            zIndex: 1
           }}>
             <h2 style={{
               fontSize: '14px',
@@ -229,7 +233,10 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            display: 'inline-block'
+            marginTop: '-50px', // User requested -50px top margin
+            display: 'inline-block',
+            position: 'relative',
+            zIndex: 2 // Ensure button is clickable over any overlap
           }}>
             <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '300px', display: 'block' }} />
           </button>
