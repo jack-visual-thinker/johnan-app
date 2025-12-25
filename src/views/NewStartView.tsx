@@ -72,15 +72,15 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
         <div style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
-          padding: '0.8rem', // Reduced from 1.2rem
-          maxWidth: '500px',
-          margin: '-5px auto -5px auto', // Relaxed negative margin to prevent overlap
+          padding: '0.8rem',
+          maxWidth: '400px', // Unify width with Brown Box (was 500px)
+          margin: '0 auto 10px auto', // Add positive margin for gap
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
           fontFamily: 'var(--font-body)',
-          lineHeight: '1.5', // Reduced from 1.8
-          fontSize: '13px', // Slightly smaller font to help compactness
+          lineHeight: '1.5',
+          fontSize: '13px',
           zIndex: 2,
           position: 'relative'
         }}>
@@ -98,10 +98,10 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
         <form onSubmit={handleSubmit}>
           <div className="card" style={{
             textAlign: 'left',
-            maxWidth: '400px',
-            margin: '0 auto 0 auto', // Removed negative margin to let it sit naturally below (or very slight negative if needed, but safe implies 0)
-            marginTop: '5px', // Small positive margin to separate slightly from white box
-            padding: '1rem', // Reduced from 1.5rem
+            maxWidth: '400px', // Matches White Box
+            margin: '0 auto 0 auto',
+            marginTop: '0', // Reset top margin as gap is handled by White Box
+            padding: '1rem',
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
