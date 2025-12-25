@@ -22,9 +22,40 @@ export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
     setMenuOpen(false);
   };
 
+  // Scroll-away logic
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // If menu is open, don't hide the header
+      if (menuOpen) return;
+
+      // Determine direction
+      // Hide if scrolling down AND we are not at the very top (buffer)
+      if (currentScrollY > lastScrollY && currentScrollY > 60) {
+        setIsVisible(false);
+      } else {
+        // Show if scrolling up
+        setIsVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY, menuOpen]);
+
+  // Force visible if menu is newly opened
+  React.useEffect(() => {
+    if (menuOpen) setIsVisible(true);
+  }, [menuOpen]);
+
   return (
     <>
-      <header className="app-header start-mode">
+      <header className={`app-header ${currentPage === 'start' ? 'start-mode' : ''} ${!isVisible ? 'hidden' : ''}`}>
         <div className="logo-container" onClick={() => onNavigate('start')}>
           <img src="/johzukan-hedder.png" alt="じょうずかん" className="logo" />
         </div>
