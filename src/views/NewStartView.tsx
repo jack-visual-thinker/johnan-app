@@ -74,7 +74,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           borderRadius: '16px',
           padding: '1.2rem', // Reduced padding
           maxWidth: '500px',
-          margin: '-20px auto -20px auto', // User requested -20px top/bottom
+          margin: '-10px auto -10px auto', // Adjusted to -10px per user request
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
@@ -99,7 +99,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           <div className="card" style={{
             textAlign: 'left',
             maxWidth: '400px',
-            margin: '-50px auto -50px auto', // User requested -50px top/bottom
+            margin: '-20px auto -20px auto', // Adjusted to -20px per user request
             padding: '1.5rem', // Reduced padding
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
@@ -233,7 +233,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            marginTop: '-50px', // User requested -50px top margin
+            marginTop: '-20px', // Adjusted to -20px per user request
             display: 'inline-block',
             position: 'relative',
             zIndex: 2 // Ensure button is clickable over any overlap
