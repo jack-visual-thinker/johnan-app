@@ -18,29 +18,33 @@ interface IconConfig {
   opacity?: number;
 }
 
-// Mobile Configuration - Optimized for Performance (Reduced Count & No Blur)
+// Mobile Configuration - Optimized & Redistributed (Top/Bottom Heavy)
 const mobileIcons: IconConfig[] = [
-  // Foreground (Big & Close) - Impactful
-  { layer: 'foreground', top: '10%', left: '5%', scale: 1.8, zIndex: 10 },
-  { layer: 'foreground', top: '40%', right: '5%', scale: 1.6, zIndex: 10 },
-  { layer: 'foreground', top: '75%', left: '8%', scale: 1.7, zIndex: 10 },
+  // --- Header Area (Top 0% - 30%) ---
+  { layer: 'foreground', top: '5%', left: '5%', scale: 1.8, zIndex: 10 },
+  { layer: 'foreground', top: '15%', right: '5%', scale: 1.6, zIndex: 10 },
+  { layer: 'midground', top: '8%', left: '35%', scale: 1.2, zIndex: 0 },
+  { layer: 'midground', top: '22%', right: '25%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '28%', left: '10%', scale: 1.3, zIndex: 0 },
+  { layer: 'background', top: '12%', right: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '2%', left: '20%', scale: 0.5, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '25%', right: '10%', scale: 0.6, zIndex: -5, opacity: 0.8 },
 
-  // Midground (Standard) - Main Distribution
-  { layer: 'midground', top: '5%', right: '10%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '20%', left: '15%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '30%', right: '25%', scale: 0.9, zIndex: 0 },
-  { layer: 'midground', top: '45%', left: '10%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '55%', right: '15%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '65%', left: '25%', scale: 1.9, zIndex: 0 },
-  { layer: 'midground', top: '85%', right: '10%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '95%', left: '20%', scale: 0.9, zIndex: 0 },
+  // --- Extreme Edges (Middle 30% - 70%) - Avoiding Center Content ---
+  { layer: 'midground', top: '40%', left: '2%', scale: 0.9, zIndex: 0 },
+  { layer: 'midground', top: '50%', right: '2%', scale: 1.0, zIndex: 0 },
+  { layer: 'background', top: '60%', left: '2%', scale: 0.6, zIndex: -5, opacity: 0.8 },
 
-  // Background (Small & Vastness) - Significantly reduced
-  { layer: 'background', top: '15%', left: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '35%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '50%', right: '5%', scale: 0.6, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '70%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '90%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.8 },
+  // --- Footer / Button Area (Bottom 70% - 100%) ---
+  { layer: 'foreground', top: '78%', left: '5%', scale: 1.7, zIndex: 10 },
+  { layer: 'foreground', top: '88%', right: '8%', scale: 1.5, zIndex: 10 },
+  { layer: 'midground', top: '75%', right: '15%', scale: 1.2, zIndex: 0 },
+  { layer: 'midground', top: '85%', left: '25%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '92%', right: '35%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '96%', left: '10%', scale: 0.9, zIndex: 0 },
+  { layer: 'background', top: '80%', left: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '90%', right: '20%', scale: 0.5, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '72%', right: '5%', scale: 0.7, zIndex: -5, opacity: 0.8 },
 ];
 
 // Desktop Configuration - Doubled Density & Life
