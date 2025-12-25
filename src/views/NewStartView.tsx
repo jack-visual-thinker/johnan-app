@@ -53,7 +53,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
 
 
         {/* Subtitle / Headline - Main Title */}
-        <div style={{ marginBottom: '0.5rem', marginTop: '1rem' }}>
+        <div style={{ marginBottom: '0', marginTop: '0' }}>
           <img
             src={headerTitleImg}
             alt="あなたはどのレジェンドタイプ？"
