@@ -72,17 +72,17 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
         <div style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
-          padding: '2rem', // Increased padding for better balance
+          padding: '1.2rem', // Reduced padding
           maxWidth: '500px',
-          margin: '0 auto 1.5rem auto', // Increased margin
+          margin: '0 auto 1rem auto', // Reduced margin
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
           fontFamily: 'var(--font-body)',
-          lineHeight: '2.0', // Increased line height for 14px readability
-          fontSize: '14px' // User requested 14px
+          lineHeight: '1.8', // Slightly reduced line height
+          fontSize: '14px'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontWeight: 'bold' }}>
+          <p style={{ marginBottom: '0.8rem', fontWeight: 'bold' }}>
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
           </p>
           <p>
@@ -97,32 +97,32 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           <div className="card" style={{
             textAlign: 'left',
             maxWidth: '400px',
-            margin: '0 auto 1rem auto',
-            padding: '2.5rem 2rem', // Increased vertical padding
+            margin: '0 auto 0.5rem auto', // Reduced margin
+            padding: '1.5rem', // Reduced padding
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
             borderRadius: '24px'
           }}>
             <h2 style={{
-              fontSize: '14px', // User requested 14px
-              marginBottom: '2.5rem', // Increased spacing
+              fontSize: '14px',
+              marginBottom: '1.5rem', // Reduced spacing
               color: 'var(--color-text-white)',
               textAlign: 'center',
               fontFamily: 'var(--font-handwritten)',
               fontWeight: 'bold',
-              letterSpacing: '0.05em' // Added spacing for elegance
+              letterSpacing: '0.05em'
             }}>
               診断をはじめる前に
             </h2>
 
             {/* Name Input */}
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '1.2rem' }}>
               <label htmlFor="name" style={{
                 display: 'block',
-                marginBottom: '0.8rem',
+                marginBottom: '0.5rem',
                 fontWeight: 'bold',
-                fontSize: '14px', // User requested 14px
+                fontSize: '14px',
                 fontFamily: 'var(--font-handwritten)',
                 opacity: 0.9
               }}>
@@ -140,11 +140,11 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 placeholder=""
                 style={{
                   width: '100%',
-                  padding: '0.8rem 1rem',
-                  fontSize: '16px', // Keep input text readable (prevent zoom on mobile)
+                  padding: '0.6rem 1rem', // Slightly compacted
+                  fontSize: '16px',
                   color: 'white',
                   background: 'transparent',
-                  border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)', // Thinner border for elegance
+                  border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
                   borderRadius: '12px',
                   outline: 'none',
                   transition: 'all 0.2s',
@@ -168,12 +168,12 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             </div>
 
             {/* Email Input */}
-            <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{ marginBottom: '0.5rem' }}>
               <label htmlFor="email" style={{
                 display: 'block',
-                marginBottom: '0.8rem',
+                marginBottom: '0.5rem',
                 fontWeight: 'bold',
-                fontSize: '14px', // User requested 14px
+                fontSize: '14px',
                 fontFamily: 'var(--font-handwritten)',
                 opacity: 0.9
               }}>
@@ -191,8 +191,8 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 placeholder=""
                 style={{
                   width: '100%',
-                  padding: '0.8rem 1rem',
-                  fontSize: '16px', // Keep input text readable
+                  padding: '0.6rem 1rem', // Slightly compacted
+                  fontSize: '16px',
                   color: 'white',
                   background: 'transparent',
                   border: errors.email ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
@@ -218,7 +218,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
               )}
             </div>
 
-            <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.2)', margin: '2.5rem auto 0 auto' }}></div>
+            {/* Horizontal line removed here */}
 
           </div>
 
