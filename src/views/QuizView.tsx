@@ -48,10 +48,31 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
           className="card"
           style={{ padding: '2rem 1rem' }} // Ensure padding inside card
         >
-          <div style={{ marginBottom: '1rem', color: '#FCC315', fontWeight: 'bold' }}>
-            Q{currentIndex + 1}
+          {/* Part 1: Illustration (Top) */}
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1.5rem'
+          }}>
+            <img
+              src={QUESTIONS[currentIndex].image}
+              alt="illustration"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '200px', // Constrain height
+                objectFit: 'contain'
+              }}
+            />
           </div>
-          <h2 style={{ fontSize: '1.2rem', margin: '0 0 2rem 0', lineHeight: 1.6 }}>
+
+          {/* Part 2: Question Text (Middle) */}
+          <h2 style={{
+            fontSize: '1.2rem',
+            margin: '0 0 2rem 0',
+            lineHeight: 1.6,
+            textAlign: 'center' // Ensure centered text
+          }}>
             {QUESTIONS[currentIndex].text}
           </h2>
 
