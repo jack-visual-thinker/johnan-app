@@ -11,22 +11,25 @@ export const EncyclopediaView: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <h1 style={{
-          fontSize: '2rem',
+          fontSize: '1.8rem',
           fontWeight: '900',
           color: 'var(--color-text)',
           marginBottom: '1rem',
           textAlign: 'center'
         }}>
-          愉快な仲間たちの動物集
+          「〇〇じょうず」な仲間たち
         </h1>
 
         <p style={{
           textAlign: 'center',
           color: 'var(--color-text-sub)',
           marginBottom: '3rem',
-          lineHeight: 1.8
+          lineHeight: 1.8,
+          maxWidth: '600px',
+          marginLeft: 'auto',
+          marginRight: 'auto'
         }}>
-          診断結果として登場する動物たちを紹介します
+          JOHNANの歴史と価値観を受けつぐ、それぞれに役割と強みをもった「じょうずな動物たち」のご紹介。
         </p>
 
         <div style={{

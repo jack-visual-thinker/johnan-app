@@ -116,9 +116,9 @@
 /* Start Mode (Custom Design) */
 .start-mode.app-header {
   background-color: var(--color-card-brown);
-  /* "This brown" from request */
   backdrop-filter: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  min-height: 60px;
 }
 
 .start-mode .logo-text {

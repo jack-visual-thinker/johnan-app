@@ -13,7 +13,7 @@ export type AnimalType = {
 export const ANIMAL_TYPES: AnimalType[] = [
   {
     id: 'lion',
-    name: 'ライオン (Lion)',
+    name: '「信念つらぬき」じょうずなライオン',
     catchphrase: '「信念つらぬき」じょうずなライオン',
     legendName: '山本 松雄さん',
     legendRole: '創業者',
@@ -27,7 +27,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'dove',
-    name: 'ハト (Dove)',
+    name: '「愛をとどけ」じょうずなハト',
     catchphrase: '「愛をとどけ」じょうずなハト',
     legendName: '山本 春子さん',
     legendRole: '愛の精神的支柱',
@@ -41,7 +41,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'eagle',
-    name: 'ワシ (Eagle)',
+    name: '「未来見通し」じょうずなワシ',
     catchphrase: '「未来見通し」じょうずなワシ',
     legendName: '山本 光世さん',
     legendRole: '変革の4代目',
@@ -55,7 +55,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'deer',
-    name: 'シカ (Deer)',
+    name: '「バランス」じょうずなシカ',
     catchphrase: '「バランス」じょうずなシカ',
     legendName: '山本 高春さん',
     legendRole: '誠実な3代目',
@@ -69,7 +69,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'bull',
-    name: 'オウシ (Bull)',
+    name: '「現場をまもり」じょうずなオウシ',
     catchphrase: '「現場をまもり」じょうずなオウシ',
     legendName: '稲葉 和雄さん',
     legendRole: '製造のレジェンド',
@@ -83,7 +83,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'ant',
-    name: 'アリ (Ant)',
+    name: '「コツコツ積み上げ」じょうずなアリ',
     catchphrase: '「コツコツ積み上げ」じょうずなアリ',
     legendName: '村上 英子さん',
     legendRole: '財務の礎を築いた人',
@@ -97,7 +97,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'serpent',
-    name: 'ヘビ (Serpent)',
+    name: '「知恵みがき」じょうずなヘビ',
     catchphrase: '「知恵みがき」じょうずなヘビ',
     legendName: '佐野 好男さん',
     legendRole: '開発のパイオニア',
@@ -111,7 +111,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'lamb',
-    name: 'コヒツジ (Lamb)',
+    name: '「愛され応援され」じょうずなコヒツジ',
     catchphrase: '「愛され応援され」じょうずなコヒツジ',
     legendName: '山本 勝さん',
     legendRole: '2代目社長',
@@ -125,7 +125,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'horse',
-    name: 'ウマ (Horse)',
+    name: '「目標駆け抜け」じょうずなウマ',
     catchphrase: '「目標駆け抜け」じょうずなウマ',
     legendName: '金光 宏さん',
     legendRole: 'デバイス事業の開拓者',
@@ -139,7 +139,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'camel',
-    name: 'ラクダ (Camel)',
+    name: '「忍耐づよく歩き」じょうずなラクダ',
     catchphrase: '「忍耐づよく歩き」じょうずなラクダ',
     legendName: '阿部 和幸さん',
     legendRole: '生産管理の守り神',
@@ -153,7 +153,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'donkey',
-    name: 'ロバ (Donkey)',
+    name: '「平和をはこび」じょうずなロバ',
     catchphrase: '「平和をはこび」じょうずなロバ',
     legendName: '井口 江利子さん & 吉岡 三重子さん',
     legendRole: '奉仕のレジェンド',
@@ -167,7 +167,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
   },
   {
     id: 'fish',
-    name: 'サカナ (Fish)',
+    name: '「奇跡をおこし」じょうずなサカナ',
     catchphrase: '「奇跡をおこし」じょうずなサカナ',
     legendName: '小泉 由佳さん & 高見 恵美さん',
     legendRole: '可能性のレジェンド',

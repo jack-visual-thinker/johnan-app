@@ -26,7 +26,7 @@ export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
     <>
       <header className="app-header start-mode">
         <div className="logo-container" onClick={() => onNavigate('start')}>
-          <img src="/logo-jouzukan-header.jpg" alt="じょうずかん" className="logo" />
+          <img src="/johzukan-hedder.png" alt="じょうずかん" className="logo" />
         </div>
 
         <button

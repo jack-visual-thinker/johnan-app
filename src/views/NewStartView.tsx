@@ -51,29 +51,30 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
       >
 
 
-        {/* Title */}
-        <div style={{ marginBottom: '0.5rem' }}>
-          <img 
-            src={headerTitleImg} 
-            alt="あなたはどのレジェンドタイプ？" 
-            style={{ 
-              maxWidth: '90%', 
-              width: '600px', 
-              display: 'block', 
+
+        {/* Subtitle / Headline - Main Title */}
+        <div style={{ marginBottom: '0.5rem', marginTop: '1rem' }}>
+          <img
+            src={headerTitleImg}
+            alt="あなたはどのレジェンドタイプ？"
+            style={{
+              maxWidth: '90%',
+              width: '700px',
+              display: 'block',
               margin: '0 auto',
               transform: 'rotate(-2deg)'
-            }} 
+            }}
           />
         </div>
 
-        
+
         {/* Introduction Text Box */}
         <div style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
           padding: '1.5rem',
           maxWidth: '500px',
-          margin: '0 auto 2rem auto',
+          margin: '0 auto 1rem auto',
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
@@ -84,7 +85,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
           </p>
           <p>
-            あなたの性格は、歴史上の誰に似ているかな？<br/>
+            あなたの性格は、歴史上の誰に似ているかな？<br />
             質問に答えて、あなたの中に眠るレジェンドの魂を見つけよう！
           </p>
         </div>
@@ -95,8 +96,8 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           <div className="card" style={{
             textAlign: 'left',
             maxWidth: '400px',
-            margin: '0 auto 2rem auto',
-            padding: '2.5rem 2rem',
+            margin: '0 auto 1rem auto',
+            padding: '2rem 2rem',
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
@@ -204,7 +205,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
 
           </div>
 
-                    {/* Start Button */}
+          {/* Start Button */}
           <button type="submit" className="" style={{
             background: 'transparent',
             border: 'none',
@@ -213,7 +214,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             marginBottom: '2rem',
             display: 'inline-block'
           }}>
-             <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '300px', display: 'block' }} />
+            <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '300px', display: 'block' }} />
           </button>
         </form>
 
