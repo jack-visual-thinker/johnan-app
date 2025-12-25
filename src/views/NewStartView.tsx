@@ -235,7 +235,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            marginTop: '-30px', // Pull button up slightly closer to the form
+            marginTop: '-20px', // Adjusted 10px down per user request (-30 -> -20)
             display: 'inline-block',
             position: 'relative',
             zIndex: 2
