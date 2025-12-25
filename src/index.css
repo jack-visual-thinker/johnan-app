@@ -53,9 +53,8 @@ body {
   justify-content: center;
   min-height: 100vh;
   background-color: var(--color-bg);
-  background-image: url('/background_desktop.png');
+  background-image: url('/background/background_desktop.png');
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -142,7 +141,7 @@ input:focus {
 
 @media (max-width: 768px) {
   body {
-    background-image: url('/background_mobile3.png');
+    background-image: url('/background/background_mobile3.png');
     background-size: cover;
     /* Ensure mobile bg covers too */
   }
