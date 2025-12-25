@@ -7,11 +7,11 @@ type Props = {
 };
 
 const OPTIONS = [
-  { value: 5, size: 60, color: '#2ECC71', borderColor: '#2ECC71' }, // Big Green
-  { value: 4, size: 45, color: 'transparent', borderColor: '#2ECC71' }, // Medium Green (Outline)
-  { value: 3, size: 40, color: 'transparent', borderColor: '#BDC3C7' }, // Small Gray
-  { value: 2, size: 45, color: 'transparent', borderColor: '#9B59B6' }, // Medium Purple (Outline)
-  { value: 1, size: 60, color: '#8E44AD', borderColor: '#8E44AD' }, // Big Purple
+  { value: 5, size: 50, color: '#FCC315' },        // So Omou (Yellow)
+  { value: 4, size: 42, color: '#C6B03B' },        // Mix 1
+  { value: 3, size: 36, color: '#909D61' },        // Mix 2 (Middle)
+  { value: 2, size: 42, color: '#5A8A88' },        // Mix 3
+  { value: 1, size: 50, color: '#005EAD' },        // So Omowanai (Blue)
 ];
 
 export const QuizView: React.FC<Props> = ({ onFinish }) => {
@@ -46,57 +46,90 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
           exit={{ x: -50, opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="card"
+          style={{ padding: '2rem 1rem' }} // Ensure padding inside card
         >
-          <div style={{ marginBottom: '1rem', color: 'var(--color-primary)', fontWeight: 'bold' }}>
+          <div style={{ marginBottom: '1rem', color: '#FCC315', fontWeight: 'bold' }}>
             Q{currentIndex + 1}
           </div>
-          <h2 style={{ fontSize: '1.4rem', margin: '0 0 2rem 0' }}>
+          <h2 style={{ fontSize: '1.2rem', margin: '0 0 2rem 0', lineHeight: 1.6 }}>
             {QUESTIONS[currentIndex].text}
           </h2>
 
           <div style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '1rem 0'
+            flexDirection: 'column', // Mobile: Stack labels and buttons if needed, or row?
+            alignItems: 'center',     // User requested horizontal single line, but need to be careful of width.
+            gap: '0.5rem',
+            width: '100%'
           }}>
-            <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>そう思う</span>
+            {/* 
+              User request: "5 buttons in a perfectly aligned horizontal line"
+              "Labels on Left and Right ends"
+            */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              maxWidth: '500px', // Prevent stretching too wide
+              margin: '0 auto',
+              gap: '0.5rem'
+            }}>
+              {/* Left Label */}
+              <div style={{
+                color: '#FCC315',
+                fontWeight: 'bold',
+                fontSize: '0.8rem',
+                width: '2.5rem',
+                textAlign: 'center',
+                lineHeight: 1.2
+              }}>
+                そう<br />思う
+              </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              {OPTIONS.map((option) => (
-                <motion.button
-                  key={option.value}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => handleAnswer(option.value)}
-                  style={{
-                    width: option.size,
-                    height: option.size,
-                    borderRadius: '50%',
-                    border: `3px solid ${option.borderColor}`,
-                    backgroundColor: option.color === 'transparent' ? 'transparent' : option.color,
-                    cursor: 'pointer',
-                    padding: 0,
-                    outline: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                  aria-label={`Option ${option.value}`}
-                >
-                  {/* Inner circle for outlined buttons to make them easier to see being "filled" if needed, 
-                      but user asked for outline/circle style. 
-                      Let's stick to simple circles or filled circles.
-                      Ref image 4 shows: Green Outline (Big), Green Outline (Med), Gray Outline (Small), Purple Outline (Med), Purple Outline (Big).
-                      Wait, Ref 4 shows OUTLINES.
-                      Let's adjustment colors in the OPTIONS constant above to match 'Outline' style.
-                  */}
+              {/* Buttons Row */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flex: 1, // Take available space
+                padding: '0 0.5rem'
+              }}>
+                {OPTIONS.map((option) => (
+                  <motion.button
+                    key={option.value}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleAnswer(option.value)}
+                    style={{
+                      width: option.size,
+                      height: option.size,
+                      minWidth: option.size, // Prevent shrinking
+                      borderRadius: '50%',
+                      border: 'none',
+                      backgroundColor: option.color,
+                      cursor: 'pointer',
+                      padding: 0,
+                      outline: 'none',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)', // Anti-gravity floating feel
+                    }}
+                    aria-label={`Option ${option.value}`}
+                  />
+                ))}
+              </div>
 
-                </motion.button>
-              ))}
+              {/* Right Label */}
+              <div style={{
+                color: '#005EAD',
+                fontWeight: 'bold',
+                fontSize: '0.8rem',
+                width: '2rem', // Fixed width
+                textAlign: 'center',
+                lineHeight: 1.2
+              }}>
+                そう<br />思わない
+              </div>
             </div>
-
-            <span style={{ color: '#8E44AD', fontWeight: 'bold' }}>そう思わない</span>
           </div>
         </motion.div>
       </AnimatePresence>
