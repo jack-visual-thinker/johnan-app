@@ -72,19 +72,19 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
         <div style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
-          padding: '1.2rem', // Reduced padding
+          padding: '0.8rem', // Reduced from 1.2rem
           maxWidth: '500px',
-          margin: '-10px auto -10px auto', // Adjusted to -10px per user request
+          margin: '-5px auto -5px auto', // Relaxed negative margin to prevent overlap
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
           fontFamily: 'var(--font-body)',
-          lineHeight: '1.8', // Slightly reduced line height
-          fontSize: '14px',
-          zIndex: 2, // Ensure it sits correctly if overlapping
+          lineHeight: '1.5', // Reduced from 1.8
+          fontSize: '13px', // Slightly smaller font to help compactness
+          zIndex: 2,
           position: 'relative'
         }}>
-          <p style={{ marginBottom: '0.8rem', fontWeight: 'bold' }}>
+          <p style={{ marginBottom: '0.4rem', fontWeight: 'bold' }}>
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
           </p>
           <p>
@@ -99,8 +99,9 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           <div className="card" style={{
             textAlign: 'left',
             maxWidth: '400px',
-            margin: '-20px auto -20px auto', // Adjusted to -20px per user request
-            padding: '1.5rem', // Reduced padding
+            margin: '0 auto 0 auto', // Removed negative margin to let it sit naturally below (or very slight negative if needed, but safe implies 0)
+            marginTop: '5px', // Small positive margin to separate slightly from white box
+            padding: '1rem', // Reduced from 1.5rem
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
             boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
@@ -110,7 +111,8 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           }}>
             <h2 style={{
               fontSize: '14px',
-              marginBottom: '1.5rem', // Reduced spacing
+              marginBottom: '0.8rem', // Reduced from 1.5rem
+              marginTop: '0.2rem',
               color: 'var(--color-text-white)',
               textAlign: 'center',
               fontFamily: 'var(--font-handwritten)',
@@ -121,16 +123,16 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             </h2>
 
             {/* Name Input */}
-            <div style={{ marginBottom: '1.2rem' }}>
+            <div style={{ marginBottom: '0.8rem' }}>
               <label htmlFor="name" style={{
                 display: 'block',
-                marginBottom: '0.5rem',
+                marginBottom: '0.3rem', // Reduced from 0.5rem
                 fontWeight: 'bold',
-                fontSize: '14px',
+                fontSize: '13px',
                 fontFamily: 'var(--font-handwritten)',
                 opacity: 0.9
               }}>
-                <User size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+                <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
                 おなまえ
               </label>
               <input
@@ -144,7 +146,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 placeholder=""
                 style={{
                   width: '100%',
-                  padding: '0.6rem 1rem', // Slightly compacted
+                  padding: '0.4rem 0.8rem', // Reduced padding
                   fontSize: '16px',
                   color: 'white',
                   background: 'transparent',
@@ -175,13 +177,13 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             <div style={{ marginBottom: '0.5rem' }}>
               <label htmlFor="email" style={{
                 display: 'block',
-                marginBottom: '0.5rem',
+                marginBottom: '0.3rem', // Reduced from 0.5rem
                 fontWeight: 'bold',
-                fontSize: '14px',
+                fontSize: '13px',
                 fontFamily: 'var(--font-handwritten)',
                 opacity: 0.9
               }}>
-                <Mail size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
+                <Mail size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
                 メールアドレス
               </label>
               <input
@@ -195,7 +197,7 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
                 placeholder=""
                 style={{
                   width: '100%',
-                  padding: '0.6rem 1rem', // Slightly compacted
+                  padding: '0.4rem 0.8rem', // Reduced padding
                   fontSize: '16px',
                   color: 'white',
                   background: 'transparent',
@@ -233,12 +235,12 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            marginTop: '-20px', // Adjusted to -20px per user request
+            marginTop: '-30px', // Pull button up slightly closer to the form
             display: 'inline-block',
             position: 'relative',
-            zIndex: 2 // Ensure button is clickable over any overlap
+            zIndex: 2
           }}>
-            <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '300px', display: 'block' }} />
+            <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '280px', display: 'block' }} />
           </button>
         </form>
 
