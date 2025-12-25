@@ -47,79 +47,38 @@ const mobileIcons: IconConfig[] = [
   { layer: 'background', top: '72%', right: '5%', scale: 0.7, zIndex: -5, opacity: 0.8 },
 ];
 
-// Desktop Configuration - Doubled Density & Life
+// Desktop Configuration - Wide Screen Optimized
 const desktopIcons: IconConfig[] = [
-  // Foreground (Very Big & Close) - Safe Zones
-  { layer: 'foreground', top: '5%', left: '5%', scale: 3.0, zIndex: 10 },
-  { layer: 'foreground', top: '40%', right: '5%', scale: 3.5, zIndex: 10 },
-  { layer: 'foreground', top: '80%', left: '5%', scale: 2.8, zIndex: 10 },
-  { layer: 'foreground', top: '20%', right: '10%', scale: 2.5, zIndex: 10 },
-  { layer: 'foreground', top: '60%', left: '10%', scale: 2.6, zIndex: 10 },
+  // --- Left Side (0% - 25%) ---
+  { layer: 'foreground', top: '10%', left: '5%', scale: 3.0, zIndex: 10 },
+  { layer: 'foreground', top: '45%', left: '2%', scale: 2.8, zIndex: 10 },
+  { layer: 'foreground', top: '80%', left: '8%', scale: 2.6, zIndex: 10 },
+  { layer: 'midground', top: '25%', left: '15%', scale: 1.5, zIndex: 0 },
+  { layer: 'midground', top: '60%', left: '12%', scale: 1.4, zIndex: 0 },
+  { layer: 'midground', top: '90%', left: '20%', scale: 1.3, zIndex: 0 },
+  { layer: 'background', top: '5%', left: '20%', scale: 0.8, zIndex: -5, opacity: 0.6 },
+  { layer: 'background', top: '35%', left: '8%', scale: 0.7, zIndex: -5, opacity: 0.5 },
+  { layer: 'background', top: '70%', left: '5%', scale: 0.6, zIndex: -5, opacity: 0.6 },
 
-  // Midground (Standard)
-  { layer: 'midground', top: '8%', right: '25%', scale: 1.4, zIndex: 0 },
-  { layer: 'midground', top: '15%', left: '20%', scale: 1.5, zIndex: 0 },
-  { layer: 'midground', top: '25%', right: '18%', scale: 1.3, zIndex: 0 },
-  { layer: 'midground', top: '35%', left: '15%', scale: 1.6, zIndex: 0 },
-  { layer: 'midground', top: '45%', right: '30%', scale: 1.4, zIndex: 0 },
-  { layer: 'midground', top: '55%', left: '25%', scale: 1.5, zIndex: 0 },
-  { layer: 'midground', top: '68%', right: '20%', scale: 1.4, zIndex: 0 },
-  { layer: 'midground', top: '78%', left: '18%', scale: 1.6, zIndex: 0 },
-  { layer: 'midground', top: '88%', right: '25%', scale: 1.3, zIndex: 0 },
-  { layer: 'midground', top: '95%', left: '30%', scale: 1.4, zIndex: 0 },
-  { layer: 'midground', top: '5%', left: '45%', scale: 1.2, zIndex: 0 },
-  { layer: 'midground', top: '50%', right: '10%', scale: 1.5, zIndex: 0 },
-  { layer: 'midground', top: '30%', left: '50%', scale: 1.1, zIndex: 0 },
+  // --- Right Side (75% - 100%) ---
+  { layer: 'foreground', top: '15%', right: '5%', scale: 3.2, zIndex: 10 },
+  { layer: 'foreground', top: '50%', right: '3%', scale: 2.9, zIndex: 10 },
+  { layer: 'foreground', top: '85%', right: '8%', scale: 2.7, zIndex: 10 },
+  { layer: 'midground', top: '30%', right: '15%', scale: 1.6, zIndex: 0 },
+  { layer: 'midground', top: '65%', right: '12%', scale: 1.5, zIndex: 0 },
+  { layer: 'midground', top: '95%', right: '20%', scale: 1.4, zIndex: 0 },
+  { layer: 'background', top: '8%', right: '22%', scale: 0.7, zIndex: -5, opacity: 0.6 },
+  { layer: 'background', top: '40%', right: '10%', scale: 0.6, zIndex: -5, opacity: 0.5 },
+  { layer: 'background', top: '75%', right: '6%', scale: 0.8, zIndex: -5, opacity: 0.6 },
 
-  // ... Background (Many small ones for vastness) ...
-  { layer: 'background', top: '10%', left: '35%', scale: 0.7, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '18%', right: '40%', scale: 0.6, zIndex: -5, opacity: 0.7 },
-  { layer: 'background', top: '28%', left: '30%', scale: 0.8, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '38%', right: '35%', scale: 0.7, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '48%', left: '40%', scale: 0.6, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '58%', right: '45%', scale: 0.8, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '68%', left: '45%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '75%', right: '50%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '85%', left: '55%', scale: 0.6, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '92%', right: '40%', scale: 0.7, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '22%', left: '10%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '65%', right: '8%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '12%', right: '15%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '42%', left: '8%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-
-  // -- EXTRA DENSITY BATCH 1 (Desktop) --
-  { layer: 'midground', top: '12%', right: '35%', scale: 1.2, zIndex: 0 },
-  { layer: 'midground', top: '28%', left: '35%', scale: 1.3, zIndex: 0 },
-  { layer: 'midground', top: '48%', right: '40%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '62%', left: '35%', scale: 1.4, zIndex: 0 },
-  { layer: 'midground', top: '82%', right: '30%', scale: 1.2, zIndex: 0 },
-  { layer: 'background', top: '5%', left: '15%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '25%', right: '15%', scale: 0.7, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '45%', left: '12%', scale: 0.5, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '65%', right: '12%', scale: 0.6, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '85%', left: '18%', scale: 0.7, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '15%', right: '20%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '35%', left: '22%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '55%', right: '18%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '75%', left: '8%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '95%', right: '25%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-
-  // -- EXTRA DENSITY BATCH 2 (Desktop) --
-  { layer: 'midground', top: '18%', right: '45%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '38%', left: '40%', scale: 1.3, zIndex: 0 },
-  { layer: 'midground', top: '58%', right: '50%', scale: 1.2, zIndex: 0 },
-  { layer: 'midground', top: '78%', left: '45%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '92%', right: '45%', scale: 1.3, zIndex: 0 },
-  { layer: 'background', top: '8%', left: '48%', scale: 0.6, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '22%', right: '52%', scale: 0.5, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '42%', left: '52%', scale: 0.7, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '68%', right: '53%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '88%', left: '42%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '3%', right: '8%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '28%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '52%', right: '5%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '72%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '98%', right: '35%', scale: 0.6, zIndex: -5, opacity: 0.6 },
+  // --- Scattered Background (Vastness, avoiding center content blockage) ---
+  { layer: 'background', top: '2%', left: '40%', scale: 0.5, zIndex: -5, opacity: 0.4 },
+  { layer: 'background', top: '95%', left: '45%', scale: 0.6, zIndex: -5, opacity: 0.4 },
+  { layer: 'midground', top: '12%', left: '30%', scale: 0.9, zIndex: -1 },
+  { layer: 'midground', top: '88%', right: '30%', scale: 1.0, zIndex: -1 },
+  // Edges of content area
+  { layer: 'background', top: '20%', left: '26%', scale: 0.7, zIndex: -5, opacity: 0.5 },
+  { layer: 'background', top: '60%', right: '26%', scale: 0.6, zIndex: -5, opacity: 0.5 },
 ];
 
 export const FloatingIcons: React.FC = () => {
@@ -139,11 +98,11 @@ export const FloatingIcons: React.FC = () => {
 
   return (
     <div style={{
-      position: 'absolute',
+      position: 'fixed',
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
+      width: '100vw',
+      height: '100vh',
       overflow: 'hidden',
       pointerEvents: 'none',
       zIndex: 0
