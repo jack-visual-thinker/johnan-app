@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, User } from 'lucide-react';
 import startBtnImg from '../assets/start_btn.png';
-import headerTitleImg from '../assets/title2.png';
+import headerTitleImg from '../assets/title3.png';
 import { FloatingIcons } from '../components/FloatingIcons';
 
 type Props = {
