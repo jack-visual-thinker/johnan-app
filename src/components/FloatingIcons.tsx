@@ -18,52 +18,29 @@ interface IconConfig {
   opacity?: number;
 }
 
-// Mobile Configuration - Doubled Density & Life
+// Mobile Configuration - Optimized for Performance (Reduced Count & No Blur)
 const mobileIcons: IconConfig[] = [
-  // Foreground (Big & Close) - Impactful but Safe
-  { layer: 'foreground', top: '12%', left: '5%', scale: 2.0, zIndex: 10 },
-  { layer: 'foreground', top: '58%', right: '2%', scale: 2.2, zIndex: 10 },
-  { layer: 'foreground', top: '85%', left: '5%', scale: 1.8, zIndex: 10 },
-  { layer: 'foreground', top: '35%', right: '5%', scale: 1.6, zIndex: 10 },
+  // Foreground (Big & Close) - Impactful
+  { layer: 'foreground', top: '10%', left: '5%', scale: 1.8, zIndex: 10 },
+  { layer: 'foreground', top: '40%', right: '5%', scale: 1.6, zIndex: 10 },
+  { layer: 'foreground', top: '75%', left: '8%', scale: 1.7, zIndex: 10 },
 
-  // Midground (Standard) - Filling the gaps
-  { layer: 'midground', top: '5%', right: '15%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '18%', left: '15%', scale: 1.2, zIndex: 0 },
-  { layer: 'midground', top: '28%', right: '20%', scale: 0.9, zIndex: 0 },
-  { layer: 'midground', top: '42%', left: '12%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '55%', right: '15%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '68%', left: '20%', scale: 1.3, zIndex: 0 },
-  { layer: 'midground', top: '80%', right: '20%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '92%', left: '25%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '2%', left: '40%', scale: 0.8, zIndex: 0 },
-  { layer: 'midground', top: '96%', right: '35%', scale: 0.9, zIndex: 0 },
+  // Midground (Standard) - Main Distribution
+  { layer: 'midground', top: '5%', right: '10%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '20%', left: '15%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '30%', right: '25%', scale: 0.9, zIndex: 0 },
+  { layer: 'midground', top: '45%', left: '10%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '55%', right: '15%', scale: 1.1, zIndex: 0 },
+  { layer: 'midground', top: '65%', left: '25%', scale: 1.9, zIndex: 0 },
+  { layer: 'midground', top: '85%', right: '10%', scale: 1.0, zIndex: 0 },
+  { layer: 'midground', top: '95%', left: '20%', scale: 0.9, zIndex: 0 },
 
-  // Background (Small & Many) - Vastness
-  { layer: 'background', top: '10%', left: '30%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '22%', right: '30%', scale: 0.5, zIndex: -5, opacity: 0.7 },
-  { layer: 'background', top: '35%', left: '40%', scale: 0.4, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '45%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '60%', left: '30%', scale: 0.6, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '75%', right: '40%', scale: 0.4, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '85%', left: '50%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '15%', right: '50%', scale: 0.5, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '50%', left: '15%', scale: 0.4, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '65%', right: '10%', scale: 0.5, zIndex: -5, opacity: 0.6 },
-  // ... Previous Mobile Icons ...
-
-  // -- EXTRA DENSITY BATCH 1 (Mobile) --
-  { layer: 'midground', top: '15%', right: '40%', scale: 0.9, zIndex: 0 },
-  { layer: 'midground', top: '35%', left: '30%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '65%', right: '35%', scale: 0.8, zIndex: 0 },
-  { layer: 'midground', top: '75%', left: '40%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '90%', right: '25%', scale: 0.9, zIndex: 0 },
-  { layer: 'background', top: '8%', left: '10%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '25%', right: '5%', scale: 0.4, zIndex: -5, opacity: 0.6 },
-  { layer: 'background', top: '48%', left: '15%', scale: 0.6, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '82%', right: '10%', scale: 0.5, zIndex: -5, opacity: 0.5 },
-  { layer: 'background', top: '55%', left: '45%', scale: 0.4, zIndex: -5, opacity: 0.6 },
-
-
+  // Background (Small & Vastness) - Significantly reduced
+  { layer: 'background', top: '15%', left: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '35%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '50%', right: '5%', scale: 0.6, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '70%', left: '5%', scale: 0.5, zIndex: -5, opacity: 0.8 },
+  { layer: 'background', top: '90%', right: '35%', scale: 0.5, zIndex: -5, opacity: 0.8 },
 ];
 
 // Desktop Configuration - Doubled Density & Life
@@ -184,7 +161,7 @@ export const FloatingIcons: React.FC = () => {
               height: '100px',
               zIndex: config.zIndex,
               opacity: config.opacity || 1,
-              filter: config.blur ? `blur(${config.blur})` : 'none',
+              // Blur removed for performance
             }}
             animate={{
               y: [0, -15, 0],
