@@ -38,6 +38,20 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
         <div className="progress-fill" style={{ width: `${progress}%` }} />
       </div>
 
+      {/* Quiz Specific Background */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: 'url(/quiz_bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        zIndex: -1
+      }} />
+
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
