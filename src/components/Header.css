@@ -40,6 +40,8 @@
 .menu-button {
   background-color: var(--color-btn-yellow);
   /* Updated to match Start Screen */
+  color: #5D4037;
+  /* Force Dark Brown for the icon lines */
   border: none;
   width: 48px;
   height: 48px;
