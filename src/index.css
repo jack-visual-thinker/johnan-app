@@ -54,7 +54,8 @@ body {
   min-height: 100vh;
   background-color: var(--color-bg);
   background-image: url('/background_desktop.png');
-  background-size: cover; background-repeat: no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -138,9 +139,11 @@ input:focus {
   outline: none;
   border-color: var(--color-primary) !important;
 }
+
 @media (max-width: 768px) {
   body {
-    background-image: url('/background_mobile.png');
-    background-size: cover; /* Ensure mobile bg covers too */
+    background-image: url('/background_mobile2.png');
+    background-size: cover;
+    /* Ensure mobile bg covers too */
   }
 }
