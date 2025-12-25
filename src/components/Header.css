@@ -8,17 +8,20 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 1.5rem;
-  background: rgba(255, 253, 247, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: var(--color-card-brown);
+  /* Updated to match Start Screen (Brown) */
+  backdrop-filter: none;
+  box-shadow: none;
   z-index: 1000;
-  transition: transform 0.3s ease-in-out; /* Smooth slide */
+  transition: transform 0.3s ease-in-out;
+  /* Smooth slide */
 }
 
 /* Hide header by moving it up out of view */
 .app-header.hidden {
   transform: translateY(-100%);
-  box-shadow: none; /* Remove shadow when hidden to avoid weird artifacts */
+  box-shadow: none;
+  /* Remove shadow when hidden to avoid weird artifacts */
 }
 
 .logo-container {
@@ -35,8 +38,9 @@
 }
 
 .menu-button {
-  background: none;
-  border: 2px solid var(--color-text);
+  background-color: var(--color-btn-yellow);
+  /* Updated to match Start Screen */
+  border: none;
   width: 48px;
   height: 48px;
   border-radius: 8px;
@@ -48,8 +52,7 @@
 }
 
 .menu-button:hover {
-  background: var(--color-primary-light);
-  border-color: var(--color-primary);
+  opacity: 0.9;
 }
 
 .menu-overlay {
