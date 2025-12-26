@@ -321,7 +321,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           {/* Legend Image */}
           <div style={{
-            width: '100px', height: '100px',
+            width: '140px', height: '140px',
             background: '#FEF3C7', borderRadius: '50%',
             margin: '0 auto 1rem auto',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -331,7 +331,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             <img
               src="/yamamoto_matsuo.png"
               alt="Legend"
-              style={{ width: '130%', height: '130%', objectFit: 'cover' }}
+              style={{ width: '180%', height: '180%', objectFit: 'cover' }}
             />
           </div>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{animal.legendName}</div>
