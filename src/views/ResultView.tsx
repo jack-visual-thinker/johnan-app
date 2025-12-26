@@ -38,7 +38,7 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
 
   return (
     <div style={{ width: '100%', maxWidth: '280px', margin: '0 auto' }}>
-      <svg viewBox="0 0 200 200" style={{ overflow: 'visible' }}>
+      <svg viewBox="0 0 200 200" style={{ overflow: 'visible', display: 'block', margin: '0 auto' }}>
         {/* Background Grid: 20, 15, 10, 5 */}
         <polygon points={bgPoints} fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="1" />
         {[15, 10, 5].map(scale => (
@@ -246,7 +246,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             justifyContent: 'center',
             boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
           }}>
-            <div style={{ width: '90%' }}>
+            <div style={{ width: '90%', display: 'flex', justifyContent: 'center' }}>
               <RadarChart data={scores} />
             </div>
           </div>
