@@ -18,9 +18,10 @@ type Props = {
 const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
   const keys = Object.keys(data) as ParameterKey[];
   const numPoints = keys.length;
-  const radius = 70; // Slightly reduced radius to fit labels
+  // Further reduce chart radius to make room for labels inside the 200x200 viewbox
+  const radius = 60;
   const center = 100;
-  const maxScore = 20; // New max score for scaling
+  const maxScore = 20;
 
   const getPoint = (index: number, value: number) => {
     // Cap value at maxScore for visual consistency
@@ -52,10 +53,10 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
         {/* Data */}
         <polygon points={points} fill="rgba(240, 165, 0, 0.4)" stroke="var(--color-primary)" strokeWidth="2" />
 
-        {/* Labels - Pushed further out */}
+        {/* Labels - Positioned closer to center to stay within bounds */}
         {keys.map((key, i) => {
           const angle = (Math.PI * 2 * i) / numPoints - Math.PI / 2;
-          // Distance for label: radius * 1.35
+          // Distance for label optimized to fit inside the circle container
           const labelR = radius * 1.35;
           const x = center + labelR * Math.cos(angle);
           const y = center + labelR * Math.sin(angle);
@@ -65,7 +66,7 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
               key={key}
               x={x}
               y={y}
-              fontSize="8"
+              fontSize="8" // Keep small font size
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#6B7280"
