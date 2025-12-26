@@ -18,26 +18,29 @@ type Props = {
 const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
   const keys = Object.keys(data) as ParameterKey[];
   const numPoints = keys.length;
-  const radius = 80; // Smaller radius to fit design
+  const radius = 70; // Slightly reduced radius to fit labels
   const center = 100;
+  const maxScore = 20; // New max score for scaling
 
   const getPoint = (index: number, value: number) => {
+    // Cap value at maxScore for visual consistency
+    const cappedValue = Math.min(Math.max(value, 0), maxScore);
     const angle = (Math.PI * 2 * index) / numPoints - Math.PI / 2;
-    const r = (value / 10) * radius;
+    const r = (cappedValue / maxScore) * radius;
     const x = center + r * Math.cos(angle);
     const y = center + r * Math.sin(angle);
     return [x, y];
   };
 
   const points = keys.map((key, i) => getPoint(i, data[key])).map(p => p.join(',')).join(' ');
-  const bgPoints = keys.map((_, i) => getPoint(i, 10)).map(p => p.join(',')).join(' ');
+  const bgPoints = keys.map((_, i) => getPoint(i, maxScore)).map(p => p.join(',')).join(' ');
 
   return (
     <div style={{ width: '100%', maxWidth: '280px', margin: '0 auto' }}>
       <svg viewBox="0 0 200 200" style={{ overflow: 'visible' }}>
-        {/* Background Grid */}
+        {/* Background Grid: 20, 15, 10, 5 */}
         <polygon points={bgPoints} fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="1" />
-        {[7, 4].map(scale => (
+        {[15, 10, 5].map(scale => (
           <polygon
             key={scale}
             points={keys.map((_, i) => getPoint(i, scale)).map(p => p.join(',')).join(' ')}
@@ -49,18 +52,24 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
         {/* Data */}
         <polygon points={points} fill="rgba(240, 165, 0, 0.4)" stroke="var(--color-primary)" strokeWidth="2" />
 
-        {/* Labels */}
+        {/* Labels - Pushed further out */}
         {keys.map((key, i) => {
-          const [x, y] = getPoint(i, 13);
+          const angle = (Math.PI * 2 * i) / numPoints - Math.PI / 2;
+          // Distance for label: radius * 1.35
+          const labelR = radius * 1.35;
+          const x = center + labelR * Math.cos(angle);
+          const y = center + labelR * Math.sin(angle);
+
           return (
             <text
               key={key}
               x={x}
               y={y}
-              fontSize="9"
+              fontSize="8"
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#6B7280"
+              style={{ fontWeight: 500 }}
             >
               {PARAM_LABELS[key]}
             </text>
