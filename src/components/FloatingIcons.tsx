@@ -19,32 +19,21 @@ interface IconConfig {
 }
 
 // Mobile Configuration - Optimized & Redistributed (Top/Bottom Heavy)
+// Mobile Configuration - Heavily Reduced for Performance (Approx. 8 icons)
 const mobileIcons: IconConfig[] = [
-  // --- Header Area (Top 0% - 30%) ---
+  // --- Header Area ---
   { layer: 'foreground', top: '5%', left: '5%', scale: 1.8, zIndex: 10 },
-  { layer: 'foreground', top: '15%', right: '5%', scale: 1.6, zIndex: 10 },
-  { layer: 'midground', top: '8%', left: '35%', scale: 1.2, zIndex: 0 },
   { layer: 'midground', top: '22%', right: '25%', scale: 1.1, zIndex: 0 },
-  { layer: 'midground', top: '28%', left: '10%', scale: 1.3, zIndex: 0 },
   { layer: 'background', top: '12%', right: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '2%', left: '20%', scale: 0.5, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '25%', right: '10%', scale: 0.6, zIndex: -5, opacity: 0.8 },
 
-  // --- Extreme Edges (Middle 30% - 70%) - Avoiding Center Content ---
-  { layer: 'midground', top: '40%', left: '2%', scale: 0.9, zIndex: 0 },
+  // --- Middle Area (Sparse) ---
   { layer: 'midground', top: '50%', right: '2%', scale: 1.0, zIndex: 0 },
-  { layer: 'background', top: '60%', left: '2%', scale: 0.6, zIndex: -5, opacity: 0.8 },
 
-  // --- Footer / Button Area (Bottom 70% - 100%) ---
+  // --- Footer Area ---
   { layer: 'foreground', top: '78%', left: '5%', scale: 1.7, zIndex: 10 },
-  { layer: 'foreground', top: '88%', right: '8%', scale: 1.5, zIndex: 10 },
-  { layer: 'midground', top: '75%', right: '15%', scale: 1.2, zIndex: 0 },
-  { layer: 'midground', top: '85%', left: '25%', scale: 1.1, zIndex: 0 },
   { layer: 'midground', top: '92%', right: '35%', scale: 1.0, zIndex: 0 },
-  { layer: 'midground', top: '96%', left: '10%', scale: 0.9, zIndex: 0 },
   { layer: 'background', top: '80%', left: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
   { layer: 'background', top: '90%', right: '20%', scale: 0.5, zIndex: -5, opacity: 0.8 },
-  { layer: 'background', top: '72%', right: '5%', scale: 0.7, zIndex: -5, opacity: 0.8 },
 ];
 
 // Desktop Configuration - Wide Screen Optimized
