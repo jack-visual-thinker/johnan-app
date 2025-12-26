@@ -319,15 +319,20 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          {/* Legend Image Placeholder */}
+          {/* Legend Image */}
           <div style={{
-            width: '120px', height: '120px',
-            background: '#FEF3C7', borderRadius: '12px',
+            width: '100px', height: '100px',
+            background: '#FEF3C7', borderRadius: '50%',
             margin: '0 auto 1rem auto',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '2rem', border: '4px solid white', boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+            border: '4px solid white', boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            overflow: 'hidden'
           }}>
-            👑
+            <img
+              src="/yamamoto_matsuo.png"
+              alt="Legend"
+              style={{ width: '130%', height: '130%', objectFit: 'cover' }}
+            />
           </div>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{animal.legendName}</div>
           <div style={{ fontSize: '0.9rem', color: '#92400E' }}>{animal.legendRole}</div>
