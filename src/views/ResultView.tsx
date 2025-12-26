@@ -70,6 +70,8 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
 
 export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   const [loading, setLoading] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
+
   // userData will be used in Phase 2 for email functionality
   console.log("User data:", userData);
 
@@ -82,7 +84,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
 
   const episodes = LEGEND_EPISODES[animal.id] || [];
 
-  // Sort scores to find top 3 strengths
+  // Sort scores to find top 3 strengths for the "Connection" text
   const topStrengths = useMemo(() => {
     return (Object.entries(scores) as [ParameterKey, number][])
       .sort((a, b) => b[1] - a[1])
@@ -99,190 +101,261 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
     return <LoadingView />;
   }
 
+  // Helper for 3-part title
+  // animal.name format: 「Catchphrase」じょうずなAnimalName
+  const nameParts = animal.name.split('じょうずな');
+  const catchphraseMain = nameParts[0] ? nameParts[0].replace(/[「」]/g, '') : '';
+  const animalNameOnly = nameParts[1] || animal.name;
+
   return (
     <motion.div
       className="result-view"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      style={{ paddingBottom: '4rem', color: '#5D4037' }}
     >
-      {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      {/* ① 導入メッセージ (Intro Message) */}
+      <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem' }}>
         <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
+          display: 'inline-block',
           background: 'white',
-          padding: '0.5rem 1rem',
-          borderRadius: '99px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+          padding: '0.8rem 1.5rem',
+          borderRadius: '24px',
+          fontWeight: 'bold',
+          fontSize: '1rem',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          position: 'relative'
         }}>
-          <BookOpen size={16} color="var(--color-primary)" />
-          <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>じょうずかん</span>
-          <span style={{ fontSize: '0.8rem', background: '#F3F4F6', padding: '2px 8px', borderRadius: '4px', color: '#666' }}>JOHNAN動物診断</span>
+          あなたのタイプは...
+          {/* Simple balloon pointer */}
+          <div style={{
+            position: 'absolute',
+            bottom: '-8px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 0,
+            height: 0,
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: '8px solid white'
+          }} />
         </div>
       </div>
 
-      {/* Main Result Card (Orange) */}
-      <div className="card" style={{
-        background: 'linear-gradient(135deg, #F4A261, #E76F51)',
-        color: 'white',
-        textAlign: 'center',
-        padding: '3rem 2rem',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          background: 'rgba(255,255,255,0.3)',
-          backdropFilter: 'blur(4px)',
-          padding: '0.5rem 1.5rem',
-          borderRadius: '99px',
-          display: 'inline-block',
-          marginBottom: '2rem',
-          fontSize: '0.9rem'
-        }}>
-          あなたのタイプは...
-        </div>
-
-        <div style={{ marginBottom: '1rem' }}>
-          {/* Placeholder for Animal Image if exists, else Emoji */}
+      {/* ② メインビジュアル / パワーチャート (Flip Card) */}
+      <div
+        style={{ perspective: '1000px', cursor: 'pointer', marginBottom: '2rem' }}
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        <motion.div
+          style={{
+            position: 'relative',
+            width: '280px',
+            height: '280px',
+            margin: '0 auto',
+            transformStyle: 'preserve-3d',
+          }}
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Front: Animal Image */}
           <div style={{
-            fontSize: '6rem',
-            background: 'white',
-            width: '120px',
-            height: '120px',
-            borderRadius: '50%',
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backfaceVisibility: 'hidden',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto',
-            boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
+            justifyContent: 'center'
           }}>
             <img
               src={`/images/${animal.id}.png`}
               onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerText = '🦁'; }}
               alt={animal.name}
-              style={{ width: '170%', height: '170%', objectFit: 'contain' }}
+              style={{
+                width: '180%', // Approximating 2x size relative to container
+                height: '180%',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.15))'
+              }}
             />
+            {/* Hint to flip */}
+            <div style={{
+              position: 'absolute',
+              bottom: '-20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontSize: '0.8rem',
+              opacity: 0.7,
+              whiteSpace: 'nowrap'
+            }}>
+              <RefreshCw size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> タップで能力を見る
+            </div>
+          </div>
+
+          {/* Back: Power Chart */}
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ width: '90%' }}>
+              <RadarChart data={scores} />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ③ 診断結果タイトル (3段構成) */}
+      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#8D7456', marginBottom: '0.2rem' }}>
+          『{catchphraseMain}』
+        </div>
+        <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#5D4037', marginBottom: '0.2rem' }}>
+          じょうずな
+        </div>
+        <div style={{ fontSize: '2.4rem', fontWeight: '900', color: '#D97706', lineHeight: 1 }}>
+          {animalNameOnly}
+        </div>
+      </div>
+
+      {/* ④ 上図鑑博士からの解説 (Doctor) */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
+        {/* Doctor Placeholder */}
+        <div style={{ flexShrink: 0 }}>
+          <div style={{
+            width: '80px', height: '80px',
+            background: '#E5E7EB', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '2rem', border: '3px solid white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+          }}>
+            👴
           </div>
         </div>
-
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 'bold', lineHeight: 1.4, margin: '1rem 0', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          「{animal.catchphrase.split('」')[0].replace('「', '')}」<br />
-          {animal.catchphrase.split('」')[1]}
-        </h1>
-
-        <Quote size={32} style={{ opacity: 0.8, marginTop: '1rem' }} />
-      </div>
-
-      {/* Description Text */}
-      <div style={{ textAlign: 'center', margin: '2rem auto', maxWidth: '600px', lineHeight: 2, color: '#4B5563' }}>
-        {animal.description}
-      </div>
-
-      {/* Details Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-        {/* Chart */}
-        <div className="card" style={{ padding: '2rem 1rem' }}>
-          <h3 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>パワーチャート</h3>
-          <RadarChart data={scores} />
+        <div style={{
+          background: 'white',
+          padding: '1.2rem',
+          borderRadius: '0 24px 24px 24px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+          flex: 1
+        }}>
+          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#9CA3AF' }}>じょうずかん博士</h4>
+          <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>{comment}</p>
         </div>
+      </div>
 
-        {/* Doctor Comment */}
-        <div className="card" style={{ background: '#F8F9FA', border: '2px solid #E9ECEF' }}>
-          <h3 style={{ textAlign: 'center', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '1.5rem' }}>👴</span> じょじょ博士のひとこと
+      {/* ⑤ 似ているレジェンド紹介 (Legend) */}
+      <div style={{ marginBottom: '3rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <h3 style={{
+            display: 'inline-block',
+            borderBottom: '2px solid #D97706',
+            paddingBottom: '0.5rem',
+            color: '#5D4037'
+          }}>
+            似ているレジェンド
           </h3>
-          <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', border: '1px solid #E5E7EB' }}>
-            <p style={{ margin: 0, lineHeight: 1.8, color: '#4B5563' }}>{comment}</p>
-          </div>
         </div>
-      </div>
 
-      {/* Strengths */}
-      <div className="card" style={{ textAlign: 'center' }}>
-        <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#F59E0B' }}>
-          <Sparkles size={20} /> あなたのすごいところ <Sparkles size={20} />
-        </h3>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          {topStrengths.map((str, i) => (
-            <span key={str} style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
-              <span style={{ color: '#F59E0B', marginRight: '4px' }}>#{i + 1}</span> {str}
-            </span>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          {/* Legend Image Placeholder */}
+          <div style={{
+            width: '120px', height: '120px',
+            background: '#FEF3C7', borderRadius: '12px',
+            margin: '0 auto 1rem auto',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '2rem', border: '4px solid white', boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+          }}>
+            👑
+          </div>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{animal.legendName}</div>
+          <div style={{ fontSize: '0.9rem', color: '#92400E' }}>{animal.legendRole}</div>
+        </div>
+
+        <div style={{ maxWidth: '90%', margin: '0 auto' }}>
+          {episodes.map((ep, i) => (
+            <div key={i} style={{ marginBottom: '1rem', background: 'rgba(255,255,255,0.6)', padding: '1rem', borderRadius: '12px' }}>
+              <div style={{ fontWeight: 'bold', color: '#D97706', marginBottom: '0.3rem' }}>
+                {ep.title.replace(/[【】]/g, '')}
+              </div>
+              <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: 1.6 }}>{ep.content}</p>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Legend Story Card */}
-      <div className="card" style={{
-        border: '3px solid var(--color-legend-card-border)',
-        background: 'var(--color-legend-bg)',
-        padding: '0'
-      }}>
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid #FDE68A' }}>
-          <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#B45309', textTransform: 'uppercase' }}>JOHNAN LEGEND STORY</div>
-          <h3 style={{ color: '#D97706', fontSize: '1.3rem' }}>あなたと似ているレジェンド</h3>
-        </div>
-
-        <div style={{ padding: '2rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div style={{
-              background: '#F3F4F6',
-              padding: '2rem',
-              borderRadius: '12px',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              minWidth: '200px'
-            }}>
-              <div style={{ fontSize: '0.8rem', color: '#6B7280', letterSpacing: '1px' }}>NAME</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{animal.legendName}</div>
-              <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#6B7280', background: '#E5E7EB', padding: '2px 8px', borderRadius: '4px', display: 'inline-block', margin: '0.5rem auto 0 auto' }}>
-                {animal.legendRole}
-              </div>
-            </div>
-
-            <div style={{ textAlign: 'left', flex: 1 }}>
-              {episodes.map((ep, i) => (
-                <div key={i} style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ fontWeight: 'bold', color: '#D97706', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ width: '8px', height: '8px', background: '#D97706', borderRadius: '50%' }}></span>
-                    {ep.title.replace(/[【】]/g, '')}
-                  </div>
-                  <p style={{ margin: 0, fontSize: '0.95rem', color: '#374151', lineHeight: 1.8 }}>
-                    {ep.content}
-                  </p>
-                </div>
-              ))}
-            </div>
+      {/* ⑥ キミとの繋がり (Connection) */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', flexDirection: 'row-reverse' }}>
+        <div style={{ flexShrink: 0 }}>
+          <div style={{
+            width: '80px', height: '80px',
+            background: '#E5E7EB', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '2rem', border: '3px solid white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+          }}>
+            👴
           </div>
         </div>
-
-        {/* Connection Box */}
-        <div style={{ background: '#FFF7ED', padding: '1.5rem', margin: '1rem', borderRadius: '12px', border: '1px dashed #FDBA74' }}>
-          <h4 style={{ color: '#C05621', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Sparkles size={16} /> キミとのつながり
-          </h4>
-          <p style={{ fontSize: '0.9rem', color: '#4B5563', margin: 0 }}>
-            {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。
+        <div style={{
+          background: '#FFF7ED',
+          padding: '1.2rem',
+          borderRadius: '24px 0 24px 24px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+          flex: 1,
+          border: '1px solid #FDBA74'
+        }}>
+          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#C05621' }}>キミとの繋がり</h4>
+          <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>
+            {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。<br />
             あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}さんの生きた証と重なるじゃろう！
           </p>
         </div>
       </div>
 
-      {/* Footer Actions */}
-      <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', paddingBottom: '3rem' }}>
-        <button className="btn-outline" onClick={onRetry} style={{ padding: '0.8rem 1.5rem' }}>
-          <RefreshCw size={18} /> 最初からやる
+      {/* ⑦ アクションボタン (Actions) */}
+      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+        <button
+          className="btn-primary"
+          style={{
+            width: '280px',
+            padding: '1rem',
+            fontSize: '1rem',
+            display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem',
+            boxShadow: '0 4px 0 #B45309'
+          }}
+        >
+          <BookOpen size={20} /> 画像を保存（模様を作る）
         </button>
-        <button className="btn-primary" style={{ fontSize: '1rem', padding: '0.8rem 2rem' }}>
-          <Share2 size={18} /> みんなに教える
+
+        <button
+          className="btn-outline"
+          style={{
+            width: '280px',
+            padding: '0.8rem',
+            background: 'rgba(255,255,255,0.8)'
+          }}
+        >
+          <Share2 size={20} /> SNSでシェアする
+        </button>
+
+        <button
+          onClick={onRetry}
+          style={{
+            background: 'none', border: 'none', textDecoration: 'underline', color: '#666', marginTop: '1rem', cursor: 'pointer'
+          }}
+        >
+          トップに戻る
         </button>
       </div>
 
-      <footer style={{ marginTop: '2rem', textAlign: 'center', color: '#AAA', fontSize: '0.8rem' }}>
-        &copy; JOJOEN 飼育委員会
-      </footer>
     </motion.div>
   );
 };
