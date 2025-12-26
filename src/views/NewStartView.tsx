@@ -42,21 +42,66 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
   };
 
   return (
-    <div className="start-view" style={{ textAlign: 'center', paddingBottom: '4rem', position: 'relative', overflow: 'hidden' }}>
+    <div className="start-view start-view-container" style={{ textAlign: 'center', paddingBottom: '4rem', position: 'relative', overflowX: 'hidden', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <style>{`
+        @media (min-width: 768px) {
+          .start-view-container {
+            padding-bottom: 0 !important;
+            padding-top: 0 !important;
+            height: 100vh;
+            overflow-y: hidden;
+            justify-content: center;
+          }
+          .title-logo-img {
+            width: 500px !important;
+            margin-bottom: -30px !important;
+          }
+          .intro-box {
+            max-width: 600px !important;
+            margin-bottom: 15px !important;
+            padding: 0.8rem 1.5rem !important;
+          }
+          .form-card {
+            margin-top: 0 !important;
+            padding: 0.8rem 1.5rem !important;
+            max-width: 600px !important;
+          }
+          .start-btn {
+            margin-top: 5px !important;
+             margin-bottom: 0 !important;
+             width: 240px !important;
+          }
+          .input-row {
+            display: flex;
+            gap: 1rem;
+          }
+          .input-group {
+            flex: 1;
+            margin-bottom: 0 !important;
+          }
+          .input-label {
+            font-size: 14px !important;
+            margin-bottom: 0.2rem !important;
+          }
+          .form-title {
+             margin-bottom: 0.5rem !important;
+          }
+        }
+      `}</style>
+
       <FloatingIcons />
-      <motion.div style={{ position: 'relative', zIndex: 1 }}
+      <motion.div style={{ position: 'relative', zIndex: 1, width: '100%' }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-
-
 
         {/* Subtitle / Headline - Main Title */}
         <div style={{ marginBottom: '-50px', marginTop: '-50px' }}>
           <img
             src={headerTitleImg}
             alt="あなたはどのレジェンドタイプ？"
+            className="title-logo-img"
             style={{
               maxWidth: '90%',
               width: '700px',
@@ -69,12 +114,12 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
 
 
         {/* Introduction Text Box */}
-        <div style={{
+        <div className="intro-box" style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
           padding: '0.8rem',
-          maxWidth: '400px', // Unify width with Brown Box (was 500px)
-          margin: '0 auto 10px auto', // Add positive margin for gap
+          maxWidth: '400px',
+          margin: '0 auto 10px auto',
           textAlign: 'left',
           color: 'var(--color-text)',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
@@ -93,14 +138,12 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
           </p>
         </div>
 
-
-
         <form onSubmit={handleSubmit}>
-          <div className="card" style={{
+          <div className="card form-card" style={{
             textAlign: 'left',
-            maxWidth: '400px', // Matches White Box
+            maxWidth: '400px',
             margin: '0 auto 0 auto',
-            marginTop: '0', // Reset top margin as gap is handled by White Box
+            marginTop: '0',
             padding: '1rem',
             backgroundColor: 'var(--color-card-brown)',
             color: 'var(--color-text-white)',
@@ -109,9 +152,9 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             position: 'relative',
             zIndex: 1
           }}>
-            <h2 style={{
+            <h2 className="form-title" style={{
               fontSize: '14px',
-              marginBottom: '0.8rem', // Reduced from 1.5rem
+              marginBottom: '0.8rem',
               marginTop: '0.2rem',
               color: 'var(--color-text-white)',
               textAlign: 'center',
@@ -122,109 +165,109 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
               診断をはじめる前に
             </h2>
 
-            {/* Name Input */}
-            <div style={{ marginBottom: '0.8rem' }}>
-              <label htmlFor="name" style={{
-                display: 'block',
-                marginBottom: '0.3rem', // Reduced from 0.5rem
-                fontWeight: 'bold',
-                fontSize: '13px',
-                fontFamily: 'var(--font-handwritten)',
-                opacity: 0.9
-              }}>
-                <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
-                おなまえ
-              </label>
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  if (errors.name) setErrors({ ...errors, name: undefined });
-                }}
-                placeholder=""
-                style={{
-                  width: '100%',
-                  padding: '0.4rem 0.8rem', // Reduced padding
-                  fontSize: '16px',
-                  color: 'white',
-                  background: 'transparent',
-                  border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
-                  borderRadius: '12px',
-                  outline: 'none',
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  fontFamily: 'var(--font-handwritten)'
-                }}
-                onFocus={(e) => {
-                  e.target.style.background = 'rgba(255,255,255,0.1)';
-                  e.target.style.borderColor = 'white';
-                }}
-                onBlur={(e) => {
-                  e.target.style.background = 'transparent';
-                  if (!errors.name) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
-                }}
-              />
-              {errors.name && (
-                <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
-                  {errors.name}
-                </p>
-              )}
-            </div>
+            <div className="input-row">
+              {/* Name Input */}
+              <div className="input-group" style={{ marginBottom: '0.8rem' }}>
+                <label htmlFor="name" className="input-label" style={{
+                  display: 'block',
+                  marginBottom: '0.3rem',
+                  fontWeight: 'bold',
+                  fontSize: '13px',
+                  fontFamily: 'var(--font-handwritten)',
+                  opacity: 0.9
+                }}>
+                  <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
+                  おなまえ
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (errors.name) setErrors({ ...errors, name: undefined });
+                  }}
+                  placeholder=""
+                  style={{
+                    width: '100%',
+                    padding: '0.4rem 0.8rem',
+                    fontSize: '16px',
+                    color: 'white',
+                    background: 'transparent',
+                    border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
+                    borderRadius: '12px',
+                    outline: 'none',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box',
+                    fontFamily: 'var(--font-handwritten)'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.background = 'rgba(255,255,255,0.1)';
+                    e.target.style.borderColor = 'white';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.background = 'transparent';
+                    if (!errors.name) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+                  }}
+                />
+                {errors.name && (
+                  <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
+                    {errors.name}
+                  </p>
+                )}
+              </div>
 
-            {/* Email Input */}
-            <div style={{ marginBottom: '0.5rem' }}>
-              <label htmlFor="email" style={{
-                display: 'block',
-                marginBottom: '0.3rem', // Reduced from 0.5rem
-                fontWeight: 'bold',
-                fontSize: '13px',
-                fontFamily: 'var(--font-handwritten)',
-                opacity: 0.9
-              }}>
-                <Mail size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
-                メールアドレス
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (errors.email) setErrors({ ...errors, email: undefined });
-                }}
-                placeholder=""
-                style={{
-                  width: '100%',
-                  padding: '0.4rem 0.8rem', // Reduced padding
-                  fontSize: '16px',
-                  color: 'white',
-                  background: 'transparent',
-                  border: errors.email ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
-                  borderRadius: '12px',
-                  outline: 'none',
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  fontFamily: 'var(--font-handwritten)'
-                }}
-                onFocus={(e) => {
-                  e.target.style.background = 'rgba(255,255,255,0.1)';
-                  e.target.style.borderColor = 'white';
-                }}
-                onBlur={(e) => {
-                  e.target.style.background = 'transparent';
-                  if (!errors.email) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
-                }}
-              />
-              {errors.email && (
-                <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
-                  {errors.email}
-                </p>
-              )}
+              {/* Email Input */}
+              <div className="input-group" style={{ marginBottom: '0.5rem' }}>
+                <label htmlFor="email" className="input-label" style={{
+                  display: 'block',
+                  marginBottom: '0.3rem',
+                  fontWeight: 'bold',
+                  fontSize: '13px',
+                  fontFamily: 'var(--font-handwritten)',
+                  opacity: 0.9
+                }}>
+                  <Mail size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
+                  メールアドレス
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors({ ...errors, email: undefined });
+                  }}
+                  placeholder=""
+                  style={{
+                    width: '100%',
+                    padding: '0.4rem 0.8rem',
+                    fontSize: '16px',
+                    color: 'white',
+                    background: 'transparent',
+                    border: errors.email ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
+                    borderRadius: '12px',
+                    outline: 'none',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box',
+                    fontFamily: 'var(--font-handwritten)'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.background = 'rgba(255,255,255,0.1)';
+                    e.target.style.borderColor = 'white';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.background = 'transparent';
+                    if (!errors.email) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+                  }}
+                />
+                {errors.email && (
+                  <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
+                    {errors.email}
+                  </p>
+                )}
+              </div>
             </div>
-
-            {/* Horizontal line removed here */}
 
           </div>
 
@@ -235,12 +278,12 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
             padding: 0,
             cursor: 'pointer',
             marginBottom: '2rem',
-            marginTop: '10px', // Adjusted another 20px down per user request (-10 -> 10)
+            marginTop: '10px',
             display: 'inline-block',
             position: 'relative',
             zIndex: 2
           }}>
-            <img src={startBtnImg} alt="診断スタート！" style={{ width: '100%', maxWidth: '280px', display: 'block' }} />
+            <img src={startBtnImg} alt="診断スタート！" className="start-btn" style={{ width: '100%', maxWidth: '280px', display: 'block' }} />
           </button>
         </form>
 
