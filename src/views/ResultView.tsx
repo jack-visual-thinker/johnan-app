@@ -268,15 +268,17 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
 
       {/* ④ 上図鑑博士からの解説 (Doctor) */}
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
-        {/* Doctor Placeholder */}
+        {/* Doctor Icon */}
         <div style={{ flexShrink: 0 }}>
           <div style={{
             width: '80px', height: '80px',
             background: '#E5E7EB', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '2rem', border: '3px solid white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            overflow: 'hidden',
+            border: '3px solid white',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            👴
+            <img src="/jojoen_stuff.png" alt="博士" style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
           </div>
         </div>
         <div style={{
@@ -284,8 +286,20 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
           padding: '1.2rem',
           borderRadius: '0 24px 24px 24px',
           boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-          flex: 1
+          flex: 1,
+          position: 'relative'
         }}>
+          {/* Bubble Triangle */}
+          <div style={{
+            position: 'absolute',
+            top: '20px',
+            left: '-10px',
+            width: 0,
+            height: 0,
+            borderTop: '10px solid transparent',
+            borderBottom: '10px solid transparent',
+            borderRight: '10px solid white'
+          }} />
           <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#9CA3AF' }}>じょうずかん博士</h4>
           <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>{comment}</p>
         </div>
@@ -332,25 +346,42 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       </div>
 
       {/* ⑥ キミとの繋がり (Connection) */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', flexDirection: 'row-reverse' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
+        {/* Doctor Icon */}
         <div style={{ flexShrink: 0 }}>
           <div style={{
             width: '80px', height: '80px',
             background: '#E5E7EB', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '2rem', border: '3px solid white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            overflow: 'hidden',
+            border: '3px solid white',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            👴
+            <img src="/jojoen_stuff.png" alt="博士" style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
           </div>
         </div>
         <div style={{
           background: '#FFF7ED',
           padding: '1.2rem',
-          borderRadius: '24px 0 24px 24px',
+          borderRadius: '0 24px 24px 24px',
           boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
           flex: 1,
-          border: '1px solid #FDBA74'
+          border: '1px solid #FDBA74',
+          position: 'relative'
         }}>
+          {/* Bubble Triangle */}
+          <div style={{
+            position: 'absolute',
+            top: '20px',
+            left: '-10px',
+            width: 0,
+            height: 0,
+            borderTop: '10px solid transparent',
+            borderBottom: '10px solid transparent',
+            borderRight: '10px solid #FFF7ED'
+          }} />
+          {/* Border Triangle Outline (Optional tweak for perfect border, usually tricky with CSS triangles, keeping simple for now) */}
+
           <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#C05621' }}>キミとの繋がり</h4>
           <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>
             {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。<br />
