@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Share2, RefreshCw, BookOpen } from 'lucide-react';
 import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
 import { LoadingView } from './LoadingView';
+
+// Google Apps Script Web App URL
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyQqXCkFKHT2YDLcFoHYc3JpRYiQJSmKq1A7i0acCX3yyCV7-D6JqtJVCe1YHNquOzeKQ/exec';
 
 type Props = {
   answers: Record<number, number>;
@@ -71,6 +74,7 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
 export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   const [loading, setLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
+  const hasSentData = useRef(false);
 
   // userData will be used in Phase 2 for email functionality
   console.log("User data:", userData);
@@ -93,9 +97,34 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   }, [scores]);
 
   useEffect(() => {
+    // Send data to GAS (only once)
+    if (!hasSentData.current && userData) {
+      hasSentData.current = true;
+
+      const payload = {
+        name: userData.name,
+        email: userData.email,
+        animal: animal.name,
+        scores: scores
+      };
+
+      fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Important for GAS
+        headers: {
+          'Content-Type': 'text/plain', // Avoid preflight
+        },
+        body: JSON.stringify(payload),
+      }).then(() => {
+        console.log('Result sent to Google Sheets');
+      }).catch(err => {
+        console.error('Failed to send result:', err);
+      });
+    }
+
     const timer = setTimeout(() => setLoading(false), 2500);
     return () => clearTimeout(timer);
-  }, []);
+  }, []); // Empty dependency array ensures run once on mount
 
   if (loading) {
     return <LoadingView />;
