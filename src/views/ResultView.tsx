@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Share2, RefreshCw, Quote, Sparkles, BookOpen } from 'lucide-react';
+import { Share2, RefreshCw, BookOpen } from 'lucide-react';
 import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
