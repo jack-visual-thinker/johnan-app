@@ -16,7 +16,19 @@ type Props = {
 };
 
 const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
-  const keys = Object.keys(data) as ParameterKey[];
+  // Explicitly defining the order here prevents any import/build issues affecting chart rotation.
+  // This order ensures 'Warmth' is at 12 o'clock (-90 degrees).
+  const keys: ParameterKey[] = [
+    'Warmth',
+    'Responsibility',
+    'UniversalTruth',
+    'DivineGuidance',
+    'Mission',
+    'HeavenlyWork',
+    'Thoroughness',
+    'Innovation',
+    'Respect',
+  ];
   const numPoints = keys.length;
   // Further reduce chart radius to make room for labels inside the 200x200 viewbox
   const radius = 60;
