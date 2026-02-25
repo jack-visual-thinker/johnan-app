@@ -17,7 +17,7 @@ export const EncyclopediaView: React.FC = () => {
           marginBottom: '1rem',
           textAlign: 'center'
         }}>
-          「〇〇じょうず」な仲間たち
+          〇〇じょうずな仲間たち
         </h1>
 
         <p style={{
@@ -81,11 +81,13 @@ export const EncyclopediaView: React.FC = () => {
                 />
               </div>
               <h3 style={{
-                fontSize: '1.3rem',
+                fontSize: '1.2rem',
                 color: 'var(--color-text)',
-                marginBottom: '0.5rem'
+                marginBottom: '0.5rem',
+                lineHeight: 1.4
               }}>
-                {animal.name}
+                {animal.name.split('じょうずな')[0]}じょうずな<br />
+                <span style={{ fontSize: '1.4rem' }}>{animal.name.split('じょうずな')[1] || ''}</span>
               </h3>
               <p style={{
                 fontSize: '0.9rem',

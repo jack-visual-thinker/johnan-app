@@ -268,12 +268,9 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       {/* ③ 診断結果タイトル (3段構成) */}
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#8D7456', marginBottom: '0.2rem' }}>
-          『{catchphraseMain}』
+          『{catchphraseMain}』<br />じょうずな
         </div>
-        <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#5D4037', marginBottom: '0.2rem' }}>
-          じょうずな
-        </div>
-        <div style={{ fontSize: '2.4rem', fontWeight: '900', color: '#D97706', lineHeight: 1 }}>
+        <div style={{ fontSize: '2.4rem', fontWeight: '900', color: '#D97706', lineHeight: 1.2, marginTop: '0.5rem' }}>
           {animalNameOnly}
         </div>
       </div>
