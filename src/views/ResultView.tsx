@@ -404,6 +404,30 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         </div>
       </div>
 
+      {/* ⑥.5 おみくじフォローアップ (この結果は暫定的なもの) */}
+      <div style={{
+        maxWidth: '600px',
+        margin: '0 auto 3rem auto',
+        background: '#FFFDF5',
+        border: '2px dashed #E5C97B',
+        borderRadius: '20px',
+        padding: '1.2rem 1.4rem',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '0.8rem'
+      }}>
+        <span style={{ fontSize: '1.8rem', lineHeight: 1, flexShrink: 0 }}>🎐</span>
+        <div>
+          <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.95rem', color: '#B45309' }}>
+            この結果は「おみくじ」のようなもの
+          </h4>
+          <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.9rem', color: '#7C6240' }}>
+            診断結果は、その時どきの<strong>暫定的なもの</strong>です。あなたを正確に決めるものではありません。<br />
+            タイプはお互いを知るための「補助線」。まわりの人との対話のきっかけにしてみてくださいね。
+          </p>
+        </div>
+      </div>
+
       {/* ⑦ アクションボタン (Actions) */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
         <button

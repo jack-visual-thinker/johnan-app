@@ -7,11 +7,11 @@ type Props = {
 };
 
 const OPTIONS = [
-  { value: 5, size: 50, color: '#FCC315' },        // So Omou (Yellow) (Left)
-  { value: 4, size: 42, color: '#C6B03B' },        // Mix 1
-  { value: 3, size: 36, color: '#909D61' },        // Mix 2 (Middle)
-  { value: 2, size: 42, color: '#5A8A88' },        // Mix 3
-  { value: 1, size: 50, color: '#005EAD' },        // So Omowanai (Blue) (Right)
+  { value: 1, size: 50, color: '#005EAD' },        // そう思わない (Blue) (Left)
+  { value: 2, size: 42, color: '#5A8A88' },        // Mix
+  { value: 3, size: 36, color: '#909D61' },        // Middle
+  { value: 4, size: 42, color: '#C6B03B' },        // Mix
+  { value: 5, size: 50, color: '#FCC315' },        // そう思う (Yellow) (Right)
 ];
 
 export const QuizView: React.FC<Props> = ({ onFinish }) => {
@@ -237,17 +237,6 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
                 }}>
                   {/* Left Label */}
                   <div style={{
-                    color: '#FCC315',
-                    fontWeight: 'bold',
-                    fontSize: '0.9rem',
-                    textAlign: 'center',
-                    lineHeight: 1.4
-                  }}>
-                    そう思う
-                  </div>
-
-                  {/* Right Label */}
-                  <div style={{
                     color: '#005EAD',
                     fontWeight: 'bold',
                     fontSize: '0.9rem',
@@ -255,6 +244,17 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
                     lineHeight: 1.4
                   }}>
                     そう<br />思わない
+                  </div>
+
+                  {/* Right Label */}
+                  <div style={{
+                    color: '#FCC315',
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    textAlign: 'center',
+                    lineHeight: 1.4
+                  }}>
+                    そう思う
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { NewStartView } from './views/NewStartView';
+import { TermsView } from './views/TermsView';
 import { AboutView } from './views/AboutView';
 import { EncyclopediaView } from './views/EncyclopediaView';
 import { FAQView } from './views/FAQView';
@@ -8,7 +9,7 @@ import { QuizView } from './views/QuizView';
 import { ResultView } from './views/ResultView';
 import './components/Header.css';
 
-type Page = 'start' | 'about' | 'encyclopedia' | 'faq' | 'quiz' | 'result';
+type Page = 'start' | 'terms' | 'about' | 'encyclopedia' | 'faq' | 'quiz' | 'result';
 
 interface UserData {
   name: string;
@@ -23,6 +24,10 @@ function App() {
   const handleStart = (data: UserData) => {
     setUserData(data);
     setAnswers({});
+    setCurrentPage('terms');
+  };
+
+  const handleAgree = () => {
     setCurrentPage('quiz');
   };
 
@@ -46,6 +51,7 @@ function App() {
       <Header onNavigate={handleNavigate} currentPage={currentPage} />
 
       {currentPage === 'start' && <NewStartView onStart={handleStart} />}
+      {currentPage === 'terms' && <TermsView onAgree={handleAgree} onBack={() => setCurrentPage('start')} />}
       {currentPage === 'about' && <AboutView />}
       {currentPage === 'encyclopedia' && <EncyclopediaView />}
       {currentPage === 'faq' && <FAQView />}
