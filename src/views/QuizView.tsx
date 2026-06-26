@@ -80,25 +80,25 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
             // 5 (Left/Yellow) -> Large Counter-Clockwise (Left tilt)
             // 1 (Right/Blue) -> Large Clockwise (Right tilt)
             switch (answerValue) {
-              case 5: // Strongly Agree (Left)
-                historyRotate = -10;
-                historyX = -20;
+              case 5: // そう思う (右) → 右に傾く
+                historyRotate = 10;
+                historyX = 20;
                 break;
-              case 4: // Agree
-                historyRotate = -5;
-                historyX = -10;
+              case 4:
+                historyRotate = 5;
+                historyX = 10;
                 break;
               case 3: // Neutral
                 historyRotate = 0;
                 historyX = 0;
                 break;
-              case 2: // Disagree
-                historyRotate = 5;
-                historyX = 10;
+              case 2:
+                historyRotate = -5;
+                historyX = -10;
                 break;
-              case 1: // Strongly Disagree (Right)
-                historyRotate = 10;
-                historyX = 20;
+              case 1: // そう思わない (左) → 左に傾く
+                historyRotate = -10;
+                historyX = -20;
                 break;
             }
           }
