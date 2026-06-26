@@ -13,10 +13,9 @@ const B: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 // 使用上の注意点（ラベリング問題の解決案として伝える内容）
-// イラストは「仮」のプレースホルダー。後でJackが正式な手描きイラストに差し替える想定。
-const NOTICES: { emoji: string; title: string; body: React.ReactNode }[] = [
+const NOTICES: { img: string; title: string; body: React.ReactNode }[] = [
   {
-    emoji: '🔍',
+    img: '/images/terms/hojosen.png',
     title: 'タイプ分類は「補助線」です',
     body: (
       <>
@@ -26,7 +25,7 @@ const NOTICES: { emoji: string; title: string; body: React.ReactNode }[] = [
     ),
   },
   {
-    emoji: '🎐',
+    img: '/images/terms/omikuji.png',
     title: 'おみくじのようなものです',
     body: (
       <>
@@ -36,7 +35,7 @@ const NOTICES: { emoji: string; title: string; body: React.ReactNode }[] = [
     ),
   },
   {
-    emoji: '🔒',
+    img: '/images/terms/data.png',
     title: '入力データを収集します',
     body: (
       <>
@@ -47,26 +46,18 @@ const NOTICES: { emoji: string; title: string; body: React.ReactNode }[] = [
   },
 ];
 
-// 仮イラスト用のプレースホルダー枠。後で本番イラストに差し替える。
-const PlaceholderArt: React.FC<{ emoji: string; size?: number }> = ({ emoji, size = 72 }) => (
-  <div
+// 注意点イラスト
+const Art: React.FC<{ src: string; size?: number }> = ({ src, size = 72 }) => (
+  <img
+    src={src}
+    alt=""
     style={{
       flexShrink: 0,
       width: size,
       height: size,
-      borderRadius: '16px',
-      border: '2px dashed #C9B68A',
-      background: '#FFFDF5',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '2px',
+      objectFit: 'contain',
     }}
-  >
-    <span style={{ fontSize: size * 0.4, lineHeight: 1 }}>{emoji}</span>
-    <span style={{ fontSize: '9px', color: '#B0A179', fontWeight: 'bold' }}>イラスト仮</span>
-  </div>
+  />
 );
 
 export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
@@ -89,13 +80,13 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
       style={{
         maxWidth: '560px',
         margin: '0 auto',
-        padding: '3.5rem 0 4rem 0',
+        padding: '6rem 0 4rem 0',
         color: 'var(--color-text)',
       }}
     >
       {/* ヘッダー */}
       <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-        <PlaceholderArt emoji="📜" size={96} />
+        <Art src="/images/terms/notice.png" size={110} />
         <h2
           style={{
             fontSize: '1.4rem',
@@ -134,7 +125,7 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
               borderBottom: i < NOTICES.length - 1 ? '1px dashed #EFE7D2' : 'none',
             }}
           >
-            <PlaceholderArt emoji={n.emoji} />
+            <Art src={n.img} size={80} />
             <div style={{ flex: 1 }}>
               <div
                 style={{
