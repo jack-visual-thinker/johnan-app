@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AlertCircle, Sparkles } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import startBtnImg from '../assets/button.png';
 
 type Props = {
   onAgree: () => void;
@@ -46,18 +47,22 @@ const NOTICES: { img: string; title: string; body: React.ReactNode }[] = [
   },
 ];
 
-// 注意点イラスト
-const Art: React.FC<{ src: string; size?: number }> = ({ src, size = 72 }) => (
-  <img
-    src={src}
-    alt=""
+// 注意点イラスト（座布団＝丸角の背景パッドの上にアイコンを大きく乗せる）
+const Art: React.FC<{ src: string; size?: number }> = ({ src, size = 130 }) => (
+  <div
     style={{
       flexShrink: 0,
       width: size,
       height: size,
-      objectFit: 'contain',
+      borderRadius: '20px',
+      background: '#EFE7D4',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     }}
-  />
+  >
+    <img src={src} alt="" style={{ width: '92%', height: '92%', objectFit: 'contain' }} />
+  </div>
 );
 
 export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
@@ -80,19 +85,25 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
       style={{
         maxWidth: '560px',
         margin: '0 auto',
-        padding: '6rem 0 4rem 0',
+        padding: '2.5rem 0 4rem 0',
         color: 'var(--color-text)',
       }}
     >
       {/* ヘッダー */}
-      <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-        <Art src="/images/terms/notice.png" size={110} />
+      <div style={{
+        textAlign: 'center',
+        marginBottom: '1.5rem',
+        background: 'white',
+        borderRadius: '24px',
+        padding: '1.3rem 1.5rem',
+        boxShadow: 'var(--shadow-md)',
+      }}>
         <h2
           style={{
             fontSize: '1.4rem',
             fontWeight: 'bold',
             color: 'var(--color-text)',
-            marginTop: '1rem',
+            marginTop: 0,
             marginBottom: '0.3rem',
           }}
         >
@@ -125,7 +136,7 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
               borderBottom: i < NOTICES.length - 1 ? '1px dashed #EFE7D2' : 'none',
             }}
           >
-            <Art src={n.img} size={80} />
+            <Art src={n.img} size={130} />
             <div style={{ flex: 1 }}>
               <div
                 style={{
@@ -196,23 +207,22 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
       {/* ボタン */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'center', marginTop: '0.5rem' }}>
         <button
-          className="btn-primary"
           onClick={handleStart}
           disabled={!agreed}
           style={{
-            width: '280px',
-            padding: '1rem',
-            fontSize: '1.1rem',
-            // サイトの黄色を使ったグラデーション。文字は白のまま、可読性確保に薄い影。
-            background: 'linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%)',
-            color: 'white',
-            textShadow: '0 1px 2px rgba(0,0,0,0.25)',
-            opacity: agreed ? 1 : 0.5,
+            background: 'transparent',
+            border: 'none',
+            padding: 0,
+            opacity: agreed ? 1 : 0.45,
             cursor: agreed ? 'pointer' : 'not-allowed',
-            boxShadow: agreed ? '0 4px 0 #D9A300' : 'none',
+            transition: 'all 0.15s',
           }}
         >
-          <Sparkles size={20} /> 診断をはじめる
+          <img
+            src={startBtnImg}
+            alt="診断をはじめる"
+            style={{ width: '100%', maxWidth: '280px', display: 'block' }}
+          />
         </button>
 
         <button

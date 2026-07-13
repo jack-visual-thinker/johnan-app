@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 export const LoadingView: React.FC = () => {
   return (
     <div className="loading-view" style={{ 
-      padding: '4rem 0', 
+      padding: '2rem 0',
       textAlign: 'center',
-      minHeight: '60vh',
+      // ヘッダー分を引いた画面高で縦中央に配置
+      minHeight: 'calc(100dvh - 220px)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

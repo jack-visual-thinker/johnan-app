@@ -33,7 +33,13 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
   const progress = ((currentIndex) / QUESTIONS.length) * 100;
 
   return (
-    <div className="quiz-view">
+    <div className="quiz-view" style={{
+      // ヘッダー(100px)+フッター分を引いた高さの中でカードを縦中央に置く
+      minHeight: 'calc(100dvh - 220px)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}>
       <div className="progress-bar">
         <div className="progress-fill" style={{ width: `${progress}%` }} />
       </div>

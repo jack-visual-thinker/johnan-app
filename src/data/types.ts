@@ -7,6 +7,7 @@ export type AnimalType = {
   description: string;
   legendName: string;
   legendRole: string;
+  legendIcon: string;
   idealProfile: Record<ParameterKey, number>;
 };
 
@@ -17,6 +18,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「信念つらぬき」じょうずなライオン',
     legendName: '山本 松雄さん',
     legendRole: '創業者',
+    legendIcon: '/legend_icons/yamamoto_matsuo.png',
     description: 'あなたは百獣の王ライオンタイプ！JOHNANの歴史を切り開く創業者のように、「こうあるべきだ！」という強い信念と、みんなを引っ張るリーダーシップを持っています。',
     idealProfile: {
       UniversalTruth: 10,
@@ -31,6 +33,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「愛をとどけ」じょうずなハト',
     legendName: '山本 春子さん',
     legendRole: '愛の精神的支柱',
+    legendIcon: '/legend_icons/yamamoto_haruko.png',
     description: 'あなたは平和のシンボル、ハトタイプ！みんなの心を癒やす、優しさの塊のような人です。組織の歴史の中で、みんなが安心して働ける場所を守り続ける慈愛の精神を持っています。',
     idealProfile: {
       Warmth: 10,
@@ -45,6 +48,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「未来見通し」じょうずなワシ',
     legendName: '山本 光世さん',
     legendRole: '変革の4代目',
+    legendIcon: '/legend_icons/yamamoto_mitsuyo.png',
     description: 'あなたは空の王者ワシタイプ！遠くまで見渡す目を持っていて、「次はこれが来る！」と未来を見通すのが得意。新しい時代に向かって、JOHNANを大きく飛躍させる先見の明があります。',
     idealProfile: {
       Mission: 10,
@@ -59,6 +63,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「バランス」じょうずなシカ',
     legendName: '山本 高春さん',
     legendRole: '誠実な3代目',
+    legendIcon: '/legend_icons/yamamoto_takaharu.png',
     description: 'あなたはスマートなシカタイプ！高い理想を持ちながらも、足元もしっかり見ることができるバランス感覚の持ち主。組織の規律を守り、誠実さで信頼を築くリーダーと同じ精神を持っています。',
     idealProfile: {
       Thoroughness: 10,
@@ -73,6 +78,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「現場をまもり」じょうずなオウシ',
     legendName: '稲葉 和雄さん',
     legendRole: '製造のレジェンド',
+    legendIcon: '/legend_icons/inaba_kazuo.png',
     description: 'あなたはパワフルなオウシタイプ！「任せとけ！」という頼もしさはナンバーワン。JOHNANのモノづくりを支え、どんな困難な仕事も完遂する、現場の守護神のような存在です。',
     idealProfile: {
       Responsibility: 10,
@@ -87,6 +93,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「コツコツ積み上げ」じょうずなアリ',
     legendName: '村上 英子さん',
     legendRole: '財務の礎を築いた人',
+    legendIcon: '/legend_icons/murakami_eiko.png',
     description: 'あなたは働き者のアリさんタイプ！小さなことでもコツコツと積み上げ、いつの間にか大きな成果を出しています。派手ではなくとも、組織の土台をしっかり支える縁の下の偉人です。',
     idealProfile: {
       HeavenlyWork: 10,
@@ -101,6 +108,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「知恵みがき」じょうずなヘビ',
     legendName: '佐野 好男さん',
     legendRole: '開発のパイオニア',
+    legendIcon: '/legend_icons/sano_yoshio.png',
     description: 'あなたは知恵者なヘビタイプ！冷静に物事を見つめ、技術や知識を深めるのが得意なスペシャリスト。技術の力で新しい価値を生み出す、探求心あふれる開拓者と同じタイプです。',
     idealProfile: {
       Innovation: 10,
@@ -115,6 +123,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「愛され応援され」じょうずなコヒツジ',
     legendName: '山本 勝さん',
     legendRole: '2代目社長',
+    legendIcon: '/legend_icons/yamamoto_masaru.png',
     description: 'あなたはピュアなコヒツジタイプ！純粋な心を持っていて、新しいことにも素直に挑戦できます。創業の精神を受け継ぎつつ、みんなから愛され応援される若きリーダーの素質があります。',
     idealProfile: {
       Warmth: 10,
@@ -129,6 +138,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「目標駆け抜け」じょうずなウマ',
     legendName: '金光 宏さん',
     legendRole: 'デバイス事業の開拓者',
+    legendIcon: '/legend_icons/kanemitsu_hiroshi.png',
     description: 'あなたは駆け抜けるウマタイプ！行動力がバツグンで、目標に向かって一直線に走ります。新しい事業や困難な現場にいち早く駆けつけ、道を切り開くスピードスターと同じ魂を持っています。',
     idealProfile: {
       Responsibility: 10,
@@ -143,6 +153,7 @@ export const ANIMAL_TYPES: AnimalType[] = [
     catchphrase: '「忍耐づよく歩き」じょうずなラクダ',
     legendName: '阿部 和幸さん',
     legendRole: '生産管理の守り神',
+    legendIcon: '/legend_icons/abe_kazuyuki.png',
     description: 'あなたは忍耐強いラクダタイプ！砂漠のような厳しい環境でも、文句を言わずに確実に歩き続けることができます。組織の規律や納期をガッチリ守り続ける、最も信頼できる実直なレジェンドです。',
     idealProfile: {
       Responsibility: 10,
@@ -155,8 +166,9 @@ export const ANIMAL_TYPES: AnimalType[] = [
     id: 'donkey',
     name: '「平和をはこび」じょうずなロバ',
     catchphrase: '「平和をはこび」じょうずなロバ',
-    legendName: '井口 江利子さん & 吉岡 三重子さん',
+    legendName: '井口 江利子さん',
     legendRole: '奉仕のレジェンド',
+    legendIcon: '/legend_icons/iguchi_eriko.png',
     description: 'あなたは優しいロバタイプ！一見地味に見えるかもしれないけれど、実は一番大切な「平和」と「安心」を運んでいます。地道な仕事を責任を持ってやり遂げ、誰かの荷物をスッと持ってあげるような、謙虚で温かい奉仕の心が輝くレジェンドです。',
     idealProfile: {
       Respect: 10,
@@ -169,8 +181,9 @@ export const ANIMAL_TYPES: AnimalType[] = [
     id: 'fish',
     name: '「奇跡をおこし」じょうずなサカナ',
     catchphrase: '「奇跡をおこし」じょうずなサカナ',
-    legendName: '小泉 由佳さん & 高見 恵美さん',
+    legendName: '小泉 由佳さん',
     legendRole: '可能性のレジェンド',
+    legendIcon: '/legend_icons/koizumi_yuka.png',
     description: 'あなたは可能性を秘めたサカナタイプ！小さなきっかけから、びっくりするような大きな成果（奇跡）を生み出すパワーを持っています。群れ（チーム）の中で自由に泳ぎながら、みんなを楽しい未来へ連れて行くムードメーカーです。',
     idealProfile: {
       DivineGuidance: 10,

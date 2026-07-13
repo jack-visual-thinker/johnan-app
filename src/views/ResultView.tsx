@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Share2, RefreshCw, BookOpen } from 'lucide-react';
+import { Share2, RefreshCw } from 'lucide-react';
 import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
@@ -338,9 +338,9 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             overflow: 'hidden'
           }}>
             <img
-              src="/yamamoto_matsuo.png"
-              alt="Legend"
-              style={{ width: '180%', height: '180%', objectFit: 'cover' }}
+              src={animal.legendIcon}
+              alt={animal.legendName}
+              style={{ width: '200%', height: '200%', objectFit: 'contain' }}
             />
           </div>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{animal.legendName}</div>
@@ -398,8 +398,8 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
 
           <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#C05621' }}>キミとの繋がり</h4>
           <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>
-            {animal.legendName}さんは、{animal.catchphrase}のような人じゃ。<br />
-            あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}さんの生きた証と重なるじゃろう！
+            {animal.legendName}は、{animal.catchphrase}のような人じゃ。<br />
+            あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}の生きた証と重なるじゃろう！
           </p>
         </div>
       </div>
@@ -409,21 +409,35 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         maxWidth: '600px',
         margin: '0 auto 3rem auto',
         background: '#FFFDF5',
-        border: '2px dashed #E5C97B',
         borderRadius: '20px',
         padding: '1.2rem 1.4rem',
         display: 'flex',
-        alignItems: 'flex-start',
-        gap: '0.8rem'
+        alignItems: 'center',
+        gap: '1rem'
       }}>
-        <span style={{ fontSize: '1.8rem', lineHeight: 1, flexShrink: 0 }}>🎐</span>
-        <div>
+        {/* 正方形の座布団＋イラスト */}
+        <div style={{
+          flexShrink: 0,
+          width: '180px',
+          height: '180px',
+          borderRadius: '24px',
+          background: '#EFE7D4',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <img src="/images/result.png" alt="" style={{ width: '128%', height: '128%', objectFit: 'contain' }} />
+        </div>
+        <div style={{ flex: 1 }}>
           <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.95rem', color: '#B45309' }}>
             この結果は「おみくじ」のようなもの
           </h4>
-          <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.9rem', color: '#7C6240' }}>
-            診断結果は、その時どきの<strong>暫定的なもの</strong>です。あなたを正確に決めるものではありません。<br />
-            タイプはお互いを知るための「補助線」。まわりの人との対話のきっかけにしてみてくださいね。
+          <p style={{ margin: 0, lineHeight: 1.9, fontSize: '0.9rem', color: '#7C6240' }}>
+            診断結果は、その時どきの<strong style={{ color: '#C05621' }}>暫定的なもの</strong>です。<br />
+            あなたを正確に<strong style={{ color: '#C05621' }}>決めるものではありません</strong>。<br />
+            タイプはお互いを知るための<strong style={{ color: '#C05621' }}>「補助線」</strong>。<br />
+            まわりの人との<strong style={{ color: '#C05621' }}>対話のきっかけ</strong>にしてみてくださいね。
           </p>
         </div>
       </div>
@@ -431,16 +445,20 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       {/* ⑦ アクションボタン (Actions) */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
         <button
-          className="btn-primary"
           style={{
             width: '280px',
             padding: '1rem',
             fontSize: '1rem',
-            display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem',
-            boxShadow: '0 4px 0 #B45309'
+            fontWeight: 'bold',
+            border: 'none',
+            borderRadius: '9999px',
+            background: '#F4C430',
+            color: '#5D4037',
+            cursor: 'pointer',
+            boxShadow: '0 4px 0 #D9A300'
           }}
         >
-          <BookOpen size={20} /> 画像を保存（模様を作る）
+          画像を保存
         </button>
 
         <button
