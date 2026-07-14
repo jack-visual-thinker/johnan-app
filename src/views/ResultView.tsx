@@ -340,7 +340,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             <img
               src={animal.legendIcon}
               alt={animal.legendName}
-              style={{ width: '200%', height: '200%', objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </div>
           <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{animal.legendName}</div>
