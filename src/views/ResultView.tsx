@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Share2, RefreshCw } from 'lucide-react';
 import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
+import { generateResultCards } from '../logic/cardImages';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
 import { LoadingView } from './LoadingView';
@@ -123,25 +124,37 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
     if (!hasSentData.current && userData) {
       hasSentData.current = true;
 
-      const payload = {
-        name: userData.name,
-        email: userData.email,
-        animal: animal.name,
-        scores: scores
+      const send = (cards?: { animalCard: string; legendCard: string }) => {
+        const payload = {
+          name: userData.name,
+          email: userData.email,
+          animal: animal.name,
+          scores: scores,
+          // 正方形カード画像（base64、data URLプレフィックス除去済み）
+          animalCard: cards ? cards.animalCard.split(',')[1] : undefined,
+          legendCard: cards ? cards.legendCard.split(',')[1] : undefined,
+        };
+        fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Important for GAS
+          headers: {
+            'Content-Type': 'text/plain', // Avoid preflight
+          },
+          body: JSON.stringify(payload),
+        }).then(() => {
+          console.log('Result sent to Google Sheets');
+        }).catch(err => {
+          console.error('Failed to send result:', err);
+        });
       };
 
-      fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for GAS
-        headers: {
-          'Content-Type': 'text/plain', // Avoid preflight
-        },
-        body: JSON.stringify(payload),
-      }).then(() => {
-        console.log('Result sent to Google Sheets');
-      }).catch(err => {
-        console.error('Failed to send result:', err);
-      });
+      // カード生成に失敗してもデータ送信自体は行う
+      generateResultCards(animal, scores, episodes)
+        .then(send)
+        .catch(err => {
+          console.error('Card generation failed, sending without cards:', err);
+          send();
+        });
     }
 
     const timer = setTimeout(() => setLoading(false), 2500);
@@ -445,6 +458,19 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       {/* ⑦ アクションボタン (Actions) */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
         <button
+          onClick={() => {
+            generateResultCards(animal, scores, episodes).then(cards => {
+              [
+                { url: cards.animalCard, file: `jouzukan_${animal.id}_result.png` },
+                { url: cards.legendCard, file: `jouzukan_${animal.id}_legend.png` },
+              ].forEach(({ url, file }) => {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file;
+                a.click();
+              });
+            }).catch(err => console.error('Card generation failed:', err));
+          }}
           style={{
             width: '280px',
             padding: '1rem',
