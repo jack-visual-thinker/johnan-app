@@ -5,6 +5,9 @@ import startBtnImg from '../assets/button.png';
 import headerTitleImg from '../assets/title3.png';
 import { FloatingIcons } from '../components/FloatingIcons';
 
+const assetSrc = (asset: string | { src: string }) =>
+  typeof asset === 'string' ? asset : asset.src;
+
 type Props = {
   nickname: string;
   agreed: boolean;
@@ -96,7 +99,7 @@ export const NewStartView: React.FC<Props> = ({
 
         <div className="start-title-wrap" style={{ marginBottom: '-50px', marginTop: '-50px' }}>
           <img
-            src={headerTitleImg}
+            src={assetSrc(headerTitleImg)}
             alt="あなたはどのレジェンドタイプ？"
             className="title-logo-img"
             style={{
@@ -282,7 +285,7 @@ export const NewStartView: React.FC<Props> = ({
             }}
           >
             <img
-              src={startBtnImg}
+              src={assetSrc(startBtnImg)}
               alt="診断を始める"
               className="start-btn"
               style={{ width: '100%', maxWidth: '280px', display: 'block' }}
