@@ -98,8 +98,8 @@ export const FloatingIcons: React.FC = () => {
     }}>
       {iconConfig.map((config, i) => {
         const animal = animals[i % animals.length];
-        const duration = 4 + Math.random() * 3;
-        const delay = Math.random() * 2;
+        const duration = 4 + (i % 4) * 0.75;
+        const delay = (i % 5) * 0.35;
 
         return (
           <motion.div

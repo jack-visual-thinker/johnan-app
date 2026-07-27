@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import startBtnImg from '../assets/button.png';
 
 type Props = {
+  initialAgreed: boolean;
   onAgree: () => void;
   onBack: () => void;
 };
@@ -37,11 +37,11 @@ const NOTICES: { img: string; title: string; body: React.ReactNode }[] = [
   },
   {
     img: '/images/terms/data.png',
-    title: '入力データを収集します',
+    title: '入力内容は診断中だけ使います',
     body: (
       <>
-        お名前・メールアドレス・診断結果などの個人データを記録・収集します。
-        <B>社内での相互理解とサービス改善のために利用します</B>。
+        ニックネームと回答内容は、診断結果の表示と画像作成に必要な範囲でのみ使います。
+        <B>アカウントとの紐づけや、診断履歴の保存は行いません</B>。
       </>
     ),
   },
@@ -65,8 +65,8 @@ const Art: React.FC<{ src: string; size?: number }> = ({ src, size = 130 }) => (
   </div>
 );
 
-export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
-  const [agreed, setAgreed] = useState(false);
+export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) => {
+  const [agreed, setAgreed] = useState(initialAgreed);
   const [showError, setShowError] = useState(false);
 
   const handleStart = () => {
@@ -181,7 +181,7 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
           style={{ width: '22px', height: '22px', accentColor: '#D97706', cursor: 'pointer', flexShrink: 0 }}
         />
         <span style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>
-          上記の注意点を確認し、同意しました
+          上記の利用規約を確認し、同意しました
         </span>
       </label>
 
@@ -210,19 +210,21 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
           onClick={handleStart}
           disabled={!agreed}
           style={{
-            background: 'transparent',
+            width: '280px',
+            background: '#F4C430',
+            color: '#5D4037',
             border: 'none',
-            padding: 0,
+            borderRadius: '9999px',
+            padding: '0.9rem 1.2rem',
+            fontSize: '1rem',
+            fontWeight: 'bold',
             opacity: agreed ? 1 : 0.45,
             cursor: agreed ? 'pointer' : 'not-allowed',
             transition: 'all 0.15s',
+            boxShadow: agreed ? '0 4px 0 #D9A300' : 'none',
           }}
         >
-          <img
-            src={startBtnImg}
-            alt="診断をはじめる"
-            style={{ width: '100%', maxWidth: '280px', display: 'block' }}
-          />
+          同意してホームへ戻る
         </button>
 
         <button
@@ -236,7 +238,7 @@ export const TermsView: React.FC<Props> = ({ onAgree, onBack }) => {
             fontSize: '0.9rem',
           }}
         >
-          戻る
+          同意せずにホームへ戻る
         </button>
       </div>
     </motion.div>

@@ -103,7 +103,7 @@ export function determineAnimal(s: Record<ParameterKey, number>): AnimalType {
   return bestMatch;
 }
 
-export function generateAIComment(userProfile: Record<ParameterKey, number>, _animal: AnimalType): string {
+export function generateAIComment(userProfile: Record<ParameterKey, number>): string {
   // Find highest parameter
   let maxVal = -1;
   let maxKey: ParameterKey = 'Respect';

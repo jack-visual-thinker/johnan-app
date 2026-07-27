@@ -1,103 +1,100 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, User } from 'lucide-react';
+import { AlertCircle, User } from 'lucide-react';
 import startBtnImg from '../assets/button.png';
 import headerTitleImg from '../assets/title3.png';
 import { FloatingIcons } from '../components/FloatingIcons';
 
 type Props = {
-  onStart: (userData: { name: string; email: string }) => void;
+  nickname: string;
+  agreed: boolean;
+  onNicknameChange: (nickname: string) => void;
+  onAgreementChange: (agreed: boolean) => void;
+  onShowTerms: () => void;
+  onStart: () => void;
 };
 
-export const NewStartView: React.FC<Props> = ({ onStart }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+export const NewStartView: React.FC<Props> = ({
+  nickname,
+  agreed,
+  onNicknameChange,
+  onAgreementChange,
+  onShowTerms,
+  onStart,
+}) => {
+  const [nicknameError, setNicknameError] = useState(false);
+  const [agreementError, setAgreementError] = useState(false);
 
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const isNicknameMissing = !nickname.trim();
+    setNicknameError(isNicknameMissing);
+    setAgreementError(!agreed);
+
+    if (isNicknameMissing || !agreed) return;
+    onStart();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newErrors: { name?: string; email?: string } = {};
-
-    if (!name.trim()) {
-      newErrors.name = 'お名前を入力してください';
-    }
-
-    if (!email.trim()) {
-      newErrors.email = 'メールアドレスを入力してください';
-    } else if (!validateEmail(email)) {
-      newErrors.email = '正しいメールアドレスを入力してください';
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    onStart({ name, email });
-  };
+  const canStart = Boolean(nickname.trim()) && agreed;
 
   return (
-    <div className="start-view start-view-container" style={{ textAlign: 'center', paddingBottom: '4rem', position: 'relative', overflowX: 'hidden', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <div
+      className="start-view start-view-container"
+      style={{
+        textAlign: 'center',
+        paddingBottom: '4rem',
+        position: 'relative',
+        overflowX: 'hidden',
+        minHeight: 'calc(100vh - 80px)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
       <style>{`
         @media (min-width: 768px) {
           .start-view-container {
-            padding-bottom: 0 !important;
-            padding-top: 0 !important;
-            height: 100vh;
-            overflow-y: hidden;
-            justify-content: center;
+            padding-top: 1rem !important;
+            padding-bottom: 2rem !important;
           }
           .title-logo-img {
             width: 500px !important;
-            margin-bottom: -30px !important;
+          }
+          .intro-box,
+          .form-card {
+            max-width: 600px !important;
           }
           .intro-box {
-            max-width: 600px !important;
-            margin-bottom: 15px !important;
             padding: 0.8rem 1.5rem !important;
           }
           .form-card {
-            margin-top: 0 !important;
-            padding: 0.8rem 1.5rem !important;
-            max-width: 600px !important;
+            padding: 1rem 1.5rem !important;
           }
           .start-btn {
-            margin-top: 5px !important;
-             margin-bottom: 0 !important;
-             width: 240px !important;
+            width: 240px !important;
           }
-          .input-row {
-            display: flex;
-            gap: 1rem;
-          }
-          .input-group {
-            flex: 1;
-            margin-bottom: 0 !important;
-          }
-          .input-label {
-            font-size: 14px !important;
-            margin-bottom: 0.2rem !important;
-          }
-          .form-title {
-             margin-bottom: 0.5rem !important;
+        }
+        @media (max-width: 480px) {
+          .start-title-wrap {
+            margin-top: -30px !important;
+            margin-bottom: -35px !important;
           }
         }
       `}</style>
 
       <FloatingIcons />
-      <motion.div style={{ position: 'relative', zIndex: 1, width: '100%' }}
+      <motion.div
+        style={{ position: 'relative', zIndex: 1, width: '100%' }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
+        <p style={{ margin: '0 0 0.25rem', color: '#6B5439', fontSize: '0.8rem', fontWeight: 'bold' }}>
+          動物診断アプリ じょうずかん
+        </p>
 
-        {/* Subtitle / Headline - Main Title */}
-        <div style={{ marginBottom: '-50px', marginTop: '-50px' }}>
+        <div className="start-title-wrap" style={{ marginBottom: '-50px', marginTop: '-50px' }}>
           <img
             src={headerTitleImg}
             alt="あなたはどのレジェンドタイプ？"
@@ -107,189 +104,192 @@ export const NewStartView: React.FC<Props> = ({ onStart }) => {
               width: '700px',
               display: 'block',
               margin: '0 auto',
-              transform: 'rotate(-2deg)'
+              transform: 'rotate(-2deg)',
             }}
           />
         </div>
 
-
-        {/* Introduction Text Box */}
-        <div className="intro-box" style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          padding: '0.8rem',
-          maxWidth: '400px',
-          margin: '0 auto 10px auto',
-          textAlign: 'left',
-          color: 'var(--color-text)',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-          fontFamily: 'var(--font-body)',
-          lineHeight: '1.5',
-          fontSize: '13px',
-          zIndex: 2,
-          position: 'relative'
-        }}>
+        <div
+          className="intro-box"
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: '16px',
+            padding: '0.8rem',
+            maxWidth: '400px',
+            margin: '0 auto 10px auto',
+            textAlign: 'left',
+            color: 'var(--color-text)',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+            fontFamily: 'var(--font-body)',
+            lineHeight: 1.5,
+            fontSize: '13px',
+            position: 'relative',
+          }}
+        >
           <p style={{ marginBottom: '0.4rem', fontWeight: 'bold' }}>
             JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
           </p>
-          <p>
+          <p style={{ margin: 0 }}>
             あなたの性格は、歴史上の誰に似ているかな？<br />
             質問に答えて、あなたの中に眠るレジェンドの魂を見つけよう！
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="card form-card" style={{
-            textAlign: 'left',
-            maxWidth: '400px',
-            margin: '0 auto 0 auto',
-            marginTop: '0',
-            padding: '1rem',
-            backgroundColor: 'var(--color-card-brown)',
-            color: 'var(--color-text-white)',
-            boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
-            borderRadius: '24px',
-            position: 'relative',
-            zIndex: 1
-          }}>
-            <h2 className="form-title" style={{
-              fontSize: '14px',
-              marginBottom: '0.8rem',
-              marginTop: '0.2rem',
+        <form onSubmit={handleSubmit} noValidate>
+          <div
+            className="card form-card"
+            style={{
+              textAlign: 'left',
+              maxWidth: '400px',
+              margin: '0 auto',
+              padding: '1rem',
+              backgroundColor: 'var(--color-card-brown)',
               color: 'var(--color-text-white)',
-              textAlign: 'center',
-              fontFamily: 'var(--font-handwritten)',
-              fontWeight: 'bold',
-              letterSpacing: '0.05em'
-            }}>
-              診断をはじめる前に
-            </h2>
+              boxShadow: '0 10px 0 rgba(0,0,0,0.1)',
+              borderRadius: '24px',
+              position: 'relative',
+            }}
+          >
+            <h1
+              style={{
+                fontSize: '1rem',
+                marginBottom: '0.8rem',
+                color: 'var(--color-text-white)',
+                textAlign: 'center',
+                fontFamily: 'var(--font-handwritten)',
+                fontWeight: 'bold',
+                letterSpacing: '0.05em',
+              }}
+            >
+              ニックネームだけで診断できます
+            </h1>
 
-            <div className="input-row">
-              {/* Name Input */}
-              <div className="input-group" style={{ marginBottom: '0.8rem' }}>
-                <label htmlFor="name" className="input-label" style={{
+            <div style={{ marginBottom: '0.8rem' }}>
+              <label
+                htmlFor="nickname"
+                style={{
                   display: 'block',
                   marginBottom: '0.3rem',
                   fontWeight: 'bold',
                   fontSize: '13px',
                   fontFamily: 'var(--font-handwritten)',
-                  opacity: 0.9
-                }}>
-                  <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
-                  おなまえ
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    if (errors.name) setErrors({ ...errors, name: undefined });
-                  }}
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                    padding: '0.4rem 0.8rem',
-                    fontSize: '16px',
-                    color: 'white',
-                    background: 'transparent',
-                    border: errors.name ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
-                    borderRadius: '12px',
-                    outline: 'none',
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    fontFamily: 'var(--font-handwritten)'
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.background = 'rgba(255,255,255,0.1)';
-                    e.target.style.borderColor = 'white';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.background = 'transparent';
-                    if (!errors.name) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
-                  }}
-                />
-                {errors.name && (
-                  <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
-                    {errors.name}
-                  </p>
-                )}
-              </div>
-
-              {/* Email Input */}
-              <div className="input-group" style={{ marginBottom: '0.5rem' }}>
-                <label htmlFor="email" className="input-label" style={{
-                  display: 'block',
-                  marginBottom: '0.3rem',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
+                }}
+              >
+                <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
+                ニックネーム
+              </label>
+              <input
+                id="nickname"
+                type="text"
+                value={nickname}
+                maxLength={30}
+                autoComplete="off"
+                placeholder="例：ジャック"
+                aria-invalid={nicknameError}
+                aria-describedby={nicknameError ? 'nickname-error' : undefined}
+                onChange={(event) => {
+                  onNicknameChange(event.target.value);
+                  if (event.target.value.trim()) setNicknameError(false);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 0.8rem',
+                  fontSize: '16px',
+                  color: 'white',
+                  background: 'rgba(255,255,255,0.08)',
+                  border: nicknameError ? '3px solid #FFD1D1' : '2px solid rgba(255,255,255,0.65)',
+                  borderRadius: '12px',
+                  boxSizing: 'border-box',
                   fontFamily: 'var(--font-handwritten)',
-                  opacity: 0.9
-                }}>
-                  <Mail size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
-                  メールアドレス
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email) setErrors({ ...errors, email: undefined });
-                  }}
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                    padding: '0.4rem 0.8rem',
-                    fontSize: '16px',
-                    color: 'white',
-                    background: 'transparent',
-                    border: errors.email ? '3px solid #ff6b6b' : '2px solid rgba(255,255,255,0.5)',
-                    borderRadius: '12px',
-                    outline: 'none',
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    fontFamily: 'var(--font-handwritten)'
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.background = 'rgba(255,255,255,0.1)';
-                    e.target.style.borderColor = 'white';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.background = 'transparent';
-                    if (!errors.email) e.target.style.borderColor = 'rgba(255,255,255,0.5)';
-                  }}
-                />
-                {errors.email && (
-                  <p style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 'bold' }}>
-                    {errors.email}
-                  </p>
-                )}
-              </div>
+                }}
+              />
+              {nicknameError && (
+                <p id="nickname-error" role="alert" style={{ color: '#FFE2E2', fontSize: '0.8rem', margin: '0.4rem 0 0', fontWeight: 'bold' }}>
+                  ニックネームを入力してください
+                </p>
+              )}
             </div>
 
+            <label
+              htmlFor="terms-agreement"
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.65rem',
+                background: agreed ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.08)',
+                border: agreementError ? '2px solid #FFD1D1' : '2px solid rgba(255,255,255,0.35)',
+                borderRadius: '12px',
+                padding: '0.75rem',
+                cursor: 'pointer',
+              }}
+            >
+              <input
+                id="terms-agreement"
+                type="checkbox"
+                checked={agreed}
+                onChange={(event) => {
+                  onAgreementChange(event.target.checked);
+                  if (event.target.checked) setAgreementError(false);
+                }}
+                style={{ width: '20px', height: '20px', margin: 0, accentColor: '#F4C430', flexShrink: 0 }}
+              />
+              <span style={{ fontSize: '0.9rem', lineHeight: 1.45 }}>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onShowTerms();
+                  }}
+                  style={{
+                    appearance: 'none',
+                    border: 0,
+                    padding: 0,
+                    background: 'none',
+                    color: '#FFF6B8',
+                    font: 'inherit',
+                    fontWeight: 'bold',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  }}
+                >
+                  利用規約
+                </button>
+                を確認し、同意します
+              </span>
+            </label>
+
+            {agreementError && (
+              <p role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#FFE2E2', fontSize: '0.8rem', margin: '0.4rem 0 0', fontWeight: 'bold' }}>
+                <AlertCircle size={15} /> 利用規約への同意が必要です
+              </p>
+            )}
           </div>
 
-          {/* Start Button */}
-          <button type="submit" className="" style={{
-            background: 'transparent',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer',
-            marginBottom: '2rem',
-            marginTop: '10px',
-            display: 'inline-block',
-            position: 'relative',
-            zIndex: 2
-          }}>
-            <img src={startBtnImg} alt="診断スタート！" className="start-btn" style={{ width: '100%', maxWidth: '280px', display: 'block' }} />
+          <button
+            type="submit"
+            aria-disabled={!canStart}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              cursor: canStart ? 'pointer' : 'not-allowed',
+              marginBottom: '2rem',
+              marginTop: '12px',
+              display: 'inline-block',
+              position: 'relative',
+              zIndex: 2,
+              opacity: canStart ? 1 : 0.55,
+            }}
+          >
+            <img
+              src={startBtnImg}
+              alt="診断を始める"
+              className="start-btn"
+              style={{ width: '100%', maxWidth: '280px', display: 'block' }}
+            />
           </button>
         </form>
-
-
       </motion.div>
-    </div >
+    </div>
   );
 };
-

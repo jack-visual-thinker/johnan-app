@@ -1,19 +1,43 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Share2, RefreshCw } from 'lucide-react';
+import { Download, RefreshCw } from 'lucide-react';
 import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
-import { generateResultCards } from '../logic/cardImages';
+import { generateResultCard } from '../logic/cardImages';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
 import { LoadingView } from './LoadingView';
 
-// Google Apps Script Web App URL
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyQqXCkFKHT2YDLcFoHYc3JpRYiQJSmKq1A7i0acCX3yyCV7-D6JqtJVCe1YHNquOzeKQ/exec';
-
 type Props = {
   answers: Record<number, number>;
   onRetry: () => void;
-  userData: { name: string; email: string } | null;
+  nickname: string;
+};
+
+const formatDisplayName = (nickname: string) => {
+  const trimmed = nickname.trim() || 'あなた';
+  return trimmed.endsWith('さん') ? trimmed : `${trimmed}さん`;
+};
+
+const safeFilenamePart = (value: string) => {
+  const normalized = value
+    .normalize('NFKC')
+    .replace(/[\\/:*?"<>|]/g, '_')
+    .replace(/\p{Cc}/gu, '_')
+    .replace(/\s+/g, '_')
+    .replace(/[. ]+$/g, '')
+    .slice(0, 50);
+  return normalized || 'じょうずかん';
+};
+
+const downloadBlob = (blob: Blob, filename: string) => {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 
 const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
@@ -94,18 +118,16 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
   );
 };
 
-export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
+export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
   const [loading, setLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
-  const hasSentData = useRef(false);
-
-  // userData will be used in Phase 2 for email functionality
-  console.log("User data:", userData);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
 
   const { animal, scores, comment } = useMemo(() => {
     const s = calculateScores(answers);
     const a = determineAnimal(s);
-    const c = generateAIComment(s, a);
+    const c = generateAIComment(s);
     return { animal: a, scores: s, comment: c };
   }, [answers]);
 
@@ -120,56 +142,75 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
   }, [scores]);
 
   useEffect(() => {
-    // Send data to GAS (only once)
-    if (!hasSentData.current && userData) {
-      hasSentData.current = true;
-
-      const send = (cards?: { animalCard: string; legendCard: string }) => {
-        const payload = {
-          name: userData.name,
-          email: userData.email,
-          animal: animal.name,
-          scores: scores,
-          // 正方形カード画像（base64、data URLプレフィックス除去済み）
-          animalCard: cards ? cards.animalCard.split(',')[1] : undefined,
-          legendCard: cards ? cards.legendCard.split(',')[1] : undefined,
-        };
-        fetch(GAS_URL, {
-          method: 'POST',
-          mode: 'no-cors', // Important for GAS
-          headers: {
-            'Content-Type': 'text/plain', // Avoid preflight
-          },
-          body: JSON.stringify(payload),
-        }).then(() => {
-          console.log('Result sent to Google Sheets');
-        }).catch(err => {
-          console.error('Failed to send result:', err);
-        });
-      };
-
-      // カード生成に失敗してもデータ送信自体は行う
-      generateResultCards(animal, scores, episodes)
-        .then(send)
-        .catch(err => {
-          console.error('Card generation failed, sending without cards:', err);
-          send();
-        });
-    }
-
     const timer = setTimeout(() => setLoading(false), 2500);
     return () => clearTimeout(timer);
-  }, []); // Empty dependency array ensures run once on mount
-
-  if (loading) {
-    return <LoadingView />;
-  }
+  }, []);
 
   // Helper for 3-part title
   // animal.name format: 「Catchphrase」じょうずなAnimalName
   const nameParts = animal.name.split('じょうずな');
   const catchphraseMain = nameParts[0] ? nameParts[0].replace(/[「」]/g, '') : '';
   const animalNameOnly = nameParts[1] || animal.name;
+  const displayName = formatDisplayName(nickname);
+  const mainFeatures = [
+    `${catchphraseMain}を活かせる`,
+    `${topStrengths[0]}が自然に表れる`,
+  ];
+  const recommendation = `今日の仕事で「${topStrengths[0]}」を活かせる小さな一歩を決め、身近な人に声をかけてみましょう。`;
+
+  const handleSaveImage = async () => {
+    if (isSaving) return;
+
+    setIsSaving(true);
+    setSaveMessage('保存用の画像を作成しています…');
+
+    try {
+      const blob = await generateResultCard(animal, {
+        displayName,
+        summary: animal.description,
+        features: mainFeatures,
+        strengths: topStrengths,
+        recommendation,
+      });
+      const filename = `${safeFilenamePart(nickname)}_${safeFilenamePart(animal.name)}タイプ_診断結果.png`;
+      const file = new File([blob], filename, { type: 'image/png' });
+      const isMobileLike = window.matchMedia('(pointer: coarse)').matches
+        || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const canShareFile = isMobileLike
+        && typeof navigator.share === 'function'
+        && typeof navigator.canShare === 'function'
+        && navigator.canShare({ files: [file] });
+
+      if (canShareFile) {
+        try {
+          await navigator.share({
+            title: 'じょうずかん 診断結果',
+            text: `${displayName}の診断結果`,
+            files: [file],
+          });
+          setSaveMessage('共有メニューへ診断結果を渡しました。');
+          return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'AbortError') {
+            setSaveMessage('共有をキャンセルしました。');
+            return;
+          }
+        }
+      }
+
+      downloadBlob(blob, filename);
+      setSaveMessage('PNG画像を保存しました。');
+    } catch (error) {
+      console.error('Result card generation failed:', error);
+      setSaveMessage('画像を保存できませんでした。もう一度お試しください。');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (loading) {
+    return <LoadingView />;
+  }
 
   return (
     <motion.div
@@ -190,7 +231,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           position: 'relative'
         }}>
-          あなたのタイプは...
+          {displayName}のタイプは...
           {/* Simple balloon pointer */}
           <div style={{
             position: 'absolute',
@@ -238,6 +279,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
               alt={animal.name}
               style={{
                 width: '180%', // Approximating 2x size relative to container
+                maxWidth: 'calc(100vw - 32px)',
                 height: '180%',
                 objectFit: 'contain',
                 filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.15))'
@@ -278,17 +320,66 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
         </motion.div>
       </div>
 
-      {/* ③ 診断結果タイトル (3段構成) */}
-      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#8D7456', marginBottom: '0.2rem' }}>
-          『{catchphraseMain}』<br />じょうずな
+      {/* ③ ニックネーム入り診断結果タイトル */}
+      <div style={{ textAlign: 'center', margin: '0 auto 2rem', maxWidth: '680px' }}>
+        <h1 style={{ fontSize: 'clamp(1.35rem, 4vw, 1.8rem)', fontWeight: 'bold', color: '#5D4037', lineHeight: 1.6 }}>
+          {displayName}のタイプは、<br />
+          <span style={{ color: '#D97706' }}>{animal.name}タイプです</span>
+        </h1>
+        <div style={{ marginTop: '0.9rem', fontSize: '0.85rem', fontWeight: 'bold', color: '#8D7456' }}>
+          診断タイプ
         </div>
-        <div style={{ fontSize: '2.4rem', fontWeight: '900', color: '#D97706', lineHeight: 1.2, marginTop: '0.5rem' }}>
+        <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#D97706', lineHeight: 1.2 }}>
           {animalNameOnly}
         </div>
       </div>
 
-      {/* ④ 上図鑑博士からの解説 (Doctor) */}
+      {/* ④ 診断結果の要約 */}
+      <section
+        aria-labelledby="result-summary-title"
+        style={{
+          maxWidth: '600px',
+          margin: '0 auto 3rem',
+          background: 'rgba(255,255,255,0.92)',
+          borderRadius: '24px',
+          padding: '1.5rem',
+          boxShadow: '0 5px 16px rgba(93,64,55,0.08)',
+        }}
+      >
+        <h2 id="result-summary-title" style={{ fontSize: '1.25rem', color: '#B45309', marginBottom: '0.7rem' }}>
+          診断結果の要約
+        </h2>
+        <p style={{ margin: '0 0 1.3rem', lineHeight: 1.8, fontSize: '0.95rem' }}>
+          {animal.description}
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.9rem' }}>
+          <div style={{ background: '#FFF7E0', borderRadius: '16px', padding: '1rem' }}>
+            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>主な特徴</h3>
+            <ul style={{ margin: 0, paddingLeft: '1.2rem', lineHeight: 1.8, fontSize: '0.92rem' }}>
+              {mainFeatures.map((feature) => <li key={feature}>{feature}</li>)}
+            </ul>
+          </div>
+
+          <div style={{ background: '#FFF7E0', borderRadius: '16px', padding: '1rem' }}>
+            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>強み</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+              {topStrengths.map((strength) => (
+                <span key={strength} style={{ background: 'white', border: '1px solid #F2C66D', borderRadius: '999px', padding: '0.35rem 0.65rem', fontSize: '0.85rem', fontWeight: 'bold' }}>
+                  {strength}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: '0.9rem', background: '#F7F1E4', borderRadius: '16px', padding: '1rem' }}>
+          <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.45rem' }}>おすすめの行動</h3>
+          <p style={{ margin: 0, lineHeight: 1.7, fontSize: '0.92rem' }}>{recommendation}</p>
+        </div>
+      </section>
+
+      {/* ⑤ 上図鑑博士からの解説 (Doctor) */}
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
         {/* Doctor Icon */}
         <div style={{ flexShrink: 0 }}>
@@ -458,19 +549,8 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
       {/* ⑦ アクションボタン (Actions) */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
         <button
-          onClick={() => {
-            generateResultCards(animal, scores, episodes).then(cards => {
-              [
-                { url: cards.animalCard, file: `jouzukan_${animal.id}_result.png` },
-                { url: cards.legendCard, file: `jouzukan_${animal.id}_legend.png` },
-              ].forEach(({ url, file }) => {
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = file;
-                a.click();
-              });
-            }).catch(err => console.error('Card generation failed:', err));
-          }}
+          onClick={handleSaveImage}
+          disabled={isSaving}
           style={{
             width: '280px',
             padding: '1rem',
@@ -480,23 +560,23 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             borderRadius: '9999px',
             background: '#F4C430',
             color: '#5D4037',
-            cursor: 'pointer',
-            boxShadow: '0 4px 0 #D9A300'
+            cursor: isSaving ? 'wait' : 'pointer',
+            opacity: isSaving ? 0.7 : 1,
+            boxShadow: '0 4px 0 #D9A300',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
           }}
         >
-          画像を保存
+          <Download size={20} /> {isSaving ? '画像を作成中…' : '結果を画像で保存する'}
         </button>
 
-        <button
-          className="btn-outline"
-          style={{
-            width: '280px',
-            padding: '0.8rem',
-            background: 'rgba(255,255,255,0.8)'
-          }}
-        >
-          <Share2 size={20} /> SNSでシェアする
-        </button>
+        {saveMessage && (
+          <p role="status" aria-live="polite" style={{ margin: '-0.2rem 0 0', color: '#6B5439', fontSize: '0.85rem' }}>
+            {saveMessage}
+          </p>
+        )}
 
         <button
           onClick={onRetry}
@@ -504,7 +584,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, userData }) => {
             background: 'none', border: 'none', textDecoration: 'underline', color: '#666', marginTop: '1rem', cursor: 'pointer'
           }}
         >
-          トップに戻る
+          もう一度診断する
         </button>
       </div>
 
