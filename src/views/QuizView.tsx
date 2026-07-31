@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { QUESTIONS } from '../data/questions';
+import { useLanguage } from '../i18n/LanguageContext';
+import { QUESTION_TEXT_EN, QUIZ_COPY } from '../i18n/content';
 
 type Props = {
   onFinish: (answers: Record<number, number>) => void;
@@ -15,22 +17,30 @@ const OPTIONS = [
 ];
 
 export const QuizView: React.FC<Props> = ({ onFinish }) => {
+  const { language } = useLanguage();
+  const copy = QUIZ_COPY[language];
+  const questions = language === 'ja'
+    ? QUESTIONS
+    : QUESTIONS.map((question) => ({
+      ...question,
+      text: QUESTION_TEXT_EN[question.id] ?? question.text,
+    }));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
 
   const handleAnswer = (value: number) => {
-    const questionId = QUESTIONS[currentIndex].id;
+    const questionId = questions[currentIndex].id;
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
 
-    if (currentIndex < QUESTIONS.length - 1) {
+    if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       onFinish(newAnswers);
     }
   };
 
-  const progress = ((currentIndex) / QUESTIONS.length) * 100;
+  const progress = ((currentIndex) / questions.length) * 100;
 
   return (
     <div className="quiz-view" style={{
@@ -69,7 +79,7 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
         maxWidth: '500px', // Restrict max width of the card stack
         margin: '0 auto',
       }}>
-        {QUESTIONS.map((question, index) => {
+        {questions.map((question, index) => {
           // Determine the visual state of the card
           let state = 'future';
           if (index === currentIndex) state = 'active';
@@ -174,7 +184,7 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
               }}>
                 <img
                   src={question.image}
-                  alt="illustration"
+                  alt={copy.illustrationAlt}
                   style={{
                     maxWidth: '100%',
                     maxHeight: '200px', // Constrain height
@@ -228,7 +238,7 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
                         boxShadow: '0 4px 12px rgba(0,0,0,0.1)', // Anti-gravity
                         pointerEvents: index === currentIndex ? 'auto' : 'none' // Prevent clicks on background cards
                       }}
-                      aria-label={`Option ${option.value}`}
+                      aria-label={copy.optionLabel(option.value)}
                     />
                   ))}
                 </div>
@@ -247,9 +257,10 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
                     fontWeight: 'bold',
                     fontSize: '0.9rem',
                     textAlign: 'center',
-                    lineHeight: 1.4
+                    lineHeight: 1.4,
+                    whiteSpace: 'pre-line'
                   }}>
-                    そう<br />思わない
+                    {copy.disagree}
                   </div>
 
                   {/* Right Label */}
@@ -260,7 +271,7 @@ export const QuizView: React.FC<Props> = ({ onFinish }) => {
                     textAlign: 'center',
                     lineHeight: 1.4
                   }}>
-                    そう思う
+                    {copy.agree}
                   </div>
                 </div>
               </div>

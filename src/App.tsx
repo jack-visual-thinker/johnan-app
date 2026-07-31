@@ -7,6 +7,7 @@ import { EncyclopediaView } from './views/EncyclopediaView';
 import { FAQView } from './views/FAQView';
 import { QuizView } from './views/QuizView';
 import { ResultView } from './views/ResultView';
+import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 
 type Page = 'start' | 'terms' | 'about' | 'encyclopedia' | 'faq' | 'quiz' | 'result';
 
@@ -20,7 +21,8 @@ const getStoredNickname = () => {
   }
 };
 
-function App() {
+function AppContent() {
+  const { language } = useLanguage();
   const [currentPage, setCurrentPage] = useState<Page>('start');
   const [nickname, setNickname] = useState(getStoredNickname);
   const [hasAgreed, setHasAgreed] = useState(false);
@@ -92,9 +94,17 @@ function App() {
       {currentPage === 'result' && <ResultView answers={answers} onRetry={handleRetry} nickname={nickname} />}
 
       <footer style={{ marginTop: '2rem', fontSize: '0.8rem', color: '#AAA', textAlign: 'center', paddingBottom: '2rem' }}>
-        &copy; JOJOEN 飼育委員会
+        &copy; JOJOEN {language === 'ja' ? '飼育委員会' : 'Jouzukan Team'}
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

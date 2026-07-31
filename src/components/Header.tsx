@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import './Header.css';
+import { useLanguage } from '../i18n/LanguageContext';
+import { HEADER_COPY } from '../i18n/content';
 
 type Props = {
   onNavigate: (page: string) => void;
@@ -9,12 +11,14 @@ type Props = {
 
 export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { language, setLanguage } = useLanguage();
+  const copy = HEADER_COPY[language];
 
   const menuItems = [
-    { id: 'about', label: 'じょうずかんとは？' },
-    { id: 'start', label: '診断する' },
-    { id: 'encyclopedia', label: '愉快な仲間たちの動物集' },
-    { id: 'faq', label: 'FAQ' },
+    { id: 'about', label: copy.items.about },
+    { id: 'start', label: copy.items.start },
+    { id: 'encyclopedia', label: copy.items.encyclopedia },
+    { id: 'faq', label: copy.items.faq },
   ];
 
   const handleMenuClick = (pageId: string) => {
@@ -60,13 +64,34 @@ export const Header: React.FC<Props> = ({ onNavigate, currentPage }) => {
           <img src="/johzukan-hedder.png" alt="じょうずかん" className="logo" />
         </div>
 
-        <button
-          className="menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="メニュー"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="header-actions">
+          <div className="language-switcher" role="group" aria-label="Language">
+            <button
+              type="button"
+              className={language === 'ja' ? 'active' : ''}
+              onClick={() => setLanguage('ja')}
+              aria-pressed={language === 'ja'}
+            >
+              日本語
+            </button>
+            <button
+              type="button"
+              className={language === 'en' ? 'active' : ''}
+              onClick={() => setLanguage('en')}
+              aria-pressed={language === 'en'}
+            >
+              English
+            </button>
+          </div>
+
+          <button
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={copy.menuLabel}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
 
       {menuOpen && (

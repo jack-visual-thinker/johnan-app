@@ -1,7 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/LanguageContext';
+import { LOADING_COPY } from '../i18n/content';
 
 export const LoadingView: React.FC = () => {
+  const { language } = useLanguage();
+  const copy = LOADING_COPY[language];
+
   return (
     <div className="loading-view" style={{ 
       padding: '2rem 0',
@@ -27,14 +32,14 @@ export const LoadingView: React.FC = () => {
       />
       
       <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#2C3E50' }}>
-        歴史を紐解いています...
+        {copy.title}
       </h2>
       <p style={{ color: '#7F8C8D' }}>
-        あなたの魂に近いレジェンドを探しています
+        {copy.body}
       </p>
 
       <footer style={{ marginTop: '4rem', color: '#AAA', fontSize: '0.8rem' }}>
-        &copy; JOJOEN 飼育委員会
+        &copy; JOJOEN {language === 'ja' ? '飼育委員会' : 'Jouzukan Team'}
       </footer>
     </div>
   );

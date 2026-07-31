@@ -1,4 +1,5 @@
 import type { AnimalType } from '../data/types';
+import type { Language } from '../i18n/LanguageContext';
 
 const WIDTH = 1080;
 const HEIGHT = 1350;
@@ -21,6 +22,18 @@ export type ResultCardContent = {
   features: string[];
   strengths: string[];
   recommendation: string;
+  language: Language;
+  labels: {
+    brand: string;
+    typeLine: (name: string) => string;
+    typeResult: (typeName: string) => string;
+    diagnosisType: string;
+    summary: string;
+    features: string;
+    strengths: string;
+    recommendation: string;
+    footer: string;
+  };
 };
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -60,11 +73,16 @@ function wrapText(
   const lines: string[] = [];
   let currentLine = '';
 
-  for (const character of Array.from(text.replace(/\s+/g, ' ').trim())) {
-    const candidate = currentLine + character;
+  const normalizedText = text.replace(/\s+/g, ' ').trim();
+  const tokens = normalizedText.includes(' ')
+    ? normalizedText.split(/(\s+)/).filter(Boolean)
+    : Array.from(normalizedText);
+
+  for (const token of tokens) {
+    const candidate = currentLine + token;
     if (currentLine && ctx.measureText(candidate).width > maxWidth) {
       lines.push(currentLine.trim());
-      currentLine = character;
+      currentLine = token.trimStart();
       if (lines.length === maxLines) break;
     } else {
       currentLine = candidate;
@@ -77,7 +95,7 @@ function wrapText(
 
   if (lines.length === maxLines) {
     const joinedLength = lines.join('').length;
-    const sourceLength = Array.from(text.replace(/\s+/g, ' ').trim()).length;
+    const sourceLength = Array.from(normalizedText).length;
     if (joinedLength < sourceLength) {
       let lastLine = lines[maxLines - 1];
       while (lastLine && ctx.measureText(`${lastLine}…`).width > maxWidth) {
@@ -203,7 +221,7 @@ export async function generateResultCard(
   ctx.font = `bold 28px ${FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('動物診断アプリ じょうずかん', WIDTH / 2, 65);
+  ctx.fillText(content.labels.brand, WIDTH / 2, 65);
 
   // ニックネーム入りタイトル
   roundedRect(ctx, 64, 118, WIDTH - 128, 230, 42);
@@ -213,10 +231,10 @@ export async function generateResultCard(
   ctx.font = `bold 43px ${FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText(`${content.displayName}のタイプは、`, WIDTH / 2, 150);
+  ctx.fillText(content.labels.typeLine(content.displayName), WIDTH / 2, 150);
   ctx.fillStyle = COLORS.orangeDeep;
   ctx.font = `900 49px ${FONT}`;
-  drawWrappedText(ctx, `${animal.name}タイプです`, WIDTH / 2, 215, WIDTH - 220, 62, 2, 'center');
+  drawWrappedText(ctx, content.labels.typeResult(animal.name), WIDTH / 2, 215, WIDTH - 220, 62, 2, 'center');
 
   // タイプを表すイラスト
   ctx.save();
@@ -241,18 +259,21 @@ export async function generateResultCard(
   ctx.font = `bold 28px ${FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('あなたの診断タイプ', WIDTH / 2, 655);
+  ctx.fillText(content.labels.diagnosisType, WIDTH / 2, 655);
 
   // 要約・特徴・強み・おすすめ行動
+  const bodyFontSize = content.language === 'en' ? 24 : 28;
+  const bullet = content.language === 'en' ? '• ' : '・';
+
   drawSection(ctx, {
     x: 64,
     y: 680,
     width: WIDTH - 128,
     height: 200,
-    title: '診断結果の要約',
+    title: content.labels.summary,
     body: content.summary,
-    bodyFontSize: 28,
-    maxLines: 3,
+    bodyFontSize,
+    maxLines: content.language === 'en' ? 4 : 3,
   });
 
   drawSection(ctx, {
@@ -260,9 +281,9 @@ export async function generateResultCard(
     y: 895,
     width: 456,
     height: 184,
-    title: '主な特徴',
-    body: content.features.slice(0, 2).map((feature) => `・${feature}`).join('  '),
-    bodyFontSize: 28,
+    title: content.labels.features,
+    body: content.features.slice(0, 2).map((feature) => `${bullet}${feature}`).join('  '),
+    bodyFontSize,
     maxLines: 3,
   });
 
@@ -271,9 +292,9 @@ export async function generateResultCard(
     y: 895,
     width: 456,
     height: 184,
-    title: '強み',
-    body: content.strengths.slice(0, 3).map((strength) => `・${strength}`).join('  '),
-    bodyFontSize: 28,
+    title: content.labels.strengths,
+    body: content.strengths.slice(0, 3).map((strength) => `${bullet}${strength}`).join('  '),
+    bodyFontSize,
     maxLines: 3,
   });
 
@@ -282,17 +303,17 @@ export async function generateResultCard(
     y: 1102,
     width: WIDTH - 128,
     height: 168,
-    title: 'おすすめの行動',
+    title: content.labels.recommendation,
     body: content.recommendation,
-    bodyFontSize: 28,
-    maxLines: 2,
+    bodyFontSize,
+    maxLines: content.language === 'en' ? 3 : 2,
   });
 
   ctx.fillStyle = COLORS.brownSoft;
   ctx.font = `bold 25px ${FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('今日の自分を知る、対話のきっかけに。', WIDTH / 2, 1313);
+  ctx.fillText(content.labels.footer, WIDTH / 2, 1313);
 
   return canvasToBlob(canvas);
 }

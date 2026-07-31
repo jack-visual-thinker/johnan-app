@@ -4,6 +4,8 @@ import { AlertCircle, User } from 'lucide-react';
 import startBtnImg from '../assets/button.png';
 import headerTitleImg from '../assets/title3.png';
 import { FloatingIcons } from '../components/FloatingIcons';
+import { useLanguage } from '../i18n/LanguageContext';
+import { START_COPY } from '../i18n/content';
 
 const assetSrc = (asset: string | { src: string }) =>
   typeof asset === 'string' ? asset : asset.src;
@@ -25,6 +27,8 @@ export const NewStartView: React.FC<Props> = ({
   onShowTerms,
   onStart,
 }) => {
+  const { language } = useLanguage();
+  const copy = START_COPY[language];
   const [nicknameError, setNicknameError] = useState(false);
   const [agreementError, setAgreementError] = useState(false);
 
@@ -94,22 +98,46 @@ export const NewStartView: React.FC<Props> = ({
         transition={{ duration: 0.8 }}
       >
         <p style={{ margin: '0 0 0.25rem', color: '#6B5439', fontSize: '0.8rem', fontWeight: 'bold' }}>
-          動物診断アプリ じょうずかん
+          {copy.eyebrow}
         </p>
 
         <div className="start-title-wrap" style={{ marginBottom: '-50px', marginTop: '-50px' }}>
-          <img
-            src={assetSrc(headerTitleImg)}
-            alt="あなたはどのレジェンドタイプ？"
-            className="title-logo-img"
-            style={{
-              maxWidth: '90%',
-              width: '700px',
-              display: 'block',
-              margin: '0 auto',
-              transform: 'rotate(-2deg)',
-            }}
-          />
+          {language === 'ja' ? (
+            <img
+              src={assetSrc(headerTitleImg)}
+              alt={copy.heroAlt}
+              className="title-logo-img"
+              style={{
+                maxWidth: '90%',
+                width: '700px',
+                display: 'block',
+                margin: '0 auto',
+                transform: 'rotate(-2deg)',
+              }}
+            />
+          ) : (
+            <h1
+              className="title-logo-img"
+              style={{
+                maxWidth: '90%',
+                width: '700px',
+                margin: '0 auto',
+                minHeight: '150px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#6B5439',
+                fontSize: 'clamp(2rem, 8vw, 4.2rem)',
+                lineHeight: 1.05,
+                fontWeight: 900,
+                letterSpacing: '-0.035em',
+                transform: 'rotate(-2deg)',
+                textShadow: '0 3px 0 rgba(255,255,255,0.55)',
+              }}
+            >
+              {copy.heroTitle}
+            </h1>
+          )}
         </div>
 
         <div
@@ -130,11 +158,11 @@ export const NewStartView: React.FC<Props> = ({
           }}
         >
           <p style={{ marginBottom: '0.4rem', fontWeight: 'bold' }}>
-            JOHNAN（ジョウナン）の長い歴史の中には、今の私たちを作ってくれた『レジェンド』たちがいます。
+            {copy.introLead}
           </p>
           <p style={{ margin: 0 }}>
-            あなたの性格は、歴史上の誰に似ているかな？<br />
-            質問に答えて、あなたの中に眠るレジェンドの魂を見つけよう！
+            {copy.introBody}<br />
+            {copy.introBodySecond}
           </p>
         </div>
 
@@ -164,7 +192,7 @@ export const NewStartView: React.FC<Props> = ({
                 letterSpacing: '0.05em',
               }}
             >
-              ニックネームだけで診断できます
+              {copy.formTitle}
             </h1>
 
             <div style={{ marginBottom: '0.8rem' }}>
@@ -179,7 +207,7 @@ export const NewStartView: React.FC<Props> = ({
                 }}
               >
                 <User size={16} style={{ verticalAlign: 'middle', marginRight: '0.3rem' }} />
-                ニックネーム
+                {copy.nickname}
               </label>
               <input
                 id="nickname"
@@ -187,7 +215,7 @@ export const NewStartView: React.FC<Props> = ({
                 value={nickname}
                 maxLength={30}
                 autoComplete="off"
-                placeholder="例：ジャック"
+                placeholder={copy.nicknamePlaceholder}
                 aria-invalid={nicknameError}
                 aria-describedby={nicknameError ? 'nickname-error' : undefined}
                 onChange={(event) => {
@@ -208,7 +236,7 @@ export const NewStartView: React.FC<Props> = ({
               />
               {nicknameError && (
                 <p id="nickname-error" role="alert" style={{ color: '#FFE2E2', fontSize: '0.8rem', margin: '0.4rem 0 0', fontWeight: 'bold' }}>
-                  ニックネームを入力してください
+                  {copy.nicknameError}
                 </p>
               )}
             </div>
@@ -237,6 +265,7 @@ export const NewStartView: React.FC<Props> = ({
                 style={{ width: '20px', height: '20px', margin: 0, accentColor: '#F4C430', flexShrink: 0 }}
               />
               <span style={{ fontSize: '0.9rem', lineHeight: 1.45 }}>
+                {language === 'en' && copy.agreement}
                 <button
                   type="button"
                   onClick={(event) => {
@@ -255,15 +284,15 @@ export const NewStartView: React.FC<Props> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  利用規約
+                  {copy.terms}
                 </button>
-                を確認し、同意します
+                {language === 'ja' && copy.agreement}
               </span>
             </label>
 
             {agreementError && (
               <p role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#FFE2E2', fontSize: '0.8rem', margin: '0.4rem 0 0', fontWeight: 'bold' }}>
-                <AlertCircle size={15} /> 利用規約への同意が必要です
+                <AlertCircle size={15} /> {copy.agreementError}
               </p>
             )}
           </div>
@@ -284,12 +313,36 @@ export const NewStartView: React.FC<Props> = ({
               opacity: canStart ? 1 : 0.55,
             }}
           >
-            <img
-              src={assetSrc(startBtnImg)}
-              alt="診断を始める"
-              className="start-btn"
-              style={{ width: '100%', maxWidth: '280px', display: 'block' }}
-            />
+            {language === 'ja' ? (
+              <img
+                src={assetSrc(startBtnImg)}
+                alt={copy.start}
+                className="start-btn"
+                style={{ width: '100%', maxWidth: '280px', display: 'block' }}
+              />
+            ) : (
+              <span
+                className="start-btn"
+                style={{
+                  width: '280px',
+                  maxWidth: 'calc(100vw - 48px)',
+                  minHeight: '68px',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '999px',
+                  boxSizing: 'border-box',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: '#F4C430',
+                  color: '#5D4037',
+                  fontSize: '1.15rem',
+                  fontWeight: 900,
+                  boxShadow: '0 6px 0 #C99D19',
+                }}
+              >
+                {copy.start}
+              </span>
+            )}
           </button>
         </form>
       </motion.div>

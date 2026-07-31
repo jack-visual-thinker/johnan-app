@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import { TERMS_COPY } from '../i18n/content';
 
 type Props = {
   initialAgreed: boolean;
@@ -8,43 +10,10 @@ type Props = {
   onBack: () => void;
 };
 
-// 大切な箇所を強調する太字ヘルパー
-const B: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <strong style={{ fontWeight: 700, color: '#C05621' }}>{children}</strong>
-);
-
-// 使用上の注意点（ラベリング問題の解決案として伝える内容）
-const NOTICES: { img: string; title: string; body: React.ReactNode }[] = [
-  {
-    img: '/images/terms/hojosen.png',
-    title: 'タイプ分類は「補助線」です',
-    body: (
-      <>
-        この診断のラベリング（タイプ分類）は、<B>あなたを決めつけるものではありません</B>。
-        お互いを理解するための<B>「補助線」</B>、<B>対話のきっかけ</B>として使ってください。
-      </>
-    ),
-  },
-  {
-    img: '/images/terms/omikuji.png',
-    title: 'おみくじのようなものです',
-    body: (
-      <>
-        結果は、その時どきの<B>暫定的なもの</B>。<B>正確にあなたを言い当てるものではありません</B>。
-        気分や状況で変わる「今日のあなた」を映すおみくじ感覚で楽しんでください。
-      </>
-    ),
-  },
-  {
-    img: '/images/terms/data.png',
-    title: '入力内容は診断中だけ使います',
-    body: (
-      <>
-        ニックネームと回答内容は、診断結果の表示と画像作成に必要な範囲でのみ使います。
-        <B>アカウントとの紐づけや、診断履歴の保存は行いません</B>。
-      </>
-    ),
-  },
+const NOTICE_IMAGES = [
+  '/images/terms/hojosen.png',
+  '/images/terms/omikuji.png',
+  '/images/terms/data.png',
 ];
 
 // 注意点イラスト（座布団＝丸角の背景パッドの上にアイコンを大きく乗せる）
@@ -66,6 +35,8 @@ const Art: React.FC<{ src: string; size?: number }> = ({ src, size = 130 }) => (
 );
 
 export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) => {
+  const { language } = useLanguage();
+  const copy = TERMS_COPY[language];
   const [agreed, setAgreed] = useState(initialAgreed);
   const [showError, setShowError] = useState(false);
 
@@ -107,10 +78,10 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
             marginBottom: '0.3rem',
           }}
         >
-          診断をはじめる前に
+          {copy.title}
         </h2>
         <p style={{ fontSize: '0.9rem', color: 'var(--color-text-sub)', margin: 0 }}>
-          ＼ 使用上の注意点をチェックしてね ／
+          {copy.intro}
         </p>
       </div>
 
@@ -124,19 +95,19 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
           marginBottom: '1.5rem',
         }}
       >
-        {NOTICES.map((n, i) => (
+        {copy.notices.map(([title, body], i) => (
           <div
-            key={i}
+            key={title}
             style={{
               display: 'flex',
               alignItems: 'flex-start',
               gap: '1rem',
-              paddingBottom: i < NOTICES.length - 1 ? '1.2rem' : 0,
-              marginBottom: i < NOTICES.length - 1 ? '1.2rem' : 0,
-              borderBottom: i < NOTICES.length - 1 ? '1px dashed #EFE7D2' : 'none',
+              paddingBottom: i < copy.notices.length - 1 ? '1.2rem' : 0,
+              marginBottom: i < copy.notices.length - 1 ? '1.2rem' : 0,
+              borderBottom: i < copy.notices.length - 1 ? '1px dashed #EFE7D2' : 'none',
             }}
           >
-            <Art src={n.img} size={130} />
+            <Art src={NOTICE_IMAGES[i]} size={130} />
             <div style={{ flex: 1 }}>
               <div
                 style={{
@@ -146,9 +117,9 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
                   marginBottom: '0.3rem',
                 }}
               >
-                {n.title}
+                {title}
               </div>
-              <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: 1.7 }}>{n.body}</p>
+              <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: 1.7 }}>{body}</p>
             </div>
           </div>
         ))}
@@ -181,7 +152,7 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
           style={{ width: '22px', height: '22px', accentColor: '#D97706', cursor: 'pointer', flexShrink: 0 }}
         />
         <span style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>
-          上記の利用規約を確認し、同意しました
+          {copy.agreement}
         </span>
       </label>
 
@@ -200,7 +171,7 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
             margin: '0 0 0.8rem 0',
           }}
         >
-          <AlertCircle size={16} /> 同意のチェックを入れると診断に進めます
+          <AlertCircle size={16} /> {copy.agreementError}
         </motion.p>
       )}
 
@@ -224,7 +195,7 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
             boxShadow: agreed ? '0 4px 0 #D9A300' : 'none',
           }}
         >
-          同意してホームへ戻る
+          {copy.agreeAndBack}
         </button>
 
         <button
@@ -238,7 +209,7 @@ export const TermsView: React.FC<Props> = ({ initialAgreed, onAgree, onBack }) =
             fontSize: '0.9rem',
           }}
         >
-          同意せずにホームへ戻る
+          {copy.backWithoutAgreeing}
         </button>
       </div>
     </motion.div>

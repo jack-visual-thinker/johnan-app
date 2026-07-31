@@ -1,35 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-
-const faqs = [
-  {
-    question: 'じょうずかんとは何ですか？',
-    answer: 'あなたの得意なことや個性を、動物のタイプとして可視化する診断ツールです。簡単な質問に答えるだけで、あなたらしさを発見できます。'
-  },
-  {
-    question: '診断にはどれくらい時間がかかりますか？',
-    answer: '全18問で、約3分程度で完了します。直感で答えていただくのがおすすめです。'
-  },
-  {
-    question: '入力したニックネームや回答は保存されますか？',
-    answer: 'ニックネームと回答は、現在の診断結果を表示して画像を作るためだけに使います。アカウントや診断履歴としてサーバーに保存することはありません。'
-  },
-  {
-    question: '診断結果はどのように残せますか？',
-    answer: '診断完了後に画面で確認できるほか、要約版を1枚のPNG画像として保存できます。対応するスマートフォンでは共有メニューも利用できます。'
-  },
-  {
-    question: '何度も診断を受けられますか？',
-    answer: 'はい、何度でも診断を受けることができます。時期によって結果が変わることもあるので、定期的に試してみるのも面白いかもしれません。'
-  },
-  {
-    question: '結果が自分に合っていないと感じたら？',
-    answer: 'この診断は、あくまで一つの見方を提供するものです。結果はヒントとして捉え、自己理解を深めるきっかけにしていただければ幸いです。'
-  }
-];
+import { useLanguage } from '../i18n/LanguageContext';
+import { FAQ_COPY } from '../i18n/content';
 
 export const FAQView: React.FC = () => {
+  const { language } = useLanguage();
+  const copy = FAQ_COPY[language];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
@@ -46,7 +23,7 @@ export const FAQView: React.FC = () => {
           marginBottom: '1rem',
           textAlign: 'center'
         }}>
-          よくある質問
+          {copy.title}
         </h1>
 
         <p style={{ 
@@ -55,11 +32,11 @@ export const FAQView: React.FC = () => {
           marginBottom: '3rem',
           lineHeight: 1.8
         }}>
-          じょうずかんについての疑問にお答えします
+          {copy.intro}
         </p>
 
         <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-          {faqs.map((faq, index) => (
+          {copy.items.map(([question, answer], index) => (
             <div 
               key={index}
               className="card"
@@ -82,7 +59,7 @@ export const FAQView: React.FC = () => {
                   margin: 0,
                   flex: 1
                 }}>
-                  {faq.question}
+                  {question}
                 </h3>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
@@ -109,7 +86,7 @@ export const FAQView: React.FC = () => {
                       lineHeight: 1.8,
                       fontSize: '0.95rem'
                     }}>
-                      {faq.answer}
+                      {answer}
                     </p>
                   </motion.div>
                 )}
@@ -133,8 +110,7 @@ export const FAQView: React.FC = () => {
             lineHeight: 1.8,
             marginBottom: '0.5rem'
           }}>
-            その他のご質問がありましたら、<br />
-            お気軽にお問い合わせください。
+            {copy.closing}
           </p>
         </div>
       </motion.div>

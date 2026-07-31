@@ -37,6 +37,45 @@
   object-fit: contain;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.language-switcher {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.language-switcher button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  background: transparent;
+  color: white;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.language-switcher button.active {
+  background: var(--color-btn-yellow);
+  color: #5D4037;
+  box-shadow: 0 1px 4px rgba(52, 35, 20, 0.18);
+}
+
+.language-switcher button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
 .menu-button {
   background-color: var(--color-btn-yellow);
   /* Updated to match Start Screen */
@@ -164,4 +203,33 @@
 /* Add spacing for fixed header */
 .app-container {
   padding-top: 80px;
+}
+
+@media (max-width: 560px) {
+  .app-header {
+    padding: 0 0.75rem;
+  }
+
+  .logo-container {
+    height: 48px;
+    min-width: 0;
+  }
+
+  .logo {
+    max-width: 130px;
+  }
+
+  .header-actions {
+    gap: 0.45rem;
+  }
+
+  .language-switcher button {
+    padding: 0.42rem 0.5rem;
+    font-size: 0.68rem;
+  }
+
+  .menu-button {
+    width: 42px;
+    height: 42px;
+  }
 }

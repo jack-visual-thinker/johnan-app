@@ -1,8 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Compass, Sparkles } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import { ABOUT_COPY } from '../i18n/content';
 
 export const AboutView: React.FC = () => {
+  const { language } = useLanguage();
+  const copy = ABOUT_COPY[language];
+  const icons = [Heart, Compass, Sparkles];
+
   return (
     <div className="about-view" style={{ paddingBottom: '4rem' }}>
       <motion.div
@@ -17,47 +23,21 @@ export const AboutView: React.FC = () => {
           marginBottom: '2rem',
           textAlign: 'center'
         }}>
-          じょうずかんとは？
+          {copy.title}
         </h1>
 
-        <div className="card" style={{ marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <Heart size={28} color="var(--color-primary)" style={{ marginRight: '1rem' }} />
-            <h2 style={{ fontSize: '1.5rem', margin: 0 }}>
-              あなたらしさを、動物で見える化
-            </h2>
-          </div>
-          <p style={{ lineHeight: 1.8, color: 'var(--color-text-sub)' }}>
-            「じょうずかん」は、あなたの得意なこと、あなたらしさを発見するための診断ツールです。
-            簡単な質問に直感で答えるだけで、あなたの性格や個性を動物のタイプとして可視化します。
-          </p>
-        </div>
-
-        <div className="card" style={{ marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <Compass size={28} color="var(--color-primary)" style={{ marginRight: '1rem' }} />
-            <h2 style={{ fontSize: '1.5rem', margin: 0 }}>
-              自己理解を深めるきっかけに
-            </h2>
-          </div>
-          <p style={{ lineHeight: 1.8, color: 'var(--color-text-sub)' }}>
-            診断結果は、あなたの強みや個性を再発見するヒントになります。
-            自分では気づかなかった一面や、大切にしている価値観が見えてくるかもしれません。
-          </p>
-        </div>
-
-        <div className="card">
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <Sparkles size={28} color="var(--color-primary)" style={{ marginRight: '1rem' }} />
-            <h2 style={{ fontSize: '1.5rem', margin: 0 }}>
-              楽しみながら、学ぶ
-            </h2>
-          </div>
-          <p style={{ lineHeight: 1.8, color: 'var(--color-text-sub)' }}>
-            診断は楽しく、気軽に。でも、その結果には意味があります。
-            仲間とシェアして、お互いの個性を理解し合う機会にもなります。
-          </p>
-        </div>
+        {copy.sections.map((section, index) => {
+          const Icon = icons[index];
+          return (
+            <div key={section.title} className="card" style={{ marginBottom: index < copy.sections.length - 1 ? '2rem' : undefined }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                <Icon size={28} color="var(--color-primary)" style={{ marginRight: '1rem', flexShrink: 0 }} />
+                <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{section.title}</h2>
+              </div>
+              <p style={{ lineHeight: 1.8, color: 'var(--color-text-sub)' }}>{section.body}</p>
+            </div>
+          );
+        })}
 
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <p style={{ 
@@ -65,8 +45,12 @@ export const AboutView: React.FC = () => {
             fontWeight: '600',
             color: 'var(--color-text)'
           }}>
-            さぁ、あなたの中に眠る動物を<br />
-            見つけに行きましょう！
+            {copy.closing.split('\n').map((line, index) => (
+              <React.Fragment key={line}>
+                {index > 0 && <br />}
+                {line}
+              </React.Fragment>
+            ))}
           </p>
         </div>
       </motion.div>

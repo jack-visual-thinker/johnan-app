@@ -1,8 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ANIMAL_TYPES } from '../data/types';
+import { useLanguage } from '../i18n/LanguageContext';
+import { ENCYCLOPEDIA_COPY, localizeAnimal } from '../i18n/content';
 
 export const EncyclopediaView: React.FC = () => {
+  const { language } = useLanguage();
+  const copy = ENCYCLOPEDIA_COPY[language];
+  const animals = ANIMAL_TYPES.map((animal) => localizeAnimal(animal, language));
+
   return (
     <div className="encyclopedia-view" style={{ paddingBottom: '4rem' }}>
       <motion.div
@@ -17,7 +23,7 @@ export const EncyclopediaView: React.FC = () => {
           marginBottom: '1rem',
           textAlign: 'center'
         }}>
-          〇〇じょうずな仲間たち
+          {copy.title}
         </h1>
 
         <p style={{
@@ -29,7 +35,7 @@ export const EncyclopediaView: React.FC = () => {
           marginLeft: 'auto',
           marginRight: 'auto'
         }}>
-          JOHNANの歴史と価値観を受けつぐ、それぞれに役割と強みをもった「じょうずな動物たち」のご紹介。
+          {copy.intro}
         </p>
 
         <div style={{
@@ -38,7 +44,7 @@ export const EncyclopediaView: React.FC = () => {
           gap: '2rem',
           padding: '0 1rem'
         }}>
-          {ANIMAL_TYPES.map((animal, index) => (
+          {animals.map((animal, index) => (
             <motion.div
               key={animal.id}
               className="card"
@@ -86,8 +92,19 @@ export const EncyclopediaView: React.FC = () => {
                 marginBottom: '0.5rem',
                 lineHeight: 1.4
               }}>
-                {animal.name.split('じょうずな')[0]}じょうずな<br />
-                <span style={{ fontSize: '1.4rem' }}>{animal.name.split('じょうずな')[1] || ''}</span>
+                {language === 'ja' ? (
+                  <>
+                    {animal.name.split('じょうずな')[0]}じょうずな<br />
+                    <span style={{ fontSize: '1.4rem' }}>{animal.name.split('じょうずな')[1] || ''}</span>
+                  </>
+                ) : (
+                  <>
+                    <span style={{ display: 'block', color: '#B45309', fontSize: '0.9rem', marginBottom: '0.35rem' }}>
+                      {animal.catchphrase}
+                    </span>
+                    <span style={{ fontSize: '1.4rem' }}>{animal.name}</span>
+                  </>
+                )}
               </h3>
               <p style={{
                 fontSize: '0.9rem',
@@ -113,8 +130,12 @@ export const EncyclopediaView: React.FC = () => {
             color: 'var(--color-text-sub)',
             lineHeight: 1.8
           }}>
-            すべての動物たちに、それぞれの個性と魅力があります。<br />
-            あなたの周りの人はどのタイプかな？
+            {copy.closing.split('\n').map((line, index) => (
+              <React.Fragment key={line}>
+                {index > 0 && <br />}
+                {line}
+              </React.Fragment>
+            ))}
           </p>
         </div>
       </motion.div>

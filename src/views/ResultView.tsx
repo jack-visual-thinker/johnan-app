@@ -1,11 +1,20 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Download, RefreshCw } from 'lucide-react';
-import { calculateScores, determineAnimal, generateAIComment, PARAM_LABELS } from '../logic/diagnosis';
+import { calculateScores, determineAnimal } from '../logic/diagnosis';
 import { generateResultCard } from '../logic/cardImages';
 import { LEGEND_EPISODES } from '../data/legends';
 import type { ParameterKey } from '../data/questions';
 import { LoadingView } from './LoadingView';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { Language } from '../i18n/LanguageContext';
+import {
+  getDoctorComment,
+  getLegendEpisodes,
+  localizeAnimal,
+  PARAM_LABELS_BY_LANGUAGE,
+  RESULT_COPY,
+} from '../i18n/content';
 
 type Props = {
   answers: Record<number, number>;
@@ -13,8 +22,9 @@ type Props = {
   nickname: string;
 };
 
-const formatDisplayName = (nickname: string) => {
-  const trimmed = nickname.trim() || 'あなた';
+const formatDisplayName = (nickname: string, language: Language, fallbackName: string) => {
+  const trimmed = nickname.trim() || fallbackName;
+  if (language === 'en') return trimmed;
   return trimmed.endsWith('さん') ? trimmed : `${trimmed}さん`;
 };
 
@@ -40,7 +50,14 @@ const downloadBlob = (blob: Blob, filename: string) => {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 
-const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
+const RadarChart = ({
+  data,
+  language,
+}: {
+  data: Record<ParameterKey, number>;
+  language: Language;
+}) => {
+  const parameterLabels = PARAM_LABELS_BY_LANGUAGE[language];
   // Explicitly defining the order here prevents any import/build issues affecting chart rotation.
   // This order ensures 'Warmth' is at 12 o'clock (-90 degrees).
   const keys: ParameterKey[] = [
@@ -109,7 +126,7 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
               fill="#6B7280"
               style={{ fontWeight: 500 }}
             >
-              {PARAM_LABELS[key]}
+              {parameterLabels[key]}
             </text>
           );
         })}
@@ -119,6 +136,8 @@ const RadarChart = ({ data }: { data: Record<ParameterKey, number> }) => {
 };
 
 export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
+  const { language } = useLanguage();
+  const copy = RESULT_COPY[language];
   const [loading, setLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -126,20 +145,21 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
 
   const { animal, scores, comment } = useMemo(() => {
     const s = calculateScores(answers);
-    const a = determineAnimal(s);
-    const c = generateAIComment(s);
+    const a = localizeAnimal(determineAnimal(s), language);
+    const c = getDoctorComment(s, language);
     return { animal: a, scores: s, comment: c };
-  }, [answers]);
+  }, [answers, language]);
 
-  const episodes = LEGEND_EPISODES[animal.id] || [];
+  const episodes = getLegendEpisodes(LEGEND_EPISODES, animal.id, language);
+  const parameterLabels = PARAM_LABELS_BY_LANGUAGE[language];
 
   // Sort scores to find top 3 strengths for the "Connection" text
   const topStrengths = useMemo(() => {
     return (Object.entries(scores) as [ParameterKey, number][])
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
-      .map(([key]) => PARAM_LABELS[key]);
-  }, [scores]);
+      .map(([key]) => parameterLabels[key]);
+  }, [scores, parameterLabels]);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2500);
@@ -148,21 +168,23 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
 
   // Helper for 3-part title
   // animal.name format: 「Catchphrase」じょうずなAnimalName
-  const nameParts = animal.name.split('じょうずな');
-  const catchphraseMain = nameParts[0] ? nameParts[0].replace(/[「」]/g, '') : '';
-  const animalNameOnly = nameParts[1] || animal.name;
-  const displayName = formatDisplayName(nickname);
+  const nameParts = language === 'ja' ? animal.name.split('じょうずな') : [];
+  const catchphraseMain = language === 'ja'
+    ? (nameParts[0] ? nameParts[0].replace(/[「」]/g, '') : '')
+    : animal.catchphrase;
+  const animalNameOnly = language === 'ja' ? (nameParts[1] || animal.name) : animal.name;
+  const displayName = formatDisplayName(nickname, language, copy.fallbackName);
   const mainFeatures = [
-    `${catchphraseMain}を活かせる`,
-    `${topStrengths[0]}が自然に表れる`,
+    copy.featureOne(catchphraseMain),
+    copy.featureTwo(topStrengths[0]),
   ];
-  const recommendation = `今日の仕事で「${topStrengths[0]}」を活かせる小さな一歩を決め、身近な人に声をかけてみましょう。`;
+  const recommendation = copy.recommendationBody(topStrengths[0]);
 
   const handleSaveImage = async () => {
     if (isSaving) return;
 
     setIsSaving(true);
-    setSaveMessage('保存用の画像を作成しています…');
+    setSaveMessage(copy.creating);
 
     try {
       const blob = await generateResultCard(animal, {
@@ -171,8 +193,12 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
         features: mainFeatures,
         strengths: topStrengths,
         recommendation,
+        language,
+        labels: copy.card,
       });
-      const filename = `${safeFilenamePart(nickname)}_${safeFilenamePart(animal.name)}タイプ_診断結果.png`;
+      const filename = language === 'ja'
+        ? `${safeFilenamePart(nickname)}_${safeFilenamePart(animal.name)}タイプ_${copy.filenameSuffix}.png`
+        : `${safeFilenamePart(nickname)}_${safeFilenamePart(animal.name)}_${copy.filenameSuffix}.png`;
       const file = new File([blob], filename, { type: 'image/png' });
       const isMobileLike = window.matchMedia('(pointer: coarse)').matches
         || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -184,25 +210,25 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
       if (canShareFile) {
         try {
           await navigator.share({
-            title: 'じょうずかん 診断結果',
-            text: `${displayName}の診断結果`,
+            title: copy.shareTitle,
+            text: copy.shareText(displayName),
             files: [file],
           });
-          setSaveMessage('共有メニューへ診断結果を渡しました。');
+          setSaveMessage(copy.shared);
           return;
         } catch (error) {
           if (error instanceof DOMException && error.name === 'AbortError') {
-            setSaveMessage('共有をキャンセルしました。');
+            setSaveMessage(copy.shareCancelled);
             return;
           }
         }
       }
 
       downloadBlob(blob, filename);
-      setSaveMessage('PNG画像を保存しました。');
+      setSaveMessage(copy.saved);
     } catch (error) {
       console.error('Result card generation failed:', error);
-      setSaveMessage('画像を保存できませんでした。もう一度お試しください。');
+      setSaveMessage(copy.saveFailed);
     } finally {
       setIsSaving(false);
     }
@@ -231,7 +257,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           position: 'relative'
         }}>
-          {displayName}のタイプは...
+          {copy.typeIntro(displayName)}
           {/* Simple balloon pointer */}
           <div style={{
             position: 'absolute',
@@ -295,7 +321,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
               opacity: 0.7,
               whiteSpace: 'nowrap'
             }}>
-              <RefreshCw size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> タップで能力を見る
+              <RefreshCw size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> {copy.flipHint}
             </div>
           </div>
 
@@ -314,7 +340,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
           }}>
             <div style={{ width: '90%', display: 'flex', justifyContent: 'center' }}>
-              <RadarChart data={scores} />
+              <RadarChart data={scores} language={language} />
             </div>
           </div>
         </motion.div>
@@ -323,11 +349,11 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
       {/* ③ ニックネーム入り診断結果タイトル */}
       <div style={{ textAlign: 'center', margin: '0 auto 2rem', maxWidth: '680px' }}>
         <h1 style={{ fontSize: 'clamp(1.35rem, 4vw, 1.8rem)', fontWeight: 'bold', color: '#5D4037', lineHeight: 1.6 }}>
-          {displayName}のタイプは、<br />
-          <span style={{ color: '#D97706' }}>{animal.name}タイプです</span>
+          {copy.titlePrefix(displayName)}<br />
+          <span style={{ color: '#D97706' }}>{copy.titleResult(animal.name)}</span>
         </h1>
         <div style={{ marginTop: '0.9rem', fontSize: '0.85rem', fontWeight: 'bold', color: '#8D7456' }}>
-          診断タイプ
+          {copy.diagnosisType}
         </div>
         <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#D97706', lineHeight: 1.2 }}>
           {animalNameOnly}
@@ -347,7 +373,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
         }}
       >
         <h2 id="result-summary-title" style={{ fontSize: '1.25rem', color: '#B45309', marginBottom: '0.7rem' }}>
-          診断結果の要約
+          {copy.summary}
         </h2>
         <p style={{ margin: '0 0 1.3rem', lineHeight: 1.8, fontSize: '0.95rem' }}>
           {animal.description}
@@ -355,14 +381,14 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.9rem' }}>
           <div style={{ background: '#FFF7E0', borderRadius: '16px', padding: '1rem' }}>
-            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>主な特徴</h3>
+            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>{copy.features}</h3>
             <ul style={{ margin: 0, paddingLeft: '1.2rem', lineHeight: 1.8, fontSize: '0.92rem' }}>
               {mainFeatures.map((feature) => <li key={feature}>{feature}</li>)}
             </ul>
           </div>
 
           <div style={{ background: '#FFF7E0', borderRadius: '16px', padding: '1rem' }}>
-            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>強み</h3>
+            <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.6rem' }}>{copy.strengths}</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
               {topStrengths.map((strength) => (
                 <span key={strength} style={{ background: 'white', border: '1px solid #F2C66D', borderRadius: '999px', padding: '0.35rem 0.65rem', fontSize: '0.85rem', fontWeight: 'bold' }}>
@@ -374,7 +400,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
         </div>
 
         <div style={{ marginTop: '0.9rem', background: '#F7F1E4', borderRadius: '16px', padding: '1rem' }}>
-          <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.45rem' }}>おすすめの行動</h3>
+          <h3 style={{ color: '#B45309', fontSize: '1rem', marginBottom: '0.45rem' }}>{copy.recommendation}</h3>
           <p style={{ margin: 0, lineHeight: 1.7, fontSize: '0.92rem' }}>{recommendation}</p>
         </div>
       </section>
@@ -391,7 +417,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            <img src="/jojoen_stuff.png" alt="博士" style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
+            <img src="/jojoen_stuff.png" alt={copy.doctor} style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
           </div>
         </div>
         <div style={{
@@ -413,7 +439,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             borderBottom: '10px solid transparent',
             borderRight: '10px solid white'
           }} />
-          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#9CA3AF' }}>じょうずかん博士</h4>
+          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#9CA3AF' }}>{copy.doctor}</h4>
           <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>{comment}</p>
         </div>
       </div>
@@ -427,7 +453,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             paddingBottom: '0.5rem',
             color: '#5D4037'
           }}>
-            似ているレジェンド
+            {copy.similarLegend}
           </h3>
         </div>
 
@@ -475,7 +501,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            <img src="/jojoen_stuff.png" alt="博士" style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
+            <img src="/jojoen_stuff.png" alt={copy.doctor} style={{ width: '150%', height: '150%', objectFit: 'cover' }} />
           </div>
         </div>
         <div style={{
@@ -500,10 +526,9 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
           }} />
           {/* Border Triangle Outline (Optional tweak for perfect border, usually tricky with CSS triangles, keeping simple for now) */}
 
-          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#C05621' }}>キミとの繋がり</h4>
+          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#C05621' }}>{copy.connection}</h4>
           <p style={{ margin: 0, lineHeight: 1.8, fontSize: '0.95rem' }}>
-            {animal.legendName}は、{animal.catchphrase}のような人じゃ。<br />
-            あなたの中から湧き出る「{topStrengths[0]}」は、まさに{animal.legendName}の生きた証と重なるじゃろう！
+            {copy.connectionBody(animal.legendName, animal.catchphrase, topStrengths[0])}
           </p>
         </div>
       </div>
@@ -535,13 +560,10 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
         </div>
         <div style={{ flex: 1 }}>
           <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.95rem', color: '#B45309' }}>
-            この結果は「おみくじ」のようなもの
+            {copy.fortuneTitle}
           </h4>
           <p style={{ margin: 0, lineHeight: 1.9, fontSize: '0.9rem', color: '#7C6240' }}>
-            診断結果は、その時どきの<strong style={{ color: '#C05621' }}>暫定的なもの</strong>です。<br />
-            あなたを正確に<strong style={{ color: '#C05621' }}>決めるものではありません</strong>。<br />
-            タイプはお互いを知るための<strong style={{ color: '#C05621' }}>「補助線」</strong>。<br />
-            まわりの人との<strong style={{ color: '#C05621' }}>対話のきっかけ</strong>にしてみてくださいね。
+            {copy.fortuneBody}
           </p>
         </div>
       </div>
@@ -569,7 +591,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             gap: '0.5rem',
           }}
         >
-          <Download size={20} /> {isSaving ? '画像を作成中…' : '結果を画像で保存する'}
+          <Download size={20} /> {isSaving ? copy.saving : copy.save}
         </button>
 
         {saveMessage && (
@@ -584,7 +606,7 @@ export const ResultView: React.FC<Props> = ({ answers, onRetry, nickname }) => {
             background: 'none', border: 'none', textDecoration: 'underline', color: '#666', marginTop: '1rem', cursor: 'pointer'
           }}
         >
-          もう一度診断する
+          {copy.retry}
         </button>
       </div>
 
