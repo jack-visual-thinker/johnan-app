@@ -23,8 +23,8 @@ interface IconConfig {
 const mobileIcons: IconConfig[] = [
   // --- Header Area ---
   { layer: 'foreground', top: '5%', left: '5%', scale: 1.8, zIndex: 10 },
-  { layer: 'midground', top: '22%', right: '25%', scale: 1.1, zIndex: 0 },
-  { layer: 'background', top: '12%', right: '40%', scale: 0.6, zIndex: -5, opacity: 0.8 },
+  { layer: 'midground', top: '24%', right: '-6%', scale: 0.85, zIndex: 0 },
+  { layer: 'background', top: '12%', right: '5%', scale: 0.5, zIndex: -5, opacity: 0.8 },
 
   // --- Middle Area (Sparse) ---
   { layer: 'midground', top: '50%', right: '2%', scale: 1.0, zIndex: 0 },

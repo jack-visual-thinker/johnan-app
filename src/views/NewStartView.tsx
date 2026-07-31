@@ -81,11 +81,40 @@ export const NewStartView: React.FC<Props> = ({
           .start-btn {
             width: 240px !important;
           }
+          .english-hero-title {
+            font-size: clamp(3.5rem, 5vw, 5rem) !important;
+          }
+        }
+        .start-title-wrap--english {
+          margin: 0 auto 1.5rem !important;
+        }
+        .english-hero-title {
+          width: min(780px, 92vw);
+          margin: 0 auto;
+          padding: 0.5rem 1rem;
+          box-sizing: border-box;
+          color: #6B5439;
+          font-size: clamp(2.6rem, 9vw, 4rem);
+          line-height: 0.98;
+          font-weight: 900;
+          letter-spacing: -0.045em;
+          text-wrap: balance;
+          transform: rotate(-1deg);
+          text-shadow: 0 3px 0 rgba(255,255,255,0.55);
         }
         @media (max-width: 480px) {
-          .start-title-wrap {
+          .start-title-wrap:not(.start-title-wrap--english) {
             margin-top: -30px !important;
             margin-bottom: -35px !important;
+          }
+          .start-title-wrap--english {
+            margin: 0 auto 1.25rem !important;
+          }
+          .english-hero-title {
+            width: min(92vw, 430px);
+            padding: 0.35rem 0.75rem;
+            font-size: clamp(2.15rem, 10.5vw, 3rem);
+            line-height: 1;
           }
         }
       `}</style>
@@ -97,11 +126,10 @@ export const NewStartView: React.FC<Props> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <p style={{ margin: '0 0 0.25rem', color: '#6B5439', fontSize: '0.8rem', fontWeight: 'bold' }}>
-          {copy.eyebrow}
-        </p>
-
-        <div className="start-title-wrap" style={{ marginBottom: '-50px', marginTop: '-50px' }}>
+        <div
+          className={`start-title-wrap ${language === 'en' ? 'start-title-wrap--english' : ''}`}
+          style={language === 'ja' ? { marginBottom: '-50px', marginTop: '-50px' } : undefined}
+        >
           {language === 'ja' ? (
             <img
               src={assetSrc(headerTitleImg)}
@@ -117,23 +145,7 @@ export const NewStartView: React.FC<Props> = ({
             />
           ) : (
             <h1
-              className="title-logo-img"
-              style={{
-                maxWidth: '90%',
-                width: '700px',
-                margin: '0 auto',
-                minHeight: '150px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#6B5439',
-                fontSize: 'clamp(2rem, 8vw, 4.2rem)',
-                lineHeight: 1.05,
-                fontWeight: 900,
-                letterSpacing: '-0.035em',
-                transform: 'rotate(-2deg)',
-                textShadow: '0 3px 0 rgba(255,255,255,0.55)',
-              }}
+              className="english-hero-title"
             >
               {copy.heroTitle}
             </h1>
